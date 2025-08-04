@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QrDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Maquinarias">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="100" />
+    <Property Name="descripcion" Type="text" />
+    <Property Name="qr_uuid" Type="uniqueidentifier" />
+    <Property Name="url_imagen" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityContainer Name="QrDBModelStoreContainer">
+    <EntitySet Name="Maquinarias" EntityType="Self.Maquinarias" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

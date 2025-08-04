@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="62a22a375cb24ac19472231729d967cb" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="PruebaAlmacenTAEPIModel.CategoriasPreventivas" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PruebaAlmacenTAEPIModel.DetallesPreventivos" Width="1.5" PointX="7.5" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="PruebaAlmacenTAEPIModel.Empresas" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PruebaAlmacenTAEPIModel.Equipos" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="PruebaAlmacenTAEPIModel.Estatus" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PruebaAlmacenTAEPIModel.Lugares" Width="1.5" PointX="5.25" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PruebaAlmacenTAEPIModel.Prioridades" Width="1.5" PointX="6" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PruebaAlmacenTAEPIModel.QrEquipos" Width="1.5" PointX="5.25" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PruebaAlmacenTAEPIModel.Recordatorios" Width="1.5" PointX="8.25" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PruebaAlmacenTAEPIModel.Refacciones" Width="1.5" PointX="10.5" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PruebaAlmacenTAEPIModel.Revisiones" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PruebaAlmacenTAEPIModel.Roles" Width="1.5" PointX="0.75" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PruebaAlmacenTAEPIModel.Tareas" Width="1.5" PointX="6" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PruebaAlmacenTAEPIModel.TiposMantenimientos" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="PruebaAlmacenTAEPIModel.TiposMaquinarias" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PruebaAlmacenTAEPIModel.Ubicaciones" Width="1.5" PointX="0.75" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PruebaAlmacenTAEPIModel.Unidades" Width="1.5" PointX="0.75" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PruebaAlmacenTAEPIModel.Usuarios" Width="1.5" PointX="3" PointY="17.75" IsExpanded="true" />
+        <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_DetallesPreventivos_CategoriasPreventivas" ManuallyRouted="false" />
+        <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_DetallesPreventivos_Revisiones" ManuallyRouted="false" />
+        <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_Revisiones_Empresas" ManuallyRouted="false" />
+        <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_Equipos_Estatus" ManuallyRouted="false" />
+        <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_Equipos_TiposMaquinarias" ManuallyRouted="false" />
+        <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_Equipos_Ubicaciones" ManuallyRouted="false" />
+        <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_Equipos_Unidades" ManuallyRouted="false" />
+        <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_Lugares_Equipos" ManuallyRouted="false" />
+        <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_QrEquipos_Equipos" ManuallyRouted="false" />
+        <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_Recordatorios_Equipos" ManuallyRouted="false" />
+        <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_Revisiones_Equipos" ManuallyRouted="false" />
+        <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_Recordatorios_Prioridades" ManuallyRouted="false" />
+        <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_Recordatorios_Tareas" ManuallyRouted="false" />
+        <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_Recordatorios_TiposMantenimientos" ManuallyRouted="false" />
+        <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_Recordatorios_Usuarios" ManuallyRouted="false" />
+        <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_Refacciones_Revisiones" ManuallyRouted="false" />
+        <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_Refacciones_Unidades" ManuallyRouted="false" />
+        <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_Revisiones_TiposMantenimientos" ManuallyRouted="false" />
+        <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_Revisiones_Usuarios" ManuallyRouted="false" />
+        <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_Usuarios_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_Tareas_TiposMantenimientos" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

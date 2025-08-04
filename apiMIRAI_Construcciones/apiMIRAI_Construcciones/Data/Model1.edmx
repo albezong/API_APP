@@ -1,0 +1,1324 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PruebaAlmacenTAEPIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CategoriasPreventivas">
+          <Key>
+            <PropertyRef Name="idCategoriasPreventivas" />
+          </Key>
+          <Property Name="idCategoriasPreventivas" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombreCategorias" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="DetallesPreventivos">
+          <Key>
+            <PropertyRef Name="idDetallesPreventivos" />
+          </Key>
+          <Property Name="idDetallesPreventivos" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idfRevisiones" Type="int" />
+          <Property Name="idfCategoriasPreventivas" Type="int" />
+          <Property Name="nombreParte" Type="varchar" MaxLength="100" />
+          <Property Name="estado" Type="varchar" MaxLength="50" />
+          <Property Name="comentarios" Type="varchar(max)" />
+          <Property Name="observaciones" Type="varchar(max)" />
+          <Property Name="fecha" Type="date" />
+          <Property Name="numeroReporte" Type="int" />
+        </EntityType>
+        <EntityType Name="Empresas">
+          <Key>
+            <PropertyRef Name="idEmpresas" />
+          </Key>
+          <Property Name="idEmpresas" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="350" />
+        </EntityType>
+        <EntityType Name="Equipos">
+          <Key>
+            <PropertyRef Name="idEquipos" />
+          </Key>
+          <Property Name="idEquipos" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codigoArticulo" Type="varchar" MaxLength="150" />
+          <Property Name="nombreArticulo" Type="varchar" MaxLength="100" />
+          <Property Name="nombreComercial" Type="varchar" MaxLength="100" />
+          <Property Name="numIdentificador" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="descripcion" Type="varchar(max)" />
+          <Property Name="marca" Type="varchar" MaxLength="100" />
+          <Property Name="modelo" Type="varchar" MaxLength="100" />
+          <Property Name="fechadeRegistro" Type="date" />
+          <Property Name="idfUbicaciones" Type="int" />
+          <Property Name="idfUnidades" Type="int" />
+          <Property Name="idfEstatus" Type="int" />
+          <Property Name="idfTiposMaquinarias" Type="int" />
+        </EntityType>
+        <EntityType Name="Estatus">
+          <Key>
+            <PropertyRef Name="idEstatus" />
+          </Key>
+          <Property Name="idEstatus" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Lugares">
+          <Key>
+            <PropertyRef Name="idLugares" />
+          </Key>
+          <Property Name="idLugares" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombreLugar" Type="varchar" MaxLength="100" />
+          <Property Name="idfEquipos" Type="int" />
+        </EntityType>
+        <EntityType Name="Prioridades">
+          <Key>
+            <PropertyRef Name="idPrioridades" />
+          </Key>
+          <Property Name="idPrioridades" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="QrEquipos">
+          <Key>
+            <PropertyRef Name="idQrEquipos" />
+          </Key>
+          <Property Name="idQrEquipos" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="claveQR" Type="varchar(max)" />
+          <Property Name="idEquipos" Type="int" />
+        </EntityType>
+        <EntityType Name="Recordatorios">
+          <Key>
+            <PropertyRef Name="idRecordatorios" />
+          </Key>
+          <Property Name="idRecordatorios" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idfEquipos" Type="int" />
+          <Property Name="idfTareas" Type="int" />
+          <Property Name="idfUsuarios" Type="int" />
+          <Property Name="idfPrioridades" Type="int" />
+          <Property Name="idfTiposMantenimientos" Type="int" />
+          <Property Name="recordarS_N" Type="binary" MaxLength="1" />
+          <Property Name="fechaRecordatorio" Type="date" />
+          <Property Name="numeroReporte" Type="int" />
+          <Property Name="descripcion" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Refacciones">
+          <Key>
+            <PropertyRef Name="idRefacciones" />
+          </Key>
+          <Property Name="idRefacciones" Type="int" Nullable="false" />
+          <Property Name="idfRevisiones" Type="int" />
+          <Property Name="idfUnidades" Type="int" />
+          <Property Name="nombreRefaccion" Type="varchar" MaxLength="100" />
+          <Property Name="descripcion" Type="varchar(max)" />
+          <Property Name="cantidad" Type="int" />
+          <Property Name="observaciones" Type="varchar(max)" />
+          <Property Name="fecha" Type="date" />
+          <Property Name="numeroReporte" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Revisiones">
+          <Key>
+            <PropertyRef Name="idRevisiones" />
+          </Key>
+          <Property Name="idRevisiones" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idfTiposMantenimientos" Type="int" />
+          <Property Name="idfEquipos" Type="int" />
+          <Property Name="idfUsuarios" Type="int" />
+          <Property Name="idfEmpresas" Type="int" />
+          <Property Name="fecha" Type="date" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="idRoles" />
+          </Key>
+          <Property Name="idRoles" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Tareas">
+          <Key>
+            <PropertyRef Name="idTareas" />
+          </Key>
+          <Property Name="idTareas" Type="int" Nullable="false" />
+          <Property Name="idTiposMantenimientos" Type="int" />
+          <Property Name="descripcion" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="TiposMantenimientos">
+          <Key>
+            <PropertyRef Name="idTiposMantenimientos" />
+          </Key>
+          <Property Name="idTiposMantenimientos" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="TiposMaquinarias">
+          <Key>
+            <PropertyRef Name="idTiposMaquinarias" />
+          </Key>
+          <Property Name="idTiposMaquinarias" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Ubicaciones">
+          <Key>
+            <PropertyRef Name="idUbicaciones" />
+          </Key>
+          <Property Name="idUbicaciones" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Unidades">
+          <Key>
+            <PropertyRef Name="idUnidades" />
+          </Key>
+          <Property Name="idUnidades" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="idUsuarios" />
+          </Key>
+          <Property Name="idUsuarios" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+          <Property Name="apellidoPaterno" Type="varchar" MaxLength="100" />
+          <Property Name="apellidoMaterno" Type="varchar" MaxLength="100" />
+          <Property Name="contraseña" Type="varchar" MaxLength="255" />
+          <Property Name="idfRoles" Type="int" />
+        </EntityType>
+        <Association Name="FK_DetallesPreventivos_CategoriasPreventivas">
+          <End Role="CategoriasPreventivas" Type="Self.CategoriasPreventivas" Multiplicity="0..1" />
+          <End Role="DetallesPreventivos" Type="Self.DetallesPreventivos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoriasPreventivas">
+              <PropertyRef Name="idCategoriasPreventivas" />
+            </Principal>
+            <Dependent Role="DetallesPreventivos">
+              <PropertyRef Name="idfCategoriasPreventivas" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetallesPreventivos_Revisiones">
+          <End Role="Revisiones" Type="Self.Revisiones" Multiplicity="0..1" />
+          <End Role="DetallesPreventivos" Type="Self.DetallesPreventivos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Revisiones">
+              <PropertyRef Name="idRevisiones" />
+            </Principal>
+            <Dependent Role="DetallesPreventivos">
+              <PropertyRef Name="idfRevisiones" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipos_Estatus">
+          <End Role="Estatus" Type="Self.Estatus" Multiplicity="0..1" />
+          <End Role="Equipos" Type="Self.Equipos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estatus">
+              <PropertyRef Name="idEstatus" />
+            </Principal>
+            <Dependent Role="Equipos">
+              <PropertyRef Name="idfEstatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipos_TiposMaquinarias">
+          <End Role="TiposMaquinarias" Type="Self.TiposMaquinarias" Multiplicity="0..1" />
+          <End Role="Equipos" Type="Self.Equipos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiposMaquinarias">
+              <PropertyRef Name="idTiposMaquinarias" />
+            </Principal>
+            <Dependent Role="Equipos">
+              <PropertyRef Name="idfTiposMaquinarias" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipos_Ubicaciones">
+          <End Role="Ubicaciones" Type="Self.Ubicaciones" Multiplicity="0..1" />
+          <End Role="Equipos" Type="Self.Equipos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ubicaciones">
+              <PropertyRef Name="idUbicaciones" />
+            </Principal>
+            <Dependent Role="Equipos">
+              <PropertyRef Name="idfUbicaciones" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipos_Unidades">
+          <End Role="Unidades" Type="Self.Unidades" Multiplicity="0..1" />
+          <End Role="Equipos" Type="Self.Equipos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidades">
+              <PropertyRef Name="idUnidades" />
+            </Principal>
+            <Dependent Role="Equipos">
+              <PropertyRef Name="idfUnidades" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lugares_Equipos">
+          <End Role="Equipos" Type="Self.Equipos" Multiplicity="0..1" />
+          <End Role="Lugares" Type="Self.Lugares" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipos">
+              <PropertyRef Name="idEquipos" />
+            </Principal>
+            <Dependent Role="Lugares">
+              <PropertyRef Name="idfEquipos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QrEquipos_Equipos">
+          <End Role="Equipos" Type="Self.Equipos" Multiplicity="0..1" />
+          <End Role="QrEquipos" Type="Self.QrEquipos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipos">
+              <PropertyRef Name="idEquipos" />
+            </Principal>
+            <Dependent Role="QrEquipos">
+              <PropertyRef Name="idEquipos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recordatorios_Equipos">
+          <End Role="Equipos" Type="Self.Equipos" Multiplicity="0..1" />
+          <End Role="Recordatorios" Type="Self.Recordatorios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipos">
+              <PropertyRef Name="idEquipos" />
+            </Principal>
+            <Dependent Role="Recordatorios">
+              <PropertyRef Name="idfEquipos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recordatorios_Prioridades">
+          <End Role="Prioridades" Type="Self.Prioridades" Multiplicity="0..1" />
+          <End Role="Recordatorios" Type="Self.Recordatorios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Prioridades">
+              <PropertyRef Name="idPrioridades" />
+            </Principal>
+            <Dependent Role="Recordatorios">
+              <PropertyRef Name="idfPrioridades" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recordatorios_Tareas">
+          <End Role="Tareas" Type="Self.Tareas" Multiplicity="0..1" />
+          <End Role="Recordatorios" Type="Self.Recordatorios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tareas">
+              <PropertyRef Name="idTareas" />
+            </Principal>
+            <Dependent Role="Recordatorios">
+              <PropertyRef Name="idfTareas" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recordatorios_TiposMantenimientos">
+          <End Role="TiposMantenimientos" Type="Self.TiposMantenimientos" Multiplicity="0..1" />
+          <End Role="Recordatorios" Type="Self.Recordatorios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiposMantenimientos">
+              <PropertyRef Name="idTiposMantenimientos" />
+            </Principal>
+            <Dependent Role="Recordatorios">
+              <PropertyRef Name="idfTiposMantenimientos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recordatorios_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="Recordatorios" Type="Self.Recordatorios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="idUsuarios" />
+            </Principal>
+            <Dependent Role="Recordatorios">
+              <PropertyRef Name="idfUsuarios" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Refacciones_Revisiones">
+          <End Role="Revisiones" Type="Self.Revisiones" Multiplicity="0..1" />
+          <End Role="Refacciones" Type="Self.Refacciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Revisiones">
+              <PropertyRef Name="idRevisiones" />
+            </Principal>
+            <Dependent Role="Refacciones">
+              <PropertyRef Name="idfRevisiones" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Refacciones_Unidades">
+          <End Role="Unidades" Type="Self.Unidades" Multiplicity="0..1" />
+          <End Role="Refacciones" Type="Self.Refacciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidades">
+              <PropertyRef Name="idUnidades" />
+            </Principal>
+            <Dependent Role="Refacciones">
+              <PropertyRef Name="idfUnidades" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Revisiones_Empresas">
+          <End Role="Empresas" Type="Self.Empresas" Multiplicity="0..1" />
+          <End Role="Revisiones" Type="Self.Revisiones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresas">
+              <PropertyRef Name="idEmpresas" />
+            </Principal>
+            <Dependent Role="Revisiones">
+              <PropertyRef Name="idfEmpresas" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Revisiones_Equipos">
+          <End Role="Equipos" Type="Self.Equipos" Multiplicity="0..1" />
+          <End Role="Revisiones" Type="Self.Revisiones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipos">
+              <PropertyRef Name="idEquipos" />
+            </Principal>
+            <Dependent Role="Revisiones">
+              <PropertyRef Name="idfEquipos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Revisiones_TiposMantenimientos">
+          <End Role="TiposMantenimientos" Type="Self.TiposMantenimientos" Multiplicity="0..1" />
+          <End Role="Revisiones" Type="Self.Revisiones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiposMantenimientos">
+              <PropertyRef Name="idTiposMantenimientos" />
+            </Principal>
+            <Dependent Role="Revisiones">
+              <PropertyRef Name="idfTiposMantenimientos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Revisiones_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="Revisiones" Type="Self.Revisiones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="idUsuarios" />
+            </Principal>
+            <Dependent Role="Revisiones">
+              <PropertyRef Name="idfUsuarios" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tareas_TiposMantenimientos">
+          <End Role="TiposMantenimientos" Type="Self.TiposMantenimientos" Multiplicity="0..1" />
+          <End Role="Tareas" Type="Self.Tareas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiposMantenimientos">
+              <PropertyRef Name="idTiposMantenimientos" />
+            </Principal>
+            <Dependent Role="Tareas">
+              <PropertyRef Name="idTiposMantenimientos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="idRoles" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="idfRoles" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PruebaAlmacenTAEPIModelStoreContainer">
+          <EntitySet Name="CategoriasPreventivas" EntityType="Self.CategoriasPreventivas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetallesPreventivos" EntityType="Self.DetallesPreventivos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Empresas" EntityType="Self.Empresas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Equipos" EntityType="Self.Equipos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estatus" EntityType="Self.Estatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lugares" EntityType="Self.Lugares" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Prioridades" EntityType="Self.Prioridades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QrEquipos" EntityType="Self.QrEquipos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Recordatorios" EntityType="Self.Recordatorios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Refacciones" EntityType="Self.Refacciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Revisiones" EntityType="Self.Revisiones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tareas" EntityType="Self.Tareas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TiposMantenimientos" EntityType="Self.TiposMantenimientos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TiposMaquinarias" EntityType="Self.TiposMaquinarias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ubicaciones" EntityType="Self.Ubicaciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Unidades" EntityType="Self.Unidades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DetallesPreventivos_CategoriasPreventivas" Association="Self.FK_DetallesPreventivos_CategoriasPreventivas">
+            <End Role="CategoriasPreventivas" EntitySet="CategoriasPreventivas" />
+            <End Role="DetallesPreventivos" EntitySet="DetallesPreventivos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetallesPreventivos_Revisiones" Association="Self.FK_DetallesPreventivos_Revisiones">
+            <End Role="Revisiones" EntitySet="Revisiones" />
+            <End Role="DetallesPreventivos" EntitySet="DetallesPreventivos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipos_Estatus" Association="Self.FK_Equipos_Estatus">
+            <End Role="Estatus" EntitySet="Estatus" />
+            <End Role="Equipos" EntitySet="Equipos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipos_TiposMaquinarias" Association="Self.FK_Equipos_TiposMaquinarias">
+            <End Role="TiposMaquinarias" EntitySet="TiposMaquinarias" />
+            <End Role="Equipos" EntitySet="Equipos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipos_Ubicaciones" Association="Self.FK_Equipos_Ubicaciones">
+            <End Role="Ubicaciones" EntitySet="Ubicaciones" />
+            <End Role="Equipos" EntitySet="Equipos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipos_Unidades" Association="Self.FK_Equipos_Unidades">
+            <End Role="Unidades" EntitySet="Unidades" />
+            <End Role="Equipos" EntitySet="Equipos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lugares_Equipos" Association="Self.FK_Lugares_Equipos">
+            <End Role="Equipos" EntitySet="Equipos" />
+            <End Role="Lugares" EntitySet="Lugares" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QrEquipos_Equipos" Association="Self.FK_QrEquipos_Equipos">
+            <End Role="Equipos" EntitySet="Equipos" />
+            <End Role="QrEquipos" EntitySet="QrEquipos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recordatorios_Equipos" Association="Self.FK_Recordatorios_Equipos">
+            <End Role="Equipos" EntitySet="Equipos" />
+            <End Role="Recordatorios" EntitySet="Recordatorios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recordatorios_Prioridades" Association="Self.FK_Recordatorios_Prioridades">
+            <End Role="Prioridades" EntitySet="Prioridades" />
+            <End Role="Recordatorios" EntitySet="Recordatorios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recordatorios_Tareas" Association="Self.FK_Recordatorios_Tareas">
+            <End Role="Tareas" EntitySet="Tareas" />
+            <End Role="Recordatorios" EntitySet="Recordatorios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recordatorios_TiposMantenimientos" Association="Self.FK_Recordatorios_TiposMantenimientos">
+            <End Role="TiposMantenimientos" EntitySet="TiposMantenimientos" />
+            <End Role="Recordatorios" EntitySet="Recordatorios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recordatorios_Usuarios" Association="Self.FK_Recordatorios_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Recordatorios" EntitySet="Recordatorios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Refacciones_Revisiones" Association="Self.FK_Refacciones_Revisiones">
+            <End Role="Revisiones" EntitySet="Revisiones" />
+            <End Role="Refacciones" EntitySet="Refacciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Refacciones_Unidades" Association="Self.FK_Refacciones_Unidades">
+            <End Role="Unidades" EntitySet="Unidades" />
+            <End Role="Refacciones" EntitySet="Refacciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Revisiones_Empresas" Association="Self.FK_Revisiones_Empresas">
+            <End Role="Empresas" EntitySet="Empresas" />
+            <End Role="Revisiones" EntitySet="Revisiones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Revisiones_Equipos" Association="Self.FK_Revisiones_Equipos">
+            <End Role="Equipos" EntitySet="Equipos" />
+            <End Role="Revisiones" EntitySet="Revisiones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Revisiones_TiposMantenimientos" Association="Self.FK_Revisiones_TiposMantenimientos">
+            <End Role="TiposMantenimientos" EntitySet="TiposMantenimientos" />
+            <End Role="Revisiones" EntitySet="Revisiones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Revisiones_Usuarios" Association="Self.FK_Revisiones_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Revisiones" EntitySet="Revisiones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tareas_TiposMantenimientos" Association="Self.FK_Tareas_TiposMantenimientos">
+            <End Role="TiposMantenimientos" EntitySet="TiposMantenimientos" />
+            <End Role="Tareas" EntitySet="Tareas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_Roles" Association="Self.FK_Usuarios_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PruebaAlmacenTAEPIModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CategoriasPreventivas">
+          <Key>
+            <PropertyRef Name="idCategoriasPreventivas" />
+          </Key>
+          <Property Name="idCategoriasPreventivas" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombreCategorias" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DetallesPreventivos" Relationship="Self.FK_DetallesPreventivos_CategoriasPreventivas" FromRole="CategoriasPreventivas" ToRole="DetallesPreventivos" />
+        </EntityType>
+        <EntityType Name="DetallesPreventivos">
+          <Key>
+            <PropertyRef Name="idDetallesPreventivos" />
+          </Key>
+          <Property Name="idDetallesPreventivos" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idfRevisiones" Type="Int32" />
+          <Property Name="idfCategoriasPreventivas" Type="Int32" />
+          <Property Name="nombreParte" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="comentarios" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="observaciones" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="fecha" Type="DateTime" Precision="0" />
+          <Property Name="numeroReporte" Type="Int32" />
+          <NavigationProperty Name="CategoriasPreventivas" Relationship="Self.FK_DetallesPreventivos_CategoriasPreventivas" FromRole="DetallesPreventivos" ToRole="CategoriasPreventivas" />
+          <NavigationProperty Name="Revisiones" Relationship="Self.FK_DetallesPreventivos_Revisiones" FromRole="DetallesPreventivos" ToRole="Revisiones" />
+        </EntityType>
+        <EntityType Name="Empresas">
+          <Key>
+            <PropertyRef Name="idEmpresas" />
+          </Key>
+          <Property Name="idEmpresas" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Revisiones" Relationship="Self.FK_Revisiones_Empresas" FromRole="Empresas" ToRole="Revisiones" />
+        </EntityType>
+        <EntityType Name="Equipos">
+          <Key>
+            <PropertyRef Name="idEquipos" />
+          </Key>
+          <Property Name="idEquipos" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codigoArticulo" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="nombreArticulo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="nombreComercial" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="numIdentificador" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="marca" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="modelo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="fechadeRegistro" Type="DateTime" Precision="0" />
+          <Property Name="idfUbicaciones" Type="Int32" />
+          <Property Name="idfUnidades" Type="Int32" />
+          <Property Name="idfEstatus" Type="Int32" />
+          <Property Name="idfTiposMaquinarias" Type="Int32" />
+          <NavigationProperty Name="Estatus" Relationship="Self.FK_Equipos_Estatus" FromRole="Equipos" ToRole="Estatus" />
+          <NavigationProperty Name="TiposMaquinarias" Relationship="Self.FK_Equipos_TiposMaquinarias" FromRole="Equipos" ToRole="TiposMaquinarias" />
+          <NavigationProperty Name="Ubicaciones" Relationship="Self.FK_Equipos_Ubicaciones" FromRole="Equipos" ToRole="Ubicaciones" />
+          <NavigationProperty Name="Unidades" Relationship="Self.FK_Equipos_Unidades" FromRole="Equipos" ToRole="Unidades" />
+          <NavigationProperty Name="Lugares" Relationship="Self.FK_Lugares_Equipos" FromRole="Equipos" ToRole="Lugares" />
+          <NavigationProperty Name="QrEquipos" Relationship="Self.FK_QrEquipos_Equipos" FromRole="Equipos" ToRole="QrEquipos" />
+          <NavigationProperty Name="Recordatorios" Relationship="Self.FK_Recordatorios_Equipos" FromRole="Equipos" ToRole="Recordatorios" />
+          <NavigationProperty Name="Revisiones" Relationship="Self.FK_Revisiones_Equipos" FromRole="Equipos" ToRole="Revisiones" />
+        </EntityType>
+        <EntityType Name="Estatus">
+          <Key>
+            <PropertyRef Name="idEstatus" />
+          </Key>
+          <Property Name="idEstatus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Equipos" Relationship="Self.FK_Equipos_Estatus" FromRole="Estatus" ToRole="Equipos" />
+        </EntityType>
+        <EntityType Name="Lugares">
+          <Key>
+            <PropertyRef Name="idLugares" />
+          </Key>
+          <Property Name="idLugares" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombreLugar" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="idfEquipos" Type="Int32" />
+          <NavigationProperty Name="Equipos" Relationship="Self.FK_Lugares_Equipos" FromRole="Lugares" ToRole="Equipos" />
+        </EntityType>
+        <EntityType Name="Prioridades">
+          <Key>
+            <PropertyRef Name="idPrioridades" />
+          </Key>
+          <Property Name="idPrioridades" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Recordatorios" Relationship="Self.FK_Recordatorios_Prioridades" FromRole="Prioridades" ToRole="Recordatorios" />
+        </EntityType>
+        <EntityType Name="QrEquipos">
+          <Key>
+            <PropertyRef Name="idQrEquipos" />
+          </Key>
+          <Property Name="idQrEquipos" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="claveQR" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="idEquipos" Type="Int32" />
+          <NavigationProperty Name="Equipos" Relationship="Self.FK_QrEquipos_Equipos" FromRole="QrEquipos" ToRole="Equipos" />
+        </EntityType>
+        <EntityType Name="Recordatorios">
+          <Key>
+            <PropertyRef Name="idRecordatorios" />
+          </Key>
+          <Property Name="idRecordatorios" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idfEquipos" Type="Int32" />
+          <Property Name="idfTareas" Type="Int32" />
+          <Property Name="idfUsuarios" Type="Int32" />
+          <Property Name="idfPrioridades" Type="Int32" />
+          <Property Name="idfTiposMantenimientos" Type="Int32" />
+          <Property Name="recordarS_N" Type="Binary" MaxLength="1" FixedLength="true" />
+          <Property Name="fechaRecordatorio" Type="DateTime" Precision="0" />
+          <Property Name="numeroReporte" Type="Int32" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Equipos" Relationship="Self.FK_Recordatorios_Equipos" FromRole="Recordatorios" ToRole="Equipos" />
+          <NavigationProperty Name="Prioridades" Relationship="Self.FK_Recordatorios_Prioridades" FromRole="Recordatorios" ToRole="Prioridades" />
+          <NavigationProperty Name="Tareas" Relationship="Self.FK_Recordatorios_Tareas" FromRole="Recordatorios" ToRole="Tareas" />
+          <NavigationProperty Name="TiposMantenimientos" Relationship="Self.FK_Recordatorios_TiposMantenimientos" FromRole="Recordatorios" ToRole="TiposMantenimientos" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Recordatorios_Usuarios" FromRole="Recordatorios" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Refacciones">
+          <Key>
+            <PropertyRef Name="idRefacciones" />
+          </Key>
+          <Property Name="idRefacciones" Type="Int32" Nullable="false" />
+          <Property Name="idfRevisiones" Type="Int32" />
+          <Property Name="idfUnidades" Type="Int32" />
+          <Property Name="nombreRefaccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="cantidad" Type="Int32" />
+          <Property Name="observaciones" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="fecha" Type="DateTime" Precision="0" />
+          <Property Name="numeroReporte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Revisiones" Relationship="Self.FK_Refacciones_Revisiones" FromRole="Refacciones" ToRole="Revisiones" />
+          <NavigationProperty Name="Unidades" Relationship="Self.FK_Refacciones_Unidades" FromRole="Refacciones" ToRole="Unidades" />
+        </EntityType>
+        <EntityType Name="Revisiones">
+          <Key>
+            <PropertyRef Name="idRevisiones" />
+          </Key>
+          <Property Name="idRevisiones" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idfTiposMantenimientos" Type="Int32" />
+          <Property Name="idfEquipos" Type="Int32" />
+          <Property Name="idfUsuarios" Type="Int32" />
+          <Property Name="idfEmpresas" Type="Int32" />
+          <Property Name="fecha" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="DetallesPreventivos" Relationship="Self.FK_DetallesPreventivos_Revisiones" FromRole="Revisiones" ToRole="DetallesPreventivos" />
+          <NavigationProperty Name="Empresas" Relationship="Self.FK_Revisiones_Empresas" FromRole="Revisiones" ToRole="Empresas" />
+          <NavigationProperty Name="Equipos" Relationship="Self.FK_Revisiones_Equipos" FromRole="Revisiones" ToRole="Equipos" />
+          <NavigationProperty Name="Refacciones" Relationship="Self.FK_Refacciones_Revisiones" FromRole="Revisiones" ToRole="Refacciones" />
+          <NavigationProperty Name="TiposMantenimientos" Relationship="Self.FK_Revisiones_TiposMantenimientos" FromRole="Revisiones" ToRole="TiposMantenimientos" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Revisiones_Usuarios" FromRole="Revisiones" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="idRoles" />
+          </Key>
+          <Property Name="idRoles" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Usuarios_Roles" FromRole="Roles" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Tareas">
+          <Key>
+            <PropertyRef Name="idTareas" />
+          </Key>
+          <Property Name="idTareas" Type="Int32" Nullable="false" />
+          <Property Name="idTiposMantenimientos" Type="Int32" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Recordatorios" Relationship="Self.FK_Recordatorios_Tareas" FromRole="Tareas" ToRole="Recordatorios" />
+          <NavigationProperty Name="TiposMantenimientos" Relationship="Self.FK_Tareas_TiposMantenimientos" FromRole="Tareas" ToRole="TiposMantenimientos" />
+        </EntityType>
+        <EntityType Name="TiposMantenimientos">
+          <Key>
+            <PropertyRef Name="idTiposMantenimientos" />
+          </Key>
+          <Property Name="idTiposMantenimientos" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Recordatorios" Relationship="Self.FK_Recordatorios_TiposMantenimientos" FromRole="TiposMantenimientos" ToRole="Recordatorios" />
+          <NavigationProperty Name="Revisiones" Relationship="Self.FK_Revisiones_TiposMantenimientos" FromRole="TiposMantenimientos" ToRole="Revisiones" />
+          <NavigationProperty Name="Tareas" Relationship="Self.FK_Tareas_TiposMantenimientos" FromRole="TiposMantenimientos" ToRole="Tareas" />
+        </EntityType>
+        <EntityType Name="TiposMaquinarias">
+          <Key>
+            <PropertyRef Name="idTiposMaquinarias" />
+          </Key>
+          <Property Name="idTiposMaquinarias" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Equipos" Relationship="Self.FK_Equipos_TiposMaquinarias" FromRole="TiposMaquinarias" ToRole="Equipos" />
+        </EntityType>
+        <EntityType Name="Ubicaciones">
+          <Key>
+            <PropertyRef Name="idUbicaciones" />
+          </Key>
+          <Property Name="idUbicaciones" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Equipos" Relationship="Self.FK_Equipos_Ubicaciones" FromRole="Ubicaciones" ToRole="Equipos" />
+        </EntityType>
+        <EntityType Name="Unidades">
+          <Key>
+            <PropertyRef Name="idUnidades" />
+          </Key>
+          <Property Name="idUnidades" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Equipos" Relationship="Self.FK_Equipos_Unidades" FromRole="Unidades" ToRole="Equipos" />
+          <NavigationProperty Name="Refacciones" Relationship="Self.FK_Refacciones_Unidades" FromRole="Unidades" ToRole="Refacciones" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="idUsuarios" />
+          </Key>
+          <Property Name="idUsuarios" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="apellidoPaterno" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="apellidoMaterno" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="contraseña" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="idfRoles" Type="Int32" />
+          <NavigationProperty Name="Recordatorios" Relationship="Self.FK_Recordatorios_Usuarios" FromRole="Usuarios" ToRole="Recordatorios" />
+          <NavigationProperty Name="Revisiones" Relationship="Self.FK_Revisiones_Usuarios" FromRole="Usuarios" ToRole="Revisiones" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK_Usuarios_Roles" FromRole="Usuarios" ToRole="Roles" />
+        </EntityType>
+        <Association Name="FK_DetallesPreventivos_CategoriasPreventivas">
+          <End Role="CategoriasPreventivas" Type="Self.CategoriasPreventivas" Multiplicity="0..1" />
+          <End Role="DetallesPreventivos" Type="Self.DetallesPreventivos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoriasPreventivas">
+              <PropertyRef Name="idCategoriasPreventivas" />
+            </Principal>
+            <Dependent Role="DetallesPreventivos">
+              <PropertyRef Name="idfCategoriasPreventivas" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetallesPreventivos_Revisiones">
+          <End Role="Revisiones" Type="Self.Revisiones" Multiplicity="0..1" />
+          <End Role="DetallesPreventivos" Type="Self.DetallesPreventivos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Revisiones">
+              <PropertyRef Name="idRevisiones" />
+            </Principal>
+            <Dependent Role="DetallesPreventivos">
+              <PropertyRef Name="idfRevisiones" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Revisiones_Empresas">
+          <End Role="Empresas" Type="Self.Empresas" Multiplicity="0..1" />
+          <End Role="Revisiones" Type="Self.Revisiones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresas">
+              <PropertyRef Name="idEmpresas" />
+            </Principal>
+            <Dependent Role="Revisiones">
+              <PropertyRef Name="idfEmpresas" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipos_Estatus">
+          <End Role="Estatus" Type="Self.Estatus" Multiplicity="0..1" />
+          <End Role="Equipos" Type="Self.Equipos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estatus">
+              <PropertyRef Name="idEstatus" />
+            </Principal>
+            <Dependent Role="Equipos">
+              <PropertyRef Name="idfEstatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipos_TiposMaquinarias">
+          <End Role="TiposMaquinarias" Type="Self.TiposMaquinarias" Multiplicity="0..1" />
+          <End Role="Equipos" Type="Self.Equipos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiposMaquinarias">
+              <PropertyRef Name="idTiposMaquinarias" />
+            </Principal>
+            <Dependent Role="Equipos">
+              <PropertyRef Name="idfTiposMaquinarias" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipos_Ubicaciones">
+          <End Role="Ubicaciones" Type="Self.Ubicaciones" Multiplicity="0..1" />
+          <End Role="Equipos" Type="Self.Equipos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ubicaciones">
+              <PropertyRef Name="idUbicaciones" />
+            </Principal>
+            <Dependent Role="Equipos">
+              <PropertyRef Name="idfUbicaciones" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipos_Unidades">
+          <End Role="Unidades" Type="Self.Unidades" Multiplicity="0..1" />
+          <End Role="Equipos" Type="Self.Equipos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidades">
+              <PropertyRef Name="idUnidades" />
+            </Principal>
+            <Dependent Role="Equipos">
+              <PropertyRef Name="idfUnidades" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lugares_Equipos">
+          <End Role="Equipos" Type="Self.Equipos" Multiplicity="0..1" />
+          <End Role="Lugares" Type="Self.Lugares" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipos">
+              <PropertyRef Name="idEquipos" />
+            </Principal>
+            <Dependent Role="Lugares">
+              <PropertyRef Name="idfEquipos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QrEquipos_Equipos">
+          <End Role="Equipos" Type="Self.Equipos" Multiplicity="0..1" />
+          <End Role="QrEquipos" Type="Self.QrEquipos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipos">
+              <PropertyRef Name="idEquipos" />
+            </Principal>
+            <Dependent Role="QrEquipos">
+              <PropertyRef Name="idEquipos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recordatorios_Equipos">
+          <End Role="Equipos" Type="Self.Equipos" Multiplicity="0..1" />
+          <End Role="Recordatorios" Type="Self.Recordatorios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipos">
+              <PropertyRef Name="idEquipos" />
+            </Principal>
+            <Dependent Role="Recordatorios">
+              <PropertyRef Name="idfEquipos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Revisiones_Equipos">
+          <End Role="Equipos" Type="Self.Equipos" Multiplicity="0..1" />
+          <End Role="Revisiones" Type="Self.Revisiones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipos">
+              <PropertyRef Name="idEquipos" />
+            </Principal>
+            <Dependent Role="Revisiones">
+              <PropertyRef Name="idfEquipos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recordatorios_Prioridades">
+          <End Role="Prioridades" Type="Self.Prioridades" Multiplicity="0..1" />
+          <End Role="Recordatorios" Type="Self.Recordatorios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Prioridades">
+              <PropertyRef Name="idPrioridades" />
+            </Principal>
+            <Dependent Role="Recordatorios">
+              <PropertyRef Name="idfPrioridades" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recordatorios_Tareas">
+          <End Role="Tareas" Type="Self.Tareas" Multiplicity="0..1" />
+          <End Role="Recordatorios" Type="Self.Recordatorios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tareas">
+              <PropertyRef Name="idTareas" />
+            </Principal>
+            <Dependent Role="Recordatorios">
+              <PropertyRef Name="idfTareas" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recordatorios_TiposMantenimientos">
+          <End Role="TiposMantenimientos" Type="Self.TiposMantenimientos" Multiplicity="0..1" />
+          <End Role="Recordatorios" Type="Self.Recordatorios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiposMantenimientos">
+              <PropertyRef Name="idTiposMantenimientos" />
+            </Principal>
+            <Dependent Role="Recordatorios">
+              <PropertyRef Name="idfTiposMantenimientos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recordatorios_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="Recordatorios" Type="Self.Recordatorios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="idUsuarios" />
+            </Principal>
+            <Dependent Role="Recordatorios">
+              <PropertyRef Name="idfUsuarios" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Refacciones_Revisiones">
+          <End Role="Revisiones" Type="Self.Revisiones" Multiplicity="0..1" />
+          <End Role="Refacciones" Type="Self.Refacciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Revisiones">
+              <PropertyRef Name="idRevisiones" />
+            </Principal>
+            <Dependent Role="Refacciones">
+              <PropertyRef Name="idfRevisiones" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Refacciones_Unidades">
+          <End Role="Unidades" Type="Self.Unidades" Multiplicity="0..1" />
+          <End Role="Refacciones" Type="Self.Refacciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidades">
+              <PropertyRef Name="idUnidades" />
+            </Principal>
+            <Dependent Role="Refacciones">
+              <PropertyRef Name="idfUnidades" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Revisiones_TiposMantenimientos">
+          <End Role="TiposMantenimientos" Type="Self.TiposMantenimientos" Multiplicity="0..1" />
+          <End Role="Revisiones" Type="Self.Revisiones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiposMantenimientos">
+              <PropertyRef Name="idTiposMantenimientos" />
+            </Principal>
+            <Dependent Role="Revisiones">
+              <PropertyRef Name="idfTiposMantenimientos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Revisiones_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="Revisiones" Type="Self.Revisiones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="idUsuarios" />
+            </Principal>
+            <Dependent Role="Revisiones">
+              <PropertyRef Name="idfUsuarios" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="idRoles" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="idfRoles" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tareas_TiposMantenimientos">
+          <End Role="TiposMantenimientos" Type="Self.TiposMantenimientos" Multiplicity="0..1" />
+          <End Role="Tareas" Type="Self.Tareas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiposMantenimientos">
+              <PropertyRef Name="idTiposMantenimientos" />
+            </Principal>
+            <Dependent Role="Tareas">
+              <PropertyRef Name="idTiposMantenimientos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AlmacenTAEPIEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CategoriasPreventivas" EntityType="Self.CategoriasPreventivas" />
+          <EntitySet Name="DetallesPreventivos" EntityType="Self.DetallesPreventivos" />
+          <EntitySet Name="Empresas" EntityType="Self.Empresas" />
+          <EntitySet Name="Equipos" EntityType="Self.Equipos" />
+          <EntitySet Name="Estatus" EntityType="Self.Estatus" />
+          <EntitySet Name="Lugares" EntityType="Self.Lugares" />
+          <EntitySet Name="Prioridades" EntityType="Self.Prioridades" />
+          <EntitySet Name="QrEquipos" EntityType="Self.QrEquipos" />
+          <EntitySet Name="Recordatorios" EntityType="Self.Recordatorios" />
+          <EntitySet Name="Refacciones" EntityType="Self.Refacciones" />
+          <EntitySet Name="Revisiones" EntityType="Self.Revisiones" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" />
+          <EntitySet Name="Tareas" EntityType="Self.Tareas" />
+          <EntitySet Name="TiposMantenimientos" EntityType="Self.TiposMantenimientos" />
+          <EntitySet Name="TiposMaquinarias" EntityType="Self.TiposMaquinarias" />
+          <EntitySet Name="Ubicaciones" EntityType="Self.Ubicaciones" />
+          <EntitySet Name="Unidades" EntityType="Self.Unidades" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+          <AssociationSet Name="FK_DetallesPreventivos_CategoriasPreventivas" Association="Self.FK_DetallesPreventivos_CategoriasPreventivas">
+            <End Role="CategoriasPreventivas" EntitySet="CategoriasPreventivas" />
+            <End Role="DetallesPreventivos" EntitySet="DetallesPreventivos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetallesPreventivos_Revisiones" Association="Self.FK_DetallesPreventivos_Revisiones">
+            <End Role="Revisiones" EntitySet="Revisiones" />
+            <End Role="DetallesPreventivos" EntitySet="DetallesPreventivos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Revisiones_Empresas" Association="Self.FK_Revisiones_Empresas">
+            <End Role="Empresas" EntitySet="Empresas" />
+            <End Role="Revisiones" EntitySet="Revisiones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipos_Estatus" Association="Self.FK_Equipos_Estatus">
+            <End Role="Estatus" EntitySet="Estatus" />
+            <End Role="Equipos" EntitySet="Equipos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipos_TiposMaquinarias" Association="Self.FK_Equipos_TiposMaquinarias">
+            <End Role="TiposMaquinarias" EntitySet="TiposMaquinarias" />
+            <End Role="Equipos" EntitySet="Equipos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipos_Ubicaciones" Association="Self.FK_Equipos_Ubicaciones">
+            <End Role="Ubicaciones" EntitySet="Ubicaciones" />
+            <End Role="Equipos" EntitySet="Equipos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipos_Unidades" Association="Self.FK_Equipos_Unidades">
+            <End Role="Unidades" EntitySet="Unidades" />
+            <End Role="Equipos" EntitySet="Equipos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lugares_Equipos" Association="Self.FK_Lugares_Equipos">
+            <End Role="Equipos" EntitySet="Equipos" />
+            <End Role="Lugares" EntitySet="Lugares" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QrEquipos_Equipos" Association="Self.FK_QrEquipos_Equipos">
+            <End Role="Equipos" EntitySet="Equipos" />
+            <End Role="QrEquipos" EntitySet="QrEquipos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recordatorios_Equipos" Association="Self.FK_Recordatorios_Equipos">
+            <End Role="Equipos" EntitySet="Equipos" />
+            <End Role="Recordatorios" EntitySet="Recordatorios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Revisiones_Equipos" Association="Self.FK_Revisiones_Equipos">
+            <End Role="Equipos" EntitySet="Equipos" />
+            <End Role="Revisiones" EntitySet="Revisiones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recordatorios_Prioridades" Association="Self.FK_Recordatorios_Prioridades">
+            <End Role="Prioridades" EntitySet="Prioridades" />
+            <End Role="Recordatorios" EntitySet="Recordatorios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recordatorios_Tareas" Association="Self.FK_Recordatorios_Tareas">
+            <End Role="Tareas" EntitySet="Tareas" />
+            <End Role="Recordatorios" EntitySet="Recordatorios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recordatorios_TiposMantenimientos" Association="Self.FK_Recordatorios_TiposMantenimientos">
+            <End Role="TiposMantenimientos" EntitySet="TiposMantenimientos" />
+            <End Role="Recordatorios" EntitySet="Recordatorios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recordatorios_Usuarios" Association="Self.FK_Recordatorios_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Recordatorios" EntitySet="Recordatorios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Refacciones_Revisiones" Association="Self.FK_Refacciones_Revisiones">
+            <End Role="Revisiones" EntitySet="Revisiones" />
+            <End Role="Refacciones" EntitySet="Refacciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Refacciones_Unidades" Association="Self.FK_Refacciones_Unidades">
+            <End Role="Unidades" EntitySet="Unidades" />
+            <End Role="Refacciones" EntitySet="Refacciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Revisiones_TiposMantenimientos" Association="Self.FK_Revisiones_TiposMantenimientos">
+            <End Role="TiposMantenimientos" EntitySet="TiposMantenimientos" />
+            <End Role="Revisiones" EntitySet="Revisiones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Revisiones_Usuarios" Association="Self.FK_Revisiones_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Revisiones" EntitySet="Revisiones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_Roles" Association="Self.FK_Usuarios_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tareas_TiposMantenimientos" Association="Self.FK_Tareas_TiposMantenimientos">
+            <End Role="TiposMantenimientos" EntitySet="TiposMantenimientos" />
+            <End Role="Tareas" EntitySet="Tareas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PruebaAlmacenTAEPIModelStoreContainer" CdmEntityContainer="AlmacenTAEPIEntities">
+          <EntitySetMapping Name="CategoriasPreventivas">
+            <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.CategoriasPreventivas">
+              <MappingFragment StoreEntitySet="CategoriasPreventivas">
+                <ScalarProperty Name="idCategoriasPreventivas" ColumnName="idCategoriasPreventivas" />
+                <ScalarProperty Name="nombreCategorias" ColumnName="nombreCategorias" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetallesPreventivos">
+            <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.DetallesPreventivos">
+              <MappingFragment StoreEntitySet="DetallesPreventivos">
+                <ScalarProperty Name="idDetallesPreventivos" ColumnName="idDetallesPreventivos" />
+                <ScalarProperty Name="idfRevisiones" ColumnName="idfRevisiones" />
+                <ScalarProperty Name="idfCategoriasPreventivas" ColumnName="idfCategoriasPreventivas" />
+                <ScalarProperty Name="nombreParte" ColumnName="nombreParte" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="comentarios" ColumnName="comentarios" />
+                <ScalarProperty Name="observaciones" ColumnName="observaciones" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="numeroReporte" ColumnName="numeroReporte" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empresas">
+            <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Empresas">
+              <MappingFragment StoreEntitySet="Empresas">
+                <ScalarProperty Name="idEmpresas" ColumnName="idEmpresas" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Equipos">
+            <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Equipos">
+              <MappingFragment StoreEntitySet="Equipos">
+                <ScalarProperty Name="idEquipos" ColumnName="idEquipos" />
+                <ScalarProperty Name="codigoArticulo" ColumnName="codigoArticulo" />
+                <ScalarProperty Name="nombreArticulo" ColumnName="nombreArticulo" />
+                <ScalarProperty Name="nombreComercial" ColumnName="nombreComercial" />
+                <ScalarProperty Name="numIdentificador" ColumnName="numIdentificador" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="marca" ColumnName="marca" />
+                <ScalarProperty Name="modelo" ColumnName="modelo" />
+                <ScalarProperty Name="fechadeRegistro" ColumnName="fechadeRegistro" />
+                <ScalarProperty Name="idfUbicaciones" ColumnName="idfUbicaciones" />
+                <ScalarProperty Name="idfUnidades" ColumnName="idfUnidades" />
+                <ScalarProperty Name="idfEstatus" ColumnName="idfEstatus" />
+                <ScalarProperty Name="idfTiposMaquinarias" ColumnName="idfTiposMaquinarias" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estatus">
+            <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Estatus">
+              <MappingFragment StoreEntitySet="Estatus">
+                <ScalarProperty Name="idEstatus" ColumnName="idEstatus" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lugares">
+            <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Lugares">
+              <MappingFragment StoreEntitySet="Lugares">
+                <ScalarProperty Name="idLugares" ColumnName="idLugares" />
+                <ScalarProperty Name="nombreLugar" ColumnName="nombreLugar" />
+                <ScalarProperty Name="idfEquipos" ColumnName="idfEquipos" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Prioridades">
+            <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Prioridades">
+              <MappingFragment StoreEntitySet="Prioridades">
+                <ScalarProperty Name="idPrioridades" ColumnName="idPrioridades" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QrEquipos">
+            <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.QrEquipos">
+              <MappingFragment StoreEntitySet="QrEquipos">
+                <ScalarProperty Name="idQrEquipos" ColumnName="idQrEquipos" />
+                <ScalarProperty Name="claveQR" ColumnName="claveQR" />
+                <ScalarProperty Name="idEquipos" ColumnName="idEquipos" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recordatorios">
+            <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Recordatorios">
+              <MappingFragment StoreEntitySet="Recordatorios">
+                <ScalarProperty Name="idRecordatorios" ColumnName="idRecordatorios" />
+                <ScalarProperty Name="idfEquipos" ColumnName="idfEquipos" />
+                <ScalarProperty Name="idfTareas" ColumnName="idfTareas" />
+                <ScalarProperty Name="idfUsuarios" ColumnName="idfUsuarios" />
+                <ScalarProperty Name="idfPrioridades" ColumnName="idfPrioridades" />
+                <ScalarProperty Name="idfTiposMantenimientos" ColumnName="idfTiposMantenimientos" />
+                <ScalarProperty Name="recordarS_N" ColumnName="recordarS_N" />
+                <ScalarProperty Name="fechaRecordatorio" ColumnName="fechaRecordatorio" />
+                <ScalarProperty Name="numeroReporte" ColumnName="numeroReporte" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Refacciones">
+            <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Refacciones">
+              <MappingFragment StoreEntitySet="Refacciones">
+                <ScalarProperty Name="idRefacciones" ColumnName="idRefacciones" />
+                <ScalarProperty Name="idfRevisiones" ColumnName="idfRevisiones" />
+                <ScalarProperty Name="idfUnidades" ColumnName="idfUnidades" />
+                <ScalarProperty Name="nombreRefaccion" ColumnName="nombreRefaccion" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="observaciones" ColumnName="observaciones" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="numeroReporte" ColumnName="numeroReporte" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Revisiones">
+            <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Revisiones">
+              <MappingFragment StoreEntitySet="Revisiones">
+                <ScalarProperty Name="idRevisiones" ColumnName="idRevisiones" />
+                <ScalarProperty Name="idfTiposMantenimientos" ColumnName="idfTiposMantenimientos" />
+                <ScalarProperty Name="idfEquipos" ColumnName="idfEquipos" />
+                <ScalarProperty Name="idfUsuarios" ColumnName="idfUsuarios" />
+                <ScalarProperty Name="idfEmpresas" ColumnName="idfEmpresas" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="idRoles" ColumnName="idRoles" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tareas">
+            <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Tareas">
+              <MappingFragment StoreEntitySet="Tareas">
+                <ScalarProperty Name="idTareas" ColumnName="idTareas" />
+                <ScalarProperty Name="idTiposMantenimientos" ColumnName="idTiposMantenimientos" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TiposMantenimientos">
+            <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.TiposMantenimientos">
+              <MappingFragment StoreEntitySet="TiposMantenimientos">
+                <ScalarProperty Name="idTiposMantenimientos" ColumnName="idTiposMantenimientos" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TiposMaquinarias">
+            <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.TiposMaquinarias">
+              <MappingFragment StoreEntitySet="TiposMaquinarias">
+                <ScalarProperty Name="idTiposMaquinarias" ColumnName="idTiposMaquinarias" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ubicaciones">
+            <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Ubicaciones">
+              <MappingFragment StoreEntitySet="Ubicaciones">
+                <ScalarProperty Name="idUbicaciones" ColumnName="idUbicaciones" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Unidades">
+            <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Unidades">
+              <MappingFragment StoreEntitySet="Unidades">
+                <ScalarProperty Name="idUnidades" ColumnName="idUnidades" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="idUsuarios" ColumnName="idUsuarios" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellidoPaterno" ColumnName="apellidoPaterno" />
+                <ScalarProperty Name="apellidoMaterno" ColumnName="apellidoMaterno" />
+                <ScalarProperty Name="contraseña" ColumnName="contraseña" />
+                <ScalarProperty Name="idfRoles" ColumnName="idfRoles" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
