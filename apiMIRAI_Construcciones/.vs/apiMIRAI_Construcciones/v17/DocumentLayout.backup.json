@@ -1,12 +1,71 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\DELL\\source\\repos\\apiMIRAI_Construcciones\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|c:\\users\\dell\\documents\\estadias-6to-github-21_05_2025-15_08_2025\\apimirai_construcciones\\apimirai_construcciones\\controllers\\maquinariascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|solutionrelative:apimirai_construcciones\\controllers\\maquinariascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|c:\\users\\dell\\documents\\estadias-6to-github-21_05_2025-15_08_2025\\apimirai_construcciones\\apimirai_construcciones\\global.asax.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|solutionrelative:apimirai_construcciones\\global.asax.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|c:\\users\\dell\\documents\\estadias-6to-github-21_05_2025-15_08_2025\\apimirai_construcciones\\apimirai_construcciones\\mapping\\webprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|solutionrelative:apimirai_construcciones\\mapping\\webprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 20,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Global.asax.cs",
+              "DocumentMoniker": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Global.asax.cs",
+              "RelativeDocumentMoniker": "apiMIRAI_Construcciones\\Global.asax.cs",
+              "ToolTip": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Global.asax.cs",
+              "RelativeToolTip": "apiMIRAI_Construcciones\\Global.asax.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAIwBgAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-04T23:43:33.147Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "WebProfile.cs",
+              "DocumentMoniker": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Mapping\\WebProfile.cs",
+              "RelativeDocumentMoniker": "apiMIRAI_Construcciones\\Mapping\\WebProfile.cs",
+              "ToolTip": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Mapping\\WebProfile.cs",
+              "RelativeToolTip": "apiMIRAI_Construcciones\\Mapping\\WebProfile.cs",
+              "ViewState": "AgIAAGsAAAAAAAAAAAAAAH0AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-04T22:17:19.885Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MaquinariasController.cs",
+              "DocumentMoniker": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\MaquinariasController.cs",
+              "RelativeDocumentMoniker": "apiMIRAI_Construcciones\\Controllers\\MaquinariasController.cs",
+              "ToolTip": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\MaquinariasController.cs",
+              "RelativeToolTip": "apiMIRAI_Construcciones\\Controllers\\MaquinariasController.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAwwFkAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-04T22:21:05.017Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

@@ -12,5 +12,18 @@
   </EntityType>
   <EntityContainer Name="QrDBEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Maquinarias" EntityType="Self.Maquinarias" />
+    <EntitySet Name="Usuario" EntityType="QrDBModel.Usuario" />
   </EntityContainer>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombres" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Apellidos" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Clave" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ProviderKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ProviderName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
 </Schema>

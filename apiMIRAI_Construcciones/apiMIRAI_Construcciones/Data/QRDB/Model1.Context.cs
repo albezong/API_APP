@@ -26,5 +26,6 @@ namespace apiMIRAI_Construcciones.Data.QRDB
         }
     
         public virtual DbSet<Maquinarias> Maquinarias { get; set; }
+        public virtual DbSet<Usuario> Usuario { get; set; }
     }
 }

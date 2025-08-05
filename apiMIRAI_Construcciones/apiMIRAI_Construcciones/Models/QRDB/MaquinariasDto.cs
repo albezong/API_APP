@@ -5,7 +5,7 @@ using System.Web;
 
 namespace apiMIRAI_Construcciones.Models.QRDB
 {
-	public class Maquinarias
+	public class MaquinariasDto
     {
         public int id { get; set; }
         public string nombre { get; set; }

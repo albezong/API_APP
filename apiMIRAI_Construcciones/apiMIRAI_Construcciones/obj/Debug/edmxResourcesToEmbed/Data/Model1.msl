@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PruebaAlmacenTAEPIModelStoreContainer" CdmEntityContainer="AlmacenTAEPIEntities">
+    <EntitySetMapping Name="CategoriasPreventivas">
+      <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.CategoriasPreventivas">
+        <MappingFragment StoreEntitySet="CategoriasPreventivas">
+          <ScalarProperty Name="idCategoriasPreventivas" ColumnName="idCategoriasPreventivas" />
+          <ScalarProperty Name="nombreCategorias" ColumnName="nombreCategorias" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DetallesPreventivos">
+      <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.DetallesPreventivos">
+        <MappingFragment StoreEntitySet="DetallesPreventivos">
+          <ScalarProperty Name="idDetallesPreventivos" ColumnName="idDetallesPreventivos" />
+          <ScalarProperty Name="idfRevisiones" ColumnName="idfRevisiones" />
+          <ScalarProperty Name="idfCategoriasPreventivas" ColumnName="idfCategoriasPreventivas" />
+          <ScalarProperty Name="nombreParte" ColumnName="nombreParte" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+          <ScalarProperty Name="comentarios" ColumnName="comentarios" />
+          <ScalarProperty Name="observaciones" ColumnName="observaciones" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="numeroReporte" ColumnName="numeroReporte" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Empresas">
+      <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Empresas">
+        <MappingFragment StoreEntitySet="Empresas">
+          <ScalarProperty Name="idEmpresas" ColumnName="idEmpresas" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Equipos">
+      <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Equipos">
+        <MappingFragment StoreEntitySet="Equipos">
+          <ScalarProperty Name="idEquipos" ColumnName="idEquipos" />
+          <ScalarProperty Name="codigoArticulo" ColumnName="codigoArticulo" />
+          <ScalarProperty Name="nombreArticulo" ColumnName="nombreArticulo" />
+          <ScalarProperty Name="nombreComercial" ColumnName="nombreComercial" />
+          <ScalarProperty Name="numIdentificador" ColumnName="numIdentificador" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="marca" ColumnName="marca" />
+          <ScalarProperty Name="modelo" ColumnName="modelo" />
+          <ScalarProperty Name="fechadeRegistro" ColumnName="fechadeRegistro" />
+          <ScalarProperty Name="idfUbicaciones" ColumnName="idfUbicaciones" />
+          <ScalarProperty Name="idfUnidades" ColumnName="idfUnidades" />
+          <ScalarProperty Name="idfEstatus" ColumnName="idfEstatus" />
+          <ScalarProperty Name="idfTiposMaquinarias" ColumnName="idfTiposMaquinarias" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Estatus">
+      <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Estatus">
+        <MappingFragment StoreEntitySet="Estatus">
+          <ScalarProperty Name="idEstatus" ColumnName="idEstatus" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Lugares">
+      <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Lugares">
+        <MappingFragment StoreEntitySet="Lugares">
+          <ScalarProperty Name="idLugares" ColumnName="idLugares" />
+          <ScalarProperty Name="nombreLugar" ColumnName="nombreLugar" />
+          <ScalarProperty Name="idfEquipos" ColumnName="idfEquipos" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Prioridades">
+      <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Prioridades">
+        <MappingFragment StoreEntitySet="Prioridades">
+          <ScalarProperty Name="idPrioridades" ColumnName="idPrioridades" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QrEquipos">
+      <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.QrEquipos">
+        <MappingFragment StoreEntitySet="QrEquipos">
+          <ScalarProperty Name="idQrEquipos" ColumnName="idQrEquipos" />
+          <ScalarProperty Name="claveQR" ColumnName="claveQR" />
+          <ScalarProperty Name="idEquipos" ColumnName="idEquipos" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Recordatorios">
+      <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Recordatorios">
+        <MappingFragment StoreEntitySet="Recordatorios">
+          <ScalarProperty Name="idRecordatorios" ColumnName="idRecordatorios" />
+          <ScalarProperty Name="idfEquipos" ColumnName="idfEquipos" />
+          <ScalarProperty Name="idfTareas" ColumnName="idfTareas" />
+          <ScalarProperty Name="idfUsuarios" ColumnName="idfUsuarios" />
+          <ScalarProperty Name="idfPrioridades" ColumnName="idfPrioridades" />
+          <ScalarProperty Name="idfTiposMantenimientos" ColumnName="idfTiposMantenimientos" />
+          <ScalarProperty Name="recordarS_N" ColumnName="recordarS_N" />
+          <ScalarProperty Name="fechaRecordatorio" ColumnName="fechaRecordatorio" />
+          <ScalarProperty Name="numeroReporte" ColumnName="numeroReporte" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Refacciones">
+      <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Refacciones">
+        <MappingFragment StoreEntitySet="Refacciones">
+          <ScalarProperty Name="idRefacciones" ColumnName="idRefacciones" />
+          <ScalarProperty Name="idfRevisiones" ColumnName="idfRevisiones" />
+          <ScalarProperty Name="idfUnidades" ColumnName="idfUnidades" />
+          <ScalarProperty Name="nombreRefaccion" ColumnName="nombreRefaccion" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="observaciones" ColumnName="observaciones" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="numeroReporte" ColumnName="numeroReporte" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Revisiones">
+      <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Revisiones">
+        <MappingFragment StoreEntitySet="Revisiones">
+          <ScalarProperty Name="idRevisiones" ColumnName="idRevisiones" />
+          <ScalarProperty Name="idfTiposMantenimientos" ColumnName="idfTiposMantenimientos" />
+          <ScalarProperty Name="idfEquipos" ColumnName="idfEquipos" />
+          <ScalarProperty Name="idfUsuarios" ColumnName="idfUsuarios" />
+          <ScalarProperty Name="idfEmpresas" ColumnName="idfEmpresas" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Roles">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="idRoles" ColumnName="idRoles" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tareas">
+      <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Tareas">
+        <MappingFragment StoreEntitySet="Tareas">
+          <ScalarProperty Name="idTareas" ColumnName="idTareas" />
+          <ScalarProperty Name="idTiposMantenimientos" ColumnName="idTiposMantenimientos" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TiposMantenimientos">
+      <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.TiposMantenimientos">
+        <MappingFragment StoreEntitySet="TiposMantenimientos">
+          <ScalarProperty Name="idTiposMantenimientos" ColumnName="idTiposMantenimientos" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TiposMaquinarias">
+      <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.TiposMaquinarias">
+        <MappingFragment StoreEntitySet="TiposMaquinarias">
+          <ScalarProperty Name="idTiposMaquinarias" ColumnName="idTiposMaquinarias" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ubicaciones">
+      <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Ubicaciones">
+        <MappingFragment StoreEntitySet="Ubicaciones">
+          <ScalarProperty Name="idUbicaciones" ColumnName="idUbicaciones" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Unidades">
+      <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Unidades">
+        <MappingFragment StoreEntitySet="Unidades">
+          <ScalarProperty Name="idUnidades" ColumnName="idUnidades" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuarios">
+      <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Usuarios">
+        <MappingFragment StoreEntitySet="Usuarios">
+          <ScalarProperty Name="idUsuarios" ColumnName="idUsuarios" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="apellidoPaterno" ColumnName="apellidoPaterno" />
+          <ScalarProperty Name="apellidoMaterno" ColumnName="apellidoMaterno" />
+          <ScalarProperty Name="contraseña" ColumnName="contraseña" />
+          <ScalarProperty Name="idfRoles" ColumnName="idfRoles" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

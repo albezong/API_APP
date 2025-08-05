@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -13,6 +15,12 @@ namespace apiMIRAI_Construcciones
 
             // Rutas de Web API
             config.MapHttpAttributeRoutes();
+
+            // Ignorar referencias circulares
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+
+            // Opcional: Usar nombres de propiedad en camelCase
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

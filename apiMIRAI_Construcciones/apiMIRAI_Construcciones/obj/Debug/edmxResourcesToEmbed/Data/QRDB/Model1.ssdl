@@ -4,13 +4,26 @@
     <Key>
       <PropertyRef Name="id" />
     </Key>
-    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="nombre" Type="nvarchar" MaxLength="100" />
     <Property Name="descripcion" Type="text" />
     <Property Name="qr_uuid" Type="uniqueidentifier" />
     <Property Name="url_imagen" Type="nvarchar(max)" />
   </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombres" Type="varchar(max)" />
+    <Property Name="Apellidos" Type="varchar(max)" />
+    <Property Name="Email" Type="varchar(max)" />
+    <Property Name="Clave" Type="varchar(max)" />
+    <Property Name="ProviderKey" Type="varchar(max)" />
+    <Property Name="ProviderName" Type="varchar(max)" />
+  </EntityType>
   <EntityContainer Name="QrDBModelStoreContainer">
     <EntitySet Name="Maquinarias" EntityType="Self.Maquinarias" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
   </EntityContainer>
 </Schema>
