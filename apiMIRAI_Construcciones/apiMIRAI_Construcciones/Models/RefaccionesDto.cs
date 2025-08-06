@@ -1,6 +1,8 @@
 ﻿using apiMIRAI_Construcciones.Data;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -8,6 +10,8 @@ namespace apiMIRAI_Construcciones.Models
 {
 	public class RefaccionesDto
 	{
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int idRefacciones { get; set; }
         public Nullable<int> idfRevisiones { get; set; }
         public Nullable<int> idfUnidades { get; set; }

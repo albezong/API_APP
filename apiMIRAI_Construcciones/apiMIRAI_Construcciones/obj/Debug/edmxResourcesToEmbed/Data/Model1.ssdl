@@ -127,7 +127,7 @@
     <Key>
       <PropertyRef Name="idTareas" />
     </Key>
-    <Property Name="idTareas" Type="int" Nullable="false" />
+    <Property Name="idTareas" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="idTiposMantenimientos" Type="int" />
     <Property Name="descripcion" Type="varchar(max)" />
   </EntityType>

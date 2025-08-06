@@ -170,9 +170,25 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\CategoriasPreventivasController.cs" />
+    <Compile Include="Controllers\DetallesPreventivosController.cs" />
+    <Compile Include="Controllers\EmpresasController.cs" />
+    <Compile Include="Controllers\EquiposController.cs" />
+    <Compile Include="Controllers\EstatusController.cs" />
+    <Compile Include="Controllers\LugaresController.cs" />
     <Compile Include="Controllers\MaquinariasController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\PrioridadesController.cs" />
+    <Compile Include="Controllers\QrEquiposController.cs" />
+    <Compile Include="Controllers\RecordatoriosController.cs" />
+    <Compile Include="Controllers\RefaccionesController.cs" />
+    <Compile Include="Controllers\RevisionesController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\TareasController.cs" />
+    <Compile Include="Controllers\TiposMantenimientosController.cs" />
+    <Compile Include="Controllers\TiposMaquinariasController.cs" />
+    <Compile Include="Controllers\UbicacionesController.cs" />
+    <Compile Include="Controllers\UnidadesController.cs" />
+    <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Data\CategoriasPreventivas.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
