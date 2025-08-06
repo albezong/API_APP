@@ -22,7 +22,7 @@ namespace apiMIRAI_Construcciones.Data
         public string comentarios { get; set; }
         public string observaciones { get; set; }
         public Nullable<System.DateTime> fecha { get; set; }
-        public Nullable<int> numeroReporte { get; set; }
+        public int numeroReporte { get; set; }
     
         public virtual CategoriasPreventivas CategoriasPreventivas { get; set; }
         public virtual Revisiones Revisiones { get; set; }

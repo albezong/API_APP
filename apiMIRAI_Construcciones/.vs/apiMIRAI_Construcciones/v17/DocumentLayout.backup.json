@@ -3,24 +3,36 @@
   "WorkspaceRootPath": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|c:\\users\\dell\\documents\\estadias-6to-github-21_05_2025-15_08_2025\\apimirai_construcciones\\apimirai_construcciones\\controllers\\tareascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|solutionrelative:apimirai_construcciones\\controllers\\tareascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|c:\\users\\dell\\documents\\estadias-6to-github-21_05_2025-15_08_2025\\apimirai_construcciones\\apimirai_construcciones\\data\\model1.edmx||{C99AEA30-8E36-4515-B76F-496F5A48A6AA}|",
+      "RelativeMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|solutionrelative:apimirai_construcciones\\data\\model1.edmx||{C99AEA30-8E36-4515-B76F-496F5A48A6AA}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|c:\\users\\dell\\documents\\estadias-6to-github-21_05_2025-15_08_2025\\apimirai_construcciones\\apimirai_construcciones\\controllers\\maquinariascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|solutionrelative:apimirai_construcciones\\controllers\\maquinariascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apimirai_construcciones\\data\\model1.edmx||{C99AEA30-8E36-4515-B76F-496F5A48A6AA}|",
-      "RelativeMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|solutionrelative:apimirai_construcciones\\data\\model1.edmx||{C99AEA30-8E36-4515-B76F-496F5A48A6AA}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apimirai_construcciones\\controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|solutionrelative:apimirai_construcciones\\controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|c:\\users\\dell\\documents\\estadias-6to-github-21_05_2025-15_08_2025\\apimirai_construcciones\\apimirai_construcciones\\data\\refacciones.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|solutionrelative:apimirai_construcciones\\data\\refacciones.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apimirai_construcciones\\controllers\\revisionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|solutionrelative:apimirai_construcciones\\controllers\\revisionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apimirai_construcciones\\controllers\\lugarescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|solutionrelative:apimirai_construcciones\\controllers\\lugarescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|c:\\users\\dell\\documents\\estadias-6to-github-21_05_2025-15_08_2025\\apimirai_construcciones\\apimirai_construcciones\\controllers\\tareascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|solutionrelative:apimirai_construcciones\\controllers\\tareascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|c:\\users\\dell\\documents\\estadias-6to-github-21_05_2025-15_08_2025\\apimirai_construcciones\\apimirai_construcciones\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|solutionrelative:apimirai_construcciones\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apimirai_construcciones\\controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|solutionrelative:apimirai_construcciones\\controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apimirai_construcciones\\controllers\\refaccionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -37,10 +49,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apimirai_construcciones\\controllers\\prioridadescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|solutionrelative:apimirai_construcciones\\controllers\\prioridadescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apimirai_construcciones\\controllers\\lugarescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|solutionrelative:apimirai_construcciones\\controllers\\lugarescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}|apiMIRAI_Construcciones\\apiMIRAI_Construcciones.csproj|C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apimirai_construcciones\\controllers\\estatuscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -69,7 +77,7 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 14,
+          "DockedWidth": 17,
           "SelectedChildIndex": 0,
           "Children": [
             {
@@ -80,44 +88,97 @@
               "RelativeDocumentMoniker": "apiMIRAI_Construcciones\\Controllers\\MaquinariasController.cs",
               "ToolTip": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\MaquinariasController.cs",
               "RelativeToolTip": "apiMIRAI_Construcciones\\Controllers\\MaquinariasController.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAqwB0AAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAqwBsAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-05T17:37:26.855Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Web.config",
+              "DocumentMoniker": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Web.config",
+              "RelativeDocumentMoniker": "apiMIRAI_Construcciones\\Web.config",
+              "ToolTip": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Web.config",
+              "RelativeToolTip": "apiMIRAI_Construcciones\\Web.config",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAAAFEAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2025-08-06T15:44:04.224Z",
               "EditorCaption": ""
             }
           ]
         },
         {
-          "DockedWidth": 26,
+          "DockedWidth": 23,
           "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "TareasController.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\TareasController.cs",
-              "RelativeDocumentMoniker": "apiMIRAI_Construcciones\\Controllers\\TareasController.cs",
-              "ToolTip": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\TareasController.cs",
-              "RelativeToolTip": "apiMIRAI_Construcciones\\Controllers\\TareasController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-05T17:32:19.089Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "Model1.edmx [Diagram1]",
               "DocumentMoniker": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Data\\Model1.edmx",
               "RelativeDocumentMoniker": "apiMIRAI_Construcciones\\Data\\Model1.edmx",
               "ToolTip": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Data\\Model1.edmx [Diagram1]",
               "RelativeToolTip": "apiMIRAI_Construcciones\\Data\\Model1.edmx [Diagram1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001116|",
-              "WhenOpened": "2025-08-05T22:29:45.819Z"
+              "WhenOpened": "2025-08-06T23:47:25.558Z",
+              "EditorCaption": " [Diagram1]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Refacciones.cs",
+              "DocumentMoniker": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Data\\Refacciones.cs",
+              "RelativeDocumentMoniker": "apiMIRAI_Construcciones\\Data\\Refacciones.cs",
+              "ToolTip": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Data\\Refacciones.cs",
+              "RelativeToolTip": "apiMIRAI_Construcciones\\Data\\Refacciones.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAABUAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T23:46:02.195Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "RevisionesController.cs",
+              "DocumentMoniker": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\RevisionesController.cs",
+              "RelativeDocumentMoniker": "apiMIRAI_Construcciones\\Controllers\\RevisionesController.cs",
+              "ToolTip": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\RevisionesController.cs",
+              "RelativeToolTip": "apiMIRAI_Construcciones\\Controllers\\RevisionesController.cs",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAIwFkAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-05T17:32:16.892Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "LugaresController.cs",
+              "DocumentMoniker": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\LugaresController.cs",
+              "RelativeDocumentMoniker": "apiMIRAI_Construcciones\\Controllers\\LugaresController.cs",
+              "ToolTip": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\LugaresController.cs",
+              "RelativeToolTip": "apiMIRAI_Construcciones\\Controllers\\LugaresController.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAIwDcAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-05T17:32:10.498Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "TareasController.cs",
+              "DocumentMoniker": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\TareasController.cs",
+              "RelativeDocumentMoniker": "apiMIRAI_Construcciones\\Controllers\\TareasController.cs",
+              "ToolTip": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\TareasController.cs",
+              "RelativeToolTip": "apiMIRAI_Construcciones\\Controllers\\TareasController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-05T17:32:19.089Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "RolesController.cs",
               "DocumentMoniker": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\RolesController.cs",
               "RelativeDocumentMoniker": "apiMIRAI_Construcciones\\Controllers\\RolesController.cs",
@@ -129,19 +190,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "RevisionesController.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\RevisionesController.cs",
-              "RelativeDocumentMoniker": "apiMIRAI_Construcciones\\Controllers\\RevisionesController.cs",
-              "ToolTip": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\RevisionesController.cs",
-              "RelativeToolTip": "apiMIRAI_Construcciones\\Controllers\\RevisionesController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-05T17:32:16.892Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 8,
               "Title": "RefaccionesController.cs",
               "DocumentMoniker": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\RefaccionesController.cs",
               "RelativeDocumentMoniker": "apiMIRAI_Construcciones\\Controllers\\RefaccionesController.cs",
@@ -153,7 +202,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "RecordatoriosController.cs",
               "DocumentMoniker": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\RecordatoriosController.cs",
               "RelativeDocumentMoniker": "apiMIRAI_Construcciones\\Controllers\\RecordatoriosController.cs",
@@ -165,7 +214,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "QrEquiposController.cs",
               "DocumentMoniker": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\QrEquiposController.cs",
               "RelativeDocumentMoniker": "apiMIRAI_Construcciones\\Controllers\\QrEquiposController.cs",
@@ -177,7 +226,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "PrioridadesController.cs",
               "DocumentMoniker": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\PrioridadesController.cs",
               "RelativeDocumentMoniker": "apiMIRAI_Construcciones\\Controllers\\PrioridadesController.cs",
@@ -189,19 +238,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "LugaresController.cs",
-              "DocumentMoniker": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\LugaresController.cs",
-              "RelativeDocumentMoniker": "apiMIRAI_Construcciones\\Controllers\\LugaresController.cs",
-              "ToolTip": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\LugaresController.cs",
-              "RelativeToolTip": "apiMIRAI_Construcciones\\Controllers\\LugaresController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-05T17:32:10.498Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "EstatusController.cs",
               "DocumentMoniker": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\EstatusController.cs",
               "RelativeDocumentMoniker": "apiMIRAI_Construcciones\\Controllers\\EstatusController.cs",
@@ -213,7 +250,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "EquiposController.cs",
               "DocumentMoniker": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\EquiposController.cs",
               "RelativeDocumentMoniker": "apiMIRAI_Construcciones\\Controllers\\EquiposController.cs",
@@ -225,7 +262,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "EmpresasController.cs",
               "DocumentMoniker": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\EmpresasController.cs",
               "RelativeDocumentMoniker": "apiMIRAI_Construcciones\\Controllers\\EmpresasController.cs",
@@ -237,7 +274,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "DetallesPreventivosController.cs",
               "DocumentMoniker": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\DetallesPreventivosController.cs",
               "RelativeDocumentMoniker": "apiMIRAI_Construcciones\\Controllers\\DetallesPreventivosController.cs",
@@ -249,7 +286,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 16,
               "Title": "CategoriasPreventivasController.cs",
               "DocumentMoniker": "C:\\Users\\DELL\\Documents\\Estadias-6to-GitHub-21_05_2025-15_08_2025\\apiMIRAI_Construcciones\\apiMIRAI_Construcciones\\Controllers\\CategoriasPreventivasController.cs",
               "RelativeDocumentMoniker": "apiMIRAI_Construcciones\\Controllers\\CategoriasPreventivasController.cs",

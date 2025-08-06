@@ -24,7 +24,7 @@
           <Property Name="comentarios" Type="varchar(max)" />
           <Property Name="observaciones" Type="varchar(max)" />
           <Property Name="fecha" Type="date" />
-          <Property Name="numeroReporte" Type="int" />
+          <Property Name="numeroReporte" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Empresas">
           <Key>
@@ -100,15 +100,15 @@
           <Key>
             <PropertyRef Name="idRefacciones" />
           </Key>
-          <Property Name="idRefacciones" Type="int" Nullable="false" />
+          <Property Name="idRefacciones" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idfRevisiones" Type="int" />
           <Property Name="idfUnidades" Type="int" />
           <Property Name="nombreRefaccion" Type="varchar" MaxLength="100" />
-          <Property Name="descripcion" Type="varchar(max)" />
+          <Property Name="idfDescripcionPrioridades" Type="int" />
           <Property Name="cantidad" Type="int" />
           <Property Name="observaciones" Type="varchar(max)" />
           <Property Name="fecha" Type="date" />
-          <Property Name="numeroReporte" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="numeroReporte" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="Revisiones">
           <Key>
@@ -555,7 +555,7 @@
           <Property Name="comentarios" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="observaciones" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="fecha" Type="DateTime" Precision="0" />
-          <Property Name="numeroReporte" Type="Int32" />
+          <Property Name="numeroReporte" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CategoriasPreventivas" Relationship="Self.FK_DetallesPreventivos_CategoriasPreventivas" FromRole="DetallesPreventivos" ToRole="CategoriasPreventivas" />
           <NavigationProperty Name="Revisiones" Relationship="Self.FK_DetallesPreventivos_Revisiones" FromRole="DetallesPreventivos" ToRole="Revisiones" />
         </EntityType>
@@ -655,13 +655,13 @@
           <Property Name="idfRevisiones" Type="Int32" />
           <Property Name="idfUnidades" Type="Int32" />
           <Property Name="nombreRefaccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="cantidad" Type="Int32" />
           <Property Name="observaciones" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="fecha" Type="DateTime" Precision="0" />
           <Property Name="numeroReporte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Revisiones" Relationship="Self.FK_Refacciones_Revisiones" FromRole="Refacciones" ToRole="Revisiones" />
           <NavigationProperty Name="Unidades" Relationship="Self.FK_Refacciones_Unidades" FromRole="Refacciones" ToRole="Unidades" />
+          <Property Name="idfDescripcionPrioridades" Type="Int32" />
         </EntityType>
         <EntityType Name="Revisiones">
           <Key>
@@ -1212,11 +1212,11 @@
           <EntitySetMapping Name="Refacciones">
             <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Refacciones">
               <MappingFragment StoreEntitySet="Refacciones">
+                <ScalarProperty Name="idfDescripcionPrioridades" ColumnName="idfDescripcionPrioridades" />
                 <ScalarProperty Name="idRefacciones" ColumnName="idRefacciones" />
                 <ScalarProperty Name="idfRevisiones" ColumnName="idfRevisiones" />
                 <ScalarProperty Name="idfUnidades" ColumnName="idfUnidades" />
                 <ScalarProperty Name="nombreRefaccion" ColumnName="nombreRefaccion" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="cantidad" ColumnName="cantidad" />
                 <ScalarProperty Name="observaciones" ColumnName="observaciones" />
                 <ScalarProperty Name="fecha" ColumnName="fecha" />

@@ -20,7 +20,7 @@
     <Property Name="comentarios" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="observaciones" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="fecha" Type="DateTime" Precision="0" />
-    <Property Name="numeroReporte" Type="Int32" />
+    <Property Name="numeroReporte" Type="Int32" Nullable="false" />
     <NavigationProperty Name="CategoriasPreventivas" Relationship="Self.FK_DetallesPreventivos_CategoriasPreventivas" FromRole="DetallesPreventivos" ToRole="CategoriasPreventivas" />
     <NavigationProperty Name="Revisiones" Relationship="Self.FK_DetallesPreventivos_Revisiones" FromRole="DetallesPreventivos" ToRole="Revisiones" />
   </EntityType>
@@ -120,13 +120,13 @@
     <Property Name="idfRevisiones" Type="Int32" />
     <Property Name="idfUnidades" Type="Int32" />
     <Property Name="nombreRefaccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="cantidad" Type="Int32" />
     <Property Name="observaciones" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="fecha" Type="DateTime" Precision="0" />
     <Property Name="numeroReporte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <NavigationProperty Name="Revisiones" Relationship="Self.FK_Refacciones_Revisiones" FromRole="Refacciones" ToRole="Revisiones" />
     <NavigationProperty Name="Unidades" Relationship="Self.FK_Refacciones_Unidades" FromRole="Refacciones" ToRole="Unidades" />
+    <Property Name="idfDescripcionPrioridades" Type="Int32" />
   </EntityType>
   <EntityType Name="Revisiones">
     <Key>

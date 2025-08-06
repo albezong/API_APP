@@ -19,7 +19,7 @@
     <Property Name="comentarios" Type="varchar(max)" />
     <Property Name="observaciones" Type="varchar(max)" />
     <Property Name="fecha" Type="date" />
-    <Property Name="numeroReporte" Type="int" />
+    <Property Name="numeroReporte" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Empresas">
     <Key>
@@ -95,15 +95,15 @@
     <Key>
       <PropertyRef Name="idRefacciones" />
     </Key>
-    <Property Name="idRefacciones" Type="int" Nullable="false" />
+    <Property Name="idRefacciones" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="idfRevisiones" Type="int" />
     <Property Name="idfUnidades" Type="int" />
     <Property Name="nombreRefaccion" Type="varchar" MaxLength="100" />
-    <Property Name="descripcion" Type="varchar(max)" />
+    <Property Name="idfDescripcionPrioridades" Type="int" />
     <Property Name="cantidad" Type="int" />
     <Property Name="observaciones" Type="varchar(max)" />
     <Property Name="fecha" Type="date" />
-    <Property Name="numeroReporte" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="numeroReporte" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
   </EntityType>
   <EntityType Name="Revisiones">
     <Key>
