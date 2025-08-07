@@ -18,6 +18,7 @@ namespace apiMIRAI_Construcciones.Data
         public Prioridades()
         {
             this.Recordatorios = new HashSet<Recordatorios>();
+            this.DetallesPreventivos = new HashSet<DetallesPreventivos>();
         }
     
         public int idPrioridades { get; set; }
@@ -25,5 +26,7 @@ namespace apiMIRAI_Construcciones.Data
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Recordatorios> Recordatorios { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DetallesPreventivos> DetallesPreventivos { get; set; }
     }
 }

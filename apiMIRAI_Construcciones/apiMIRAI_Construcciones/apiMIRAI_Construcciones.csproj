@@ -305,6 +305,12 @@
     <Compile Include="Models\UnidadesDto.cs" />
     <Compile Include="Models\UsuariosDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\1MaquinariasYVehiculos.cs" />
+    <Compile Include="Services\2HistorialServicios.cs" />
+    <Compile Include="Services\3CRUD_MantenimientoPreventivo.cs" />
+    <Compile Include="Services\4CRUD_MantenimientoCorrectivo.cs" />
+    <Compile Include="Services\5HistorialProgramarMantenimientos.cs" />
+    <Compile Include="Services\6CRUDProgramarMantenimientos.cs" />
     <Compile Include="Wrapper\HttpResponseOnError.cs" />
     <Compile Include="Wrapper\ResponseWrapper.cs" />
   </ItemGroup>
@@ -364,7 +370,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Infraestructura\" />
-    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="Data\QRDB\Model1.edmx">

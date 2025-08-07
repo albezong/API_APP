@@ -20,7 +20,7 @@
           <Property Name="idfRevisiones" Type="int" />
           <Property Name="idfCategoriasPreventivas" Type="int" />
           <Property Name="nombreParte" Type="varchar" MaxLength="100" />
-          <Property Name="estado" Type="varchar" MaxLength="50" />
+          <Property Name="idfEstadoPrioridades" Type="int" />
           <Property Name="comentarios" Type="varchar(max)" />
           <Property Name="observaciones" Type="varchar(max)" />
           <Property Name="fecha" Type="date" />
@@ -184,6 +184,18 @@
             </Principal>
             <Dependent Role="DetallesPreventivos">
               <PropertyRef Name="idfCategoriasPreventivas" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetallesPreventivos_Prioridades">
+          <End Role="Prioridades" Type="Self.Prioridades" Multiplicity="0..1" />
+          <End Role="DetallesPreventivos" Type="Self.DetallesPreventivos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Prioridades">
+              <PropertyRef Name="idPrioridades" />
+            </Principal>
+            <Dependent Role="DetallesPreventivos">
+              <PropertyRef Name="idfEstadoPrioridades" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -450,6 +462,10 @@
             <End Role="CategoriasPreventivas" EntitySet="CategoriasPreventivas" />
             <End Role="DetallesPreventivos" EntitySet="DetallesPreventivos" />
           </AssociationSet>
+          <AssociationSet Name="FK_DetallesPreventivos_Prioridades" Association="Self.FK_DetallesPreventivos_Prioridades">
+            <End Role="Prioridades" EntitySet="Prioridades" />
+            <End Role="DetallesPreventivos" EntitySet="DetallesPreventivos" />
+          </AssociationSet>
           <AssociationSet Name="FK_DetallesPreventivos_Revisiones" Association="Self.FK_DetallesPreventivos_Revisiones">
             <End Role="Revisiones" EntitySet="Revisiones" />
             <End Role="DetallesPreventivos" EntitySet="DetallesPreventivos" />
@@ -551,13 +567,14 @@
           <Property Name="idfRevisiones" Type="Int32" />
           <Property Name="idfCategoriasPreventivas" Type="Int32" />
           <Property Name="nombreParte" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="comentarios" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="observaciones" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="fecha" Type="DateTime" Precision="0" />
           <Property Name="numeroReporte" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CategoriasPreventivas" Relationship="Self.FK_DetallesPreventivos_CategoriasPreventivas" FromRole="DetallesPreventivos" ToRole="CategoriasPreventivas" />
           <NavigationProperty Name="Revisiones" Relationship="Self.FK_DetallesPreventivos_Revisiones" FromRole="DetallesPreventivos" ToRole="Revisiones" />
+          <Property Name="idfEstadoPrioridades" Type="Int32" />
+          <NavigationProperty Name="Prioridades" Relationship="PruebaAlmacenTAEPIModel.FK_DetallesPreventivos_Prioridades" FromRole="DetallesPreventivos" ToRole="Prioridades" />
         </EntityType>
         <EntityType Name="Empresas">
           <Key>
@@ -617,6 +634,7 @@
           <Property Name="idPrioridades" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Recordatorios" Relationship="Self.FK_Recordatorios_Prioridades" FromRole="Prioridades" ToRole="Recordatorios" />
+          <NavigationProperty Name="DetallesPreventivos" Relationship="PruebaAlmacenTAEPIModel.FK_DetallesPreventivos_Prioridades" FromRole="Prioridades" ToRole="DetallesPreventivos" />
         </EntityType>
         <EntityType Name="QrEquipos">
           <Key>
@@ -1102,7 +1120,23 @@
             <End Role="TiposMantenimientos" EntitySet="TiposMantenimientos" />
             <End Role="Tareas" EntitySet="Tareas" />
           </AssociationSet>
+          <AssociationSet Name="FK_DetallesPreventivos_Prioridades" Association="PruebaAlmacenTAEPIModel.FK_DetallesPreventivos_Prioridades">
+            <End Role="Prioridades" EntitySet="Prioridades" />
+            <End Role="DetallesPreventivos" EntitySet="DetallesPreventivos" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_DetallesPreventivos_Prioridades">
+          <End Type="PruebaAlmacenTAEPIModel.Prioridades" Role="Prioridades" Multiplicity="0..1" />
+          <End Type="PruebaAlmacenTAEPIModel.DetallesPreventivos" Role="DetallesPreventivos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Prioridades">
+              <PropertyRef Name="idPrioridades" />
+            </Principal>
+            <Dependent Role="DetallesPreventivos">
+              <PropertyRef Name="idfEstadoPrioridades" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1120,11 +1154,11 @@
           <EntitySetMapping Name="DetallesPreventivos">
             <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.DetallesPreventivos">
               <MappingFragment StoreEntitySet="DetallesPreventivos">
+                <ScalarProperty Name="idfEstadoPrioridades" ColumnName="idfEstadoPrioridades" />
                 <ScalarProperty Name="idDetallesPreventivos" ColumnName="idDetallesPreventivos" />
                 <ScalarProperty Name="idfRevisiones" ColumnName="idfRevisiones" />
                 <ScalarProperty Name="idfCategoriasPreventivas" ColumnName="idfCategoriasPreventivas" />
                 <ScalarProperty Name="nombreParte" ColumnName="nombreParte" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
                 <ScalarProperty Name="comentarios" ColumnName="comentarios" />
                 <ScalarProperty Name="observaciones" ColumnName="observaciones" />
                 <ScalarProperty Name="fecha" ColumnName="fecha" />

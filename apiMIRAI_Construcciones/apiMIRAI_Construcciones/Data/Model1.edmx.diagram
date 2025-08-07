@@ -44,6 +44,7 @@
         <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_Revisiones_Usuarios" ManuallyRouted="false" />
         <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_Usuarios_Roles" ManuallyRouted="false" />
         <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_Tareas_TiposMantenimientos" ManuallyRouted="false" />
+        <AssociationConnector Association="PruebaAlmacenTAEPIModel.FK_DetallesPreventivos_Prioridades" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

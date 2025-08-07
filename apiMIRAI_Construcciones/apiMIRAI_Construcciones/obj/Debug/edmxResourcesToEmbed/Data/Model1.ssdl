@@ -15,7 +15,7 @@
     <Property Name="idfRevisiones" Type="int" />
     <Property Name="idfCategoriasPreventivas" Type="int" />
     <Property Name="nombreParte" Type="varchar" MaxLength="100" />
-    <Property Name="estado" Type="varchar" MaxLength="50" />
+    <Property Name="idfEstadoPrioridades" Type="int" />
     <Property Name="comentarios" Type="varchar(max)" />
     <Property Name="observaciones" Type="varchar(max)" />
     <Property Name="fecha" Type="date" />
@@ -179,6 +179,18 @@
       </Principal>
       <Dependent Role="DetallesPreventivos">
         <PropertyRef Name="idfCategoriasPreventivas" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetallesPreventivos_Prioridades">
+    <End Role="Prioridades" Type="Self.Prioridades" Multiplicity="0..1" />
+    <End Role="DetallesPreventivos" Type="Self.DetallesPreventivos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Prioridades">
+        <PropertyRef Name="idPrioridades" />
+      </Principal>
+      <Dependent Role="DetallesPreventivos">
+        <PropertyRef Name="idfEstadoPrioridades" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -443,6 +455,10 @@
     <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_DetallesPreventivos_CategoriasPreventivas" Association="Self.FK_DetallesPreventivos_CategoriasPreventivas">
       <End Role="CategoriasPreventivas" EntitySet="CategoriasPreventivas" />
+      <End Role="DetallesPreventivos" EntitySet="DetallesPreventivos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetallesPreventivos_Prioridades" Association="Self.FK_DetallesPreventivos_Prioridades">
+      <End Role="Prioridades" EntitySet="Prioridades" />
       <End Role="DetallesPreventivos" EntitySet="DetallesPreventivos" />
     </AssociationSet>
     <AssociationSet Name="FK_DetallesPreventivos_Revisiones" Association="Self.FK_DetallesPreventivos_Revisiones">
