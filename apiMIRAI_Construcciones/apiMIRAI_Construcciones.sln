@@ -5,8 +5,6 @@ VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "apiMIRAI_Construcciones", "apiMIRAI_Construcciones\apiMIRAI_Construcciones.csproj", "{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppQrLector.UnitWork", "AppQrLector.UnitWork\AppQrLector.UnitWork.csproj", "{3575207A-F919-4171-A57B-1883A72D9635}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3575207A-F919-4171-A57B-1883A72D9635}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3575207A-F919-4171-A57B-1883A72D9635}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3575207A-F919-4171-A57B-1883A72D9635}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3575207A-F919-4171-A57B-1883A72D9635}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
