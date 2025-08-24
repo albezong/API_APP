@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace apiMIRAI_Construcciones.Data
+namespace APIMIRAI_Construcciones.Data
 {
     using System;
     using System.Collections.Generic;
@@ -17,16 +17,19 @@ namespace apiMIRAI_Construcciones.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Prioridades()
         {
-            this.Recordatorios = new HashSet<Recordatorios>();
             this.DetallesPreventivos = new HashSet<DetallesPreventivos>();
+            this.Recordatorios = new HashSet<Recordatorios>();
+            this.Refacciones = new HashSet<Refacciones>();
         }
     
         public int idPrioridades { get; set; }
         public string nombre { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DetallesPreventivos> DetallesPreventivos { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Recordatorios> Recordatorios { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DetallesPreventivos> DetallesPreventivos { get; set; }
+        public virtual ICollection<Refacciones> Refacciones { get; set; }
     }
 }

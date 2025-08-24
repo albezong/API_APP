@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace apiMIRAI_Construcciones.Data
+namespace APIMIRAI_Construcciones.Data
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class AlmacenTAEPIEntities : DbContext
+    public partial class PruebaAlmacenTAEPIEntities1 : DbContext
     {
-        public AlmacenTAEPIEntities()
-            : base("name=AlmacenTAEPIEntities")
+        public PruebaAlmacenTAEPIEntities1()
+            : base("name=PruebaAlmacenTAEPIEntities1")
         {
         }
     

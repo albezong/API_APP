@@ -1,20 +1,19 @@
-﻿using apiMIRAI_Construcciones.Data;
-using apiMIRAI_Construcciones.Data.QRDB;
-using apiMIRAI_Construcciones.Infraestructura;
+﻿using APIMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Infraestructura;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web;
 
-namespace apiMIRAI_Construcciones.Services
+namespace APIMIRAI_Construcciones.Services
 {
 	public class EquiposRepository : IRepository<QrEquipos>
     {
-        private readonly AlmacenTAEPIEntities _tentities;
+        private readonly PruebaAlmacenTAEPIEntities1 _tentities;
         public EquiposRepository()
         {
-            _tentities = new AlmacenTAEPIEntities();
+            _tentities = new PruebaAlmacenTAEPIEntities1();
         }
 
         public void Add(QrEquipos entity)
@@ -34,13 +33,11 @@ namespace apiMIRAI_Construcciones.Services
 
         public QrEquipos GetById(int id)
         {
-            //throw new NotImplementedException();
             return _tentities.QrEquipos.Find(id);
         }
 
         public void Update(QrEquipos qrEquiposEntity)
         {
-            //throw new NotImplementedException();
             _tentities.QrEquipos.Add(qrEquiposEntity);
 
             try

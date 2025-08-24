@@ -7,7 +7,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Forms;
 
-namespace apiMIRAI_Construcciones.Helper.HCrearImagen
+namespace APIMIRAI_Construcciones.Helper.HCrearImagen
 {
     public class CrearImagen
     {
@@ -22,8 +22,7 @@ namespace apiMIRAI_Construcciones.Helper.HCrearImagen
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string query = "SELECT * FROM QrEquipos WHERE id = @id"; // Reemplaza 'tuTabla' y 'id'
-                    //SELECT* FROM QrEquipos WHERE idQrEquipos = 1;
+                    string query = "SELECT * FROM QrEquipos WHERE id = @id";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
@@ -39,9 +38,6 @@ namespace apiMIRAI_Construcciones.Helper.HCrearImagen
                         }
                         else
                         {
-                            // Manejar el caso donde no se encuentra la imagen
-                            //MessageBox.Silent("Imagen no encontrada.");
-                            //pictureBox.Image = null; // Limpiar el PictureBox si no hay imagen
                             var Xm = 0;
                         }
                     }
@@ -49,7 +45,6 @@ namespace apiMIRAI_Construcciones.Helper.HCrearImagen
             }
             catch (Exception ex)
             {
-                // Manejar errores de la base de datos o conversión
                 System.Windows.MessageBox.Show($"Error al cargar la imagen: {ex.Message}");
             }
         }

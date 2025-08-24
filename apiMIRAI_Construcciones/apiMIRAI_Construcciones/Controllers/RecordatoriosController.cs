@@ -8,31 +8,64 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using apiMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Models;
 
-namespace apiMIRAI_Construcciones.Controllers
+namespace APIMIRAI_Construcciones.Controllers
 {
     public class RecordatoriosController : ApiController
     {
-        private AlmacenTAEPIEntities db = new AlmacenTAEPIEntities();
+        private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/Recordatorios
-        public IQueryable<Recordatorios> GetRecordatorios()
+        public IHttpActionResult GetRecordatorios()
         {
-            return db.Recordatorios;
+            var empresas = db.Recordatorios
+                .Select(e => new RecordatoriosDto
+                {
+                    idRecordatorios = e.idRecordatorios,
+                    idfEquipos = e.idfEquipos,
+                    idfTareas = e.idfTareas,
+                    idfUsuarios = e.idfUsuarios,
+                    idfPrioridades = e.idfPrioridades,
+                    idfTiposMantenimientos = e.idfTiposMantenimientos,
+                    recordarS_N = e.recordarS_N,
+                    fechaRecordatorio = e.fechaRecordatorio,
+                    numeroReporte = e.numeroReporte,
+                    descripcion = e.descripcion,
+                })
+                .ToList();
+
+            return Ok(empresas);
         }
 
         // GET: api/Recordatorios/5
         [ResponseType(typeof(Recordatorios))]
         public IHttpActionResult GetRecordatorios(int id)
         {
-            Recordatorios recordatorios = db.Recordatorios.Find(id);
-            if (recordatorios == null)
+            var empresa = db.Recordatorios
+        .Where(e => e.idRecordatorios == id)
+        .Select(e => new RecordatoriosDto
+        {
+            idRecordatorios = e.idRecordatorios,
+            idfEquipos = e.idfEquipos,
+            idfTareas = e.idfTareas,
+            idfUsuarios = e.idfUsuarios,
+            idfPrioridades = e.idfPrioridades,
+            idfTiposMantenimientos = e.idfTiposMantenimientos,
+            recordarS_N = e.recordarS_N,
+            fechaRecordatorio = e.fechaRecordatorio,
+            numeroReporte = e.numeroReporte,
+            descripcion = e.descripcion,
+        })
+        .FirstOrDefault();
+
+            if (empresa == null)
             {
                 return NotFound();
             }
 
-            return Ok(recordatorios);
+            return Ok(empresa);
         }
 
         // PUT: api/Recordatorios/5

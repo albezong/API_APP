@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace apiMIRAI_Construcciones.Helper
+namespace APIMIRAI_Construcciones.Helper
 {
     public class StringConverter
     {

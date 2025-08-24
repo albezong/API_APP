@@ -1,22 +1,25 @@
-﻿using apiMIRAI_Construcciones.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
-namespace apiMIRAI_Construcciones.Models
+namespace APIMIRAI_Construcciones.Models
 {
-	public class TiposMantenimientosDto
-	{
+    public class TiposMantenimientosDto
+    {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int idTiposMantenimientos { get; set; }
         public string nombre { get; set; }
 
+        [JsonIgnore]
         public ICollection<RecordatoriosDto> RecordatoriosDto { get; set; }
+        [JsonIgnore]
         public ICollection<RevisionesDto> RevisionesDto { get; set; }
+        [JsonIgnore]
         public ICollection<TareasDto> TareasDto { get; set; }
     }
 }

@@ -8,31 +8,62 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using apiMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Models;
 
-namespace apiMIRAI_Construcciones.Controllers
+namespace APIMIRAI_Construcciones.Controllers
 {
     public class DetallesPreventivosController : ApiController
     {
-        private AlmacenTAEPIEntities db = new AlmacenTAEPIEntities();
+        private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/DetallesPreventivos
-        public IQueryable<DetallesPreventivos> GetDetallesPreventivos()
+        public IHttpActionResult GetDetallesPreventivos()
         {
-            return db.DetallesPreventivos;
+            var empresas = db.DetallesPreventivos
+                .Select(e => new DetallesPreventivosDto
+                {
+                    idDetallesPreventivos = e.idDetallesPreventivos,
+                    idfRevisiones = e.idfRevisiones,
+                    idfCategoriasPreventivas = e.idfCategoriasPreventivas,
+                    nombreParte = e.nombreParte, 
+                    idfEstadoPrioridades = e.idfEstadoPrioridades,
+                    comentarios = e.comentarios,
+                    observaciones = e.observaciones,
+                    fecha = e.fecha,
+                    numeroReporte = e.numeroReporte,
+                })
+                .ToList();
+
+            return Ok(empresas);
         }
 
         // GET: api/DetallesPreventivos/5
         [ResponseType(typeof(DetallesPreventivos))]
         public IHttpActionResult GetDetallesPreventivos(int id)
         {
-            DetallesPreventivos detallesPreventivos = db.DetallesPreventivos.Find(id);
-            if (detallesPreventivos == null)
+            var empresa = db.DetallesPreventivos
+        .Where(e => e.idDetallesPreventivos == id)
+        .Select(e => new DetallesPreventivosDto
+        {
+            idDetallesPreventivos = e.idDetallesPreventivos,
+            idfRevisiones = e.idfRevisiones,
+            idfCategoriasPreventivas = e.idfCategoriasPreventivas,
+            nombreParte = e.nombreParte,
+            idfEstadoPrioridades = e.idfEstadoPrioridades,
+            comentarios = e.comentarios,
+            observaciones = e.observaciones,
+            fecha = e.fecha,
+            numeroReporte = e.numeroReporte,
+        })
+        .FirstOrDefault();
+
+            if (empresa == null)
             {
                 return NotFound();
             }
 
-            return Ok(detallesPreventivos);
+            return Ok(empresa);
         }
 
         // PUT: api/DetallesPreventivos/5

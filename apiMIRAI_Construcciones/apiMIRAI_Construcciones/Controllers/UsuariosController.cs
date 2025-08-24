@@ -8,31 +8,58 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using apiMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Models;
 
-namespace apiMIRAI_Construcciones.Controllers
+namespace APIMIRAI_Construcciones.Controllers
 {
     public class UsuariosController : ApiController
     {
-        private AlmacenTAEPIEntities db = new AlmacenTAEPIEntities();
+        private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/Usuarios
-        public IQueryable<Usuarios> GetUsuarios()
+        public IHttpActionResult GetUsuarios()
         {
-            return db.Usuarios;
+            var empresas = db.Usuarios
+                .Select(e => new UsuariosDto
+                {
+                    idUsuarios = e.idUsuarios,
+                    nombre = e.nombre,
+                    apellidoPaterno = e.apellidoPaterno,
+                    apellidoMaterno = e.apellidoMaterno,
+                    contraseña = e.contraseña,
+                    idfRoles  = e.idfRoles,
+                    telefono = e.telefono,
+                })
+                .ToList();
+
+            return Ok(empresas);
         }
 
         // GET: api/Usuarios/5
         [ResponseType(typeof(Usuarios))]
         public IHttpActionResult GetUsuarios(int id)
         {
-            Usuarios usuarios = db.Usuarios.Find(id);
-            if (usuarios == null)
+            var empresa = db.Usuarios
+        .Where(e => e.idUsuarios == id)
+        .Select(e => new UsuariosDto
+        {
+            idUsuarios = e.idUsuarios,
+            nombre = e.nombre,
+            apellidoPaterno = e.apellidoPaterno,
+            apellidoMaterno = e.apellidoMaterno,
+            contraseña = e.contraseña,
+            idfRoles = e.idfRoles,
+            telefono = e.telefono,
+        })
+        .FirstOrDefault();
+
+            if (empresa == null)
             {
                 return NotFound();
             }
 
-            return Ok(usuarios);
+            return Ok(empresa);
         }
 
         // PUT: api/Usuarios/5

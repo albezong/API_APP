@@ -8,31 +8,48 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using apiMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Models;
 
-namespace apiMIRAI_Construcciones.Controllers
+namespace APIMIRAI_Construcciones.Controllers
 {
     public class RolesController : ApiController
     {
-        private AlmacenTAEPIEntities db = new AlmacenTAEPIEntities();
+        private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/Roles
-        public IQueryable<Roles> GetRoles()
+        public IHttpActionResult GetRoles()
         {
-            return db.Roles;
+            var empresas = db.Roles
+                .Select(e => new RolesDto
+                {
+                    idRoles = e.idRoles,
+                    nombre = e.nombre,
+                })
+                .ToList();
+
+            return Ok(empresas);
         }
 
         // GET: api/Roles/5
         [ResponseType(typeof(Roles))]
         public IHttpActionResult GetRoles(int id)
         {
-            Roles roles = db.Roles.Find(id);
-            if (roles == null)
+            var empresa = db.Roles
+        .Where(e => e.idRoles == id)
+        .Select(e => new RolesDto
+        {
+            idRoles = e.idRoles,
+            nombre = e.nombre,
+        })
+        .FirstOrDefault();
+
+            if (empresa == null)
             {
                 return NotFound();
             }
 
-            return Ok(roles);
+            return Ok(empresa);
         }
 
         // PUT: api/Roles/5

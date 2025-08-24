@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace apiMIRAI_Construcciones.Data
+namespace APIMIRAI_Construcciones.Data
 {
     using System;
     using System.Collections.Generic;
@@ -27,6 +27,7 @@ namespace apiMIRAI_Construcciones.Data
         public Nullable<int> idfUsuarios { get; set; }
         public Nullable<int> idfEmpresas { get; set; }
         public Nullable<System.DateTime> fecha { get; set; }
+        public string descripcion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetallesPreventivos> DetallesPreventivos { get; set; }

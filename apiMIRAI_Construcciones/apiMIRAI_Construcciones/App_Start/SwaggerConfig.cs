@@ -1,11 +1,11 @@
 using System.Web.Http;
 using WebActivatorEx;
-using apiMIRAI_Construcciones;
+using APIMIRAI_Construcciones;
 using Swashbuckle.Application;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
-namespace apiMIRAI_Construcciones
+namespace APIMIRAI_Construcciones
 {
     public class SwaggerConfig
     {
@@ -32,17 +32,17 @@ namespace apiMIRAI_Construcciones
                         // hold additional metadata for an API. Version and title are required but you can also provide
                         // additional fields by chaining methods off SingleApiVersion.
                         //
-                        c.SingleApiVersion("v1", "apiMIRAI_Construcciones")
-                        .Description("API MIRAI Construcciones")
-                        .TermsOfService("Términos de servicio.")
-                        .Contact(x => x
-                        .Name("MIRAI Construcciones")
-                        .Url("http://www.dsicode.net/api-doc.pdf")
-                        //.Email("")
-                        )
-                        .License(x => x
-                        //.Name("License")
-                        .Url("http://www.test.net/license"));
+                        c.SingleApiVersion("v1", "APIMIRAI_Construcciones")
+                       .Description("API MIRAI Construcciones")
+                       .TermsOfService("Términos de servicio.")
+                       .Contact(x => x
+                       .Name("MIRAI Construcciones")
+                       .Url("http://www.dsicode.net/api-doc.pdf")
+                       //.Email("")
+                       )
+                       .License(x => x
+                       //.Name("License")
+                       .Url("http://www.test.net/license"));
 
                         // If you want the output Swagger docs to be indented properly, enable the "PrettyPrint" option.
                         //

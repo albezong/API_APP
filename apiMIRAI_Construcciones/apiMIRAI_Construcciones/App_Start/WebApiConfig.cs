@@ -1,26 +1,22 @@
-﻿using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
-namespace apiMIRAI_Construcciones
+namespace APIMIRAI_Construcciones
 {
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
         {
+            // Habilitar CORS para todas las solicitudes
+            var cors = new System.Web.Http.Cors.EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(cors);
             // Configuración y servicios de Web API
 
             // Rutas de Web API
             config.MapHttpAttributeRoutes();
-
-            // Ignorar referencias circulares
-            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-
-            // Opcional: Usar nombres de propiedad en camelCase
-            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

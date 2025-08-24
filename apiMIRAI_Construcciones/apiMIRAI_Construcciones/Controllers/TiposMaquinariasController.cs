@@ -8,31 +8,48 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using apiMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Models;
 
-namespace apiMIRAI_Construcciones.Controllers
+namespace APIMIRAI_Construcciones.Controllers
 {
     public class TiposMaquinariasController : ApiController
     {
-        private AlmacenTAEPIEntities db = new AlmacenTAEPIEntities();
+        private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/TiposMaquinarias
-        public IQueryable<TiposMaquinarias> GetTiposMaquinarias()
+        public IHttpActionResult GetTiposMaquinarias()
         {
-            return db.TiposMaquinarias;
+            var empresas = db.TiposMaquinarias
+                .Select(e => new TiposMaquinariasDto
+                {
+                    idTiposMaquinarias = e.idTiposMaquinarias,
+                    nombre = e.nombre,
+                })
+                .ToList();
+
+            return Ok(empresas);
         }
 
         // GET: api/TiposMaquinarias/5
         [ResponseType(typeof(TiposMaquinarias))]
         public IHttpActionResult GetTiposMaquinarias(int id)
         {
-            TiposMaquinarias tiposMaquinarias = db.TiposMaquinarias.Find(id);
-            if (tiposMaquinarias == null)
+            var empresa = db.TiposMaquinarias
+        .Where(e => e.idTiposMaquinarias == id)
+        .Select(e => new TiposMaquinariasDto
+        {
+            idTiposMaquinarias = e.idTiposMaquinarias,
+            nombre = e.nombre,
+        })
+        .FirstOrDefault();
+
+            if (empresa == null)
             {
                 return NotFound();
             }
 
-            return Ok(tiposMaquinarias);
+            return Ok(empresa);
         }
 
         // PUT: api/TiposMaquinarias/5

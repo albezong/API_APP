@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 
-namespace apiMIRAI_Construcciones.Wrapper
+namespace APIMIRAI_Construcciones.Wrapper
 {
     public class ResponseWrapper<T>
     {

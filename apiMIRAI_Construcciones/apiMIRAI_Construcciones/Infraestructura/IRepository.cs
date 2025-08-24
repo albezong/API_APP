@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace apiMIRAI_Construcciones.Infraestructura
+namespace APIMIRAI_Construcciones.Infraestructura
 {
     public interface IRepository<T> where T : class
     {

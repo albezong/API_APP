@@ -32,6 +32,7 @@
           </Key>
           <Property Name="idEmpresas" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="350" />
+          <Property Name="reportaOsolicita" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="Equipos">
           <Key>
@@ -108,7 +109,8 @@
           <Property Name="cantidad" Type="int" />
           <Property Name="observaciones" Type="varchar(max)" />
           <Property Name="fecha" Type="date" />
-          <Property Name="numeroReporte" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="numeroReporte" Type="int" Nullable="false" />
+          <Property Name="descripcion" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="Revisiones">
           <Key>
@@ -120,6 +122,7 @@
           <Property Name="idfUsuarios" Type="int" />
           <Property Name="idfEmpresas" Type="int" />
           <Property Name="fecha" Type="date" />
+          <Property Name="descripcion" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -173,6 +176,7 @@
           <Property Name="apellidoPaterno" Type="varchar" MaxLength="100" />
           <Property Name="apellidoMaterno" Type="varchar" MaxLength="100" />
           <Property Name="contraseña" Type="varchar" MaxLength="255" />
+          <Property Name="telefono" Type="varchar" MaxLength="12" />
           <Property Name="idfRoles" Type="int" />
         </EntityType>
         <Association Name="FK_DetallesPreventivos_CategoriasPreventivas">
@@ -340,6 +344,18 @@
             </Principal>
             <Dependent Role="Recordatorios">
               <PropertyRef Name="idfUsuarios" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Refacciones_Prioridades">
+          <End Role="Prioridades" Type="Self.Prioridades" Multiplicity="0..1" />
+          <End Role="Refacciones" Type="Self.Refacciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Prioridades">
+              <PropertyRef Name="idPrioridades" />
+            </Principal>
+            <Dependent Role="Refacciones">
+              <PropertyRef Name="idfDescripcionPrioridades" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -514,6 +530,10 @@
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="Recordatorios" EntitySet="Recordatorios" />
           </AssociationSet>
+          <AssociationSet Name="FK_Refacciones_Prioridades" Association="Self.FK_Refacciones_Prioridades">
+            <End Role="Prioridades" EntitySet="Prioridades" />
+            <End Role="Refacciones" EntitySet="Refacciones" />
+          </AssociationSet>
           <AssociationSet Name="FK_Refacciones_Revisiones" Association="Self.FK_Refacciones_Revisiones">
             <End Role="Revisiones" EntitySet="Revisiones" />
             <End Role="Refacciones" EntitySet="Refacciones" />
@@ -567,14 +587,14 @@
           <Property Name="idfRevisiones" Type="Int32" />
           <Property Name="idfCategoriasPreventivas" Type="Int32" />
           <Property Name="nombreParte" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="idfEstadoPrioridades" Type="Int32" />
           <Property Name="comentarios" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="observaciones" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="fecha" Type="DateTime" Precision="0" />
           <Property Name="numeroReporte" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CategoriasPreventivas" Relationship="Self.FK_DetallesPreventivos_CategoriasPreventivas" FromRole="DetallesPreventivos" ToRole="CategoriasPreventivas" />
+          <NavigationProperty Name="Prioridades" Relationship="Self.FK_DetallesPreventivos_Prioridades" FromRole="DetallesPreventivos" ToRole="Prioridades" />
           <NavigationProperty Name="Revisiones" Relationship="Self.FK_DetallesPreventivos_Revisiones" FromRole="DetallesPreventivos" ToRole="Revisiones" />
-          <Property Name="idfEstadoPrioridades" Type="Int32" />
-          <NavigationProperty Name="Prioridades" Relationship="PruebaAlmacenTAEPIModel.FK_DetallesPreventivos_Prioridades" FromRole="DetallesPreventivos" ToRole="Prioridades" />
         </EntityType>
         <EntityType Name="Empresas">
           <Key>
@@ -583,6 +603,7 @@
           <Property Name="idEmpresas" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Revisiones" Relationship="Self.FK_Revisiones_Empresas" FromRole="Empresas" ToRole="Revisiones" />
+          <Property Name="reportaOsolicita" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Equipos">
           <Key>
@@ -633,8 +654,9 @@
           </Key>
           <Property Name="idPrioridades" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DetallesPreventivos" Relationship="Self.FK_DetallesPreventivos_Prioridades" FromRole="Prioridades" ToRole="DetallesPreventivos" />
           <NavigationProperty Name="Recordatorios" Relationship="Self.FK_Recordatorios_Prioridades" FromRole="Prioridades" ToRole="Recordatorios" />
-          <NavigationProperty Name="DetallesPreventivos" Relationship="PruebaAlmacenTAEPIModel.FK_DetallesPreventivos_Prioridades" FromRole="Prioridades" ToRole="DetallesPreventivos" />
+          <NavigationProperty Name="Refacciones" Relationship="PruebaAlmacenTAEPIModel.FK_Refacciones_Prioridades" FromRole="Prioridades" ToRole="Refacciones" />
         </EntityType>
         <EntityType Name="QrEquipos">
           <Key>
@@ -669,17 +691,19 @@
           <Key>
             <PropertyRef Name="idRefacciones" />
           </Key>
-          <Property Name="idRefacciones" Type="Int32" Nullable="false" />
+          <Property Name="idRefacciones" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idfRevisiones" Type="Int32" />
           <Property Name="idfUnidades" Type="Int32" />
           <Property Name="nombreRefaccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="idfDescripcionPrioridades" Type="Int32" />
           <Property Name="cantidad" Type="Int32" />
           <Property Name="observaciones" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="fecha" Type="DateTime" Precision="0" />
-          <Property Name="numeroReporte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="numeroReporte" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Revisiones" Relationship="Self.FK_Refacciones_Revisiones" FromRole="Refacciones" ToRole="Revisiones" />
           <NavigationProperty Name="Unidades" Relationship="Self.FK_Refacciones_Unidades" FromRole="Refacciones" ToRole="Unidades" />
-          <Property Name="idfDescripcionPrioridades" Type="Int32" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Prioridades" Relationship="PruebaAlmacenTAEPIModel.FK_Refacciones_Prioridades" FromRole="Refacciones" ToRole="Prioridades" />
         </EntityType>
         <EntityType Name="Revisiones">
           <Key>
@@ -697,6 +721,7 @@
           <NavigationProperty Name="Refacciones" Relationship="Self.FK_Refacciones_Revisiones" FromRole="Revisiones" ToRole="Refacciones" />
           <NavigationProperty Name="TiposMantenimientos" Relationship="Self.FK_Revisiones_TiposMantenimientos" FromRole="Revisiones" ToRole="TiposMantenimientos" />
           <NavigationProperty Name="Usuarios" Relationship="Self.FK_Revisiones_Usuarios" FromRole="Revisiones" ToRole="Usuarios" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -710,7 +735,7 @@
           <Key>
             <PropertyRef Name="idTareas" />
           </Key>
-          <Property Name="idTareas" Type="Int32" Nullable="false" />
+          <Property Name="idTareas" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idTiposMantenimientos" Type="Int32" />
           <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Recordatorios" Relationship="Self.FK_Recordatorios_Tareas" FromRole="Tareas" ToRole="Recordatorios" />
@@ -764,6 +789,7 @@
           <NavigationProperty Name="Recordatorios" Relationship="Self.FK_Recordatorios_Usuarios" FromRole="Usuarios" ToRole="Recordatorios" />
           <NavigationProperty Name="Revisiones" Relationship="Self.FK_Revisiones_Usuarios" FromRole="Usuarios" ToRole="Revisiones" />
           <NavigationProperty Name="Roles" Relationship="Self.FK_Usuarios_Roles" FromRole="Usuarios" ToRole="Roles" />
+          <Property Name="telefono" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_DetallesPreventivos_CategoriasPreventivas">
           <End Role="CategoriasPreventivas" Type="Self.CategoriasPreventivas" Multiplicity="0..1" />
@@ -774,6 +800,18 @@
             </Principal>
             <Dependent Role="DetallesPreventivos">
               <PropertyRef Name="idfCategoriasPreventivas" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetallesPreventivos_Prioridades">
+          <End Role="Prioridades" Type="Self.Prioridades" Multiplicity="0..1" />
+          <End Role="DetallesPreventivos" Type="Self.DetallesPreventivos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Prioridades">
+              <PropertyRef Name="idPrioridades" />
+            </Principal>
+            <Dependent Role="DetallesPreventivos">
+              <PropertyRef Name="idfEstadoPrioridades" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1017,7 +1055,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="AlmacenTAEPIEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="PruebaAlmacenTAEPIEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CategoriasPreventivas" EntityType="Self.CategoriasPreventivas" />
           <EntitySet Name="DetallesPreventivos" EntityType="Self.DetallesPreventivos" />
           <EntitySet Name="Empresas" EntityType="Self.Empresas" />
@@ -1038,6 +1076,10 @@
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
           <AssociationSet Name="FK_DetallesPreventivos_CategoriasPreventivas" Association="Self.FK_DetallesPreventivos_CategoriasPreventivas">
             <End Role="CategoriasPreventivas" EntitySet="CategoriasPreventivas" />
+            <End Role="DetallesPreventivos" EntitySet="DetallesPreventivos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetallesPreventivos_Prioridades" Association="Self.FK_DetallesPreventivos_Prioridades">
+            <End Role="Prioridades" EntitySet="Prioridades" />
             <End Role="DetallesPreventivos" EntitySet="DetallesPreventivos" />
           </AssociationSet>
           <AssociationSet Name="FK_DetallesPreventivos_Revisiones" Association="Self.FK_DetallesPreventivos_Revisiones">
@@ -1120,20 +1162,20 @@
             <End Role="TiposMantenimientos" EntitySet="TiposMantenimientos" />
             <End Role="Tareas" EntitySet="Tareas" />
           </AssociationSet>
-          <AssociationSet Name="FK_DetallesPreventivos_Prioridades" Association="PruebaAlmacenTAEPIModel.FK_DetallesPreventivos_Prioridades">
+          <AssociationSet Name="FK_Refacciones_Prioridades" Association="PruebaAlmacenTAEPIModel.FK_Refacciones_Prioridades">
             <End Role="Prioridades" EntitySet="Prioridades" />
-            <End Role="DetallesPreventivos" EntitySet="DetallesPreventivos" />
+            <End Role="Refacciones" EntitySet="Refacciones" />
           </AssociationSet>
         </EntityContainer>
-        <Association Name="FK_DetallesPreventivos_Prioridades">
+        <Association Name="FK_Refacciones_Prioridades">
           <End Type="PruebaAlmacenTAEPIModel.Prioridades" Role="Prioridades" Multiplicity="0..1" />
-          <End Type="PruebaAlmacenTAEPIModel.DetallesPreventivos" Role="DetallesPreventivos" Multiplicity="*" />
+          <End Type="PruebaAlmacenTAEPIModel.Refacciones" Role="Refacciones" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Prioridades">
               <PropertyRef Name="idPrioridades" />
             </Principal>
-            <Dependent Role="DetallesPreventivos">
-              <PropertyRef Name="idfEstadoPrioridades" />
+            <Dependent Role="Refacciones">
+              <PropertyRef Name="idfDescripcionPrioridades" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1142,7 +1184,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="PruebaAlmacenTAEPIModelStoreContainer" CdmEntityContainer="AlmacenTAEPIEntities">
+        <EntityContainerMapping StorageEntityContainer="PruebaAlmacenTAEPIModelStoreContainer" CdmEntityContainer="PruebaAlmacenTAEPIEntities1">
           <EntitySetMapping Name="CategoriasPreventivas">
             <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.CategoriasPreventivas">
               <MappingFragment StoreEntitySet="CategoriasPreventivas">
@@ -1154,11 +1196,11 @@
           <EntitySetMapping Name="DetallesPreventivos">
             <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.DetallesPreventivos">
               <MappingFragment StoreEntitySet="DetallesPreventivos">
-                <ScalarProperty Name="idfEstadoPrioridades" ColumnName="idfEstadoPrioridades" />
                 <ScalarProperty Name="idDetallesPreventivos" ColumnName="idDetallesPreventivos" />
                 <ScalarProperty Name="idfRevisiones" ColumnName="idfRevisiones" />
                 <ScalarProperty Name="idfCategoriasPreventivas" ColumnName="idfCategoriasPreventivas" />
                 <ScalarProperty Name="nombreParte" ColumnName="nombreParte" />
+                <ScalarProperty Name="idfEstadoPrioridades" ColumnName="idfEstadoPrioridades" />
                 <ScalarProperty Name="comentarios" ColumnName="comentarios" />
                 <ScalarProperty Name="observaciones" ColumnName="observaciones" />
                 <ScalarProperty Name="fecha" ColumnName="fecha" />
@@ -1169,6 +1211,7 @@
           <EntitySetMapping Name="Empresas">
             <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Empresas">
               <MappingFragment StoreEntitySet="Empresas">
+                <ScalarProperty Name="reportaOsolicita" ColumnName="reportaOsolicita" />
                 <ScalarProperty Name="idEmpresas" ColumnName="idEmpresas" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
               </MappingFragment>
@@ -1246,11 +1289,12 @@
           <EntitySetMapping Name="Refacciones">
             <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Refacciones">
               <MappingFragment StoreEntitySet="Refacciones">
-                <ScalarProperty Name="idfDescripcionPrioridades" ColumnName="idfDescripcionPrioridades" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="idRefacciones" ColumnName="idRefacciones" />
                 <ScalarProperty Name="idfRevisiones" ColumnName="idfRevisiones" />
                 <ScalarProperty Name="idfUnidades" ColumnName="idfUnidades" />
                 <ScalarProperty Name="nombreRefaccion" ColumnName="nombreRefaccion" />
+                <ScalarProperty Name="idfDescripcionPrioridades" ColumnName="idfDescripcionPrioridades" />
                 <ScalarProperty Name="cantidad" ColumnName="cantidad" />
                 <ScalarProperty Name="observaciones" ColumnName="observaciones" />
                 <ScalarProperty Name="fecha" ColumnName="fecha" />
@@ -1261,6 +1305,7 @@
           <EntitySetMapping Name="Revisiones">
             <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Revisiones">
               <MappingFragment StoreEntitySet="Revisiones">
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="idRevisiones" ColumnName="idRevisiones" />
                 <ScalarProperty Name="idfTiposMantenimientos" ColumnName="idfTiposMantenimientos" />
                 <ScalarProperty Name="idfEquipos" ColumnName="idfEquipos" />
@@ -1322,6 +1367,7 @@
           <EntitySetMapping Name="Usuarios">
             <EntityTypeMapping TypeName="PruebaAlmacenTAEPIModel.Usuarios">
               <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
                 <ScalarProperty Name="idUsuarios" ColumnName="idUsuarios" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="apellidoPaterno" ColumnName="apellidoPaterno" />

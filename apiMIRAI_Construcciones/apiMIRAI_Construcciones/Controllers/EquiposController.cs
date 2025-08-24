@@ -1,38 +1,82 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
-using apiMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Helper;
+using APIMIRAI_Construcciones.Models;
 
-namespace apiMIRAI_Construcciones.Controllers
+namespace APIMIRAI_Construcciones.Controllers
 {
     public class EquiposController : ApiController
     {
-        private AlmacenTAEPIEntities db = new AlmacenTAEPIEntities();
+        private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/Equipos
-        public IQueryable<Equipos> GetEquipos()
+        public IHttpActionResult GetEquipos()
         {
-            return db.Equipos;
+            var equipos = db.Equipos
+                .Select(e => new EquiposDto
+                {
+                    idEquipos = e.idEquipos,
+                    codigoArticulo = e.codigoArticulo,
+                    nombreArticulo = e.nombreArticulo,
+                    nombreComercial = e.nombreComercial,
+                    numIdentificador = e.numIdentificador,
+                    descripcion = e.descripcion,
+                    marca = e.marca,
+                    modelo = e.modelo,
+                    fechadeRegistro = e.fechadeRegistro,
+                    idfUbicaciones = e.idfUbicaciones,
+                    idfUnidades = e.idfUnidades,
+                    idfEstatus = e.idfEstatus,
+                    idfTiposMaquinarias = e.idfTiposMaquinarias,
+                })
+                .ToList();
+
+
+            return Ok(equipos);
         }
 
         // GET: api/Equipos/5
         [ResponseType(typeof(Equipos))]
         public IHttpActionResult GetEquipos(int id)
         {
-            Equipos equipos = db.Equipos.Find(id);
-            if (equipos == null)
+            var empresa = db.Equipos
+        .Where(e => e.idEquipos == id)
+        .Select(e => new EquiposDto
+        {
+            idEquipos = e.idEquipos,
+            codigoArticulo = e.codigoArticulo,
+            nombreArticulo = e.nombreArticulo,
+            nombreComercial = e.nombreComercial,
+            numIdentificador = e.numIdentificador,
+            descripcion = e.descripcion,
+            marca = e.marca,
+            modelo = e.modelo,
+            fechadeRegistro = e.fechadeRegistro,
+            idfUbicaciones = e.idfUbicaciones,
+            idfUnidades = e.idfUnidades,
+            idfEstatus = e.idfEstatus,
+            idfTiposMaquinarias = e.idfTiposMaquinarias,
+        })
+        .FirstOrDefault();
+
+            if (empresa == null)
             {
                 return NotFound();
             }
 
-            return Ok(equipos);
+            return Ok(empresa);
         }
 
         // PUT: api/Equipos/5
@@ -72,7 +116,7 @@ namespace apiMIRAI_Construcciones.Controllers
 
         // POST: api/Equipos
         [ResponseType(typeof(Equipos))]
-        public IHttpActionResult PostEquipos(Equipos equipos)
+        public IHttpActionResult PostEquipos_Se_crea_QR_solo(Equipos equipos)
         {
             if (!ModelState.IsValid)
             {
@@ -80,9 +124,40 @@ namespace apiMIRAI_Construcciones.Controllers
             }
 
             db.Equipos.Add(equipos);
+            db.SaveChanges(); 
+
+            var datos =
+                $"Codigo del Articulo:{equipos.codigoArticulo}, " +
+                $"Nombre del Articulo:{equipos.nombreArticulo}, " +
+                $"Nombre Comercial:{equipos.nombreComercial}, " +
+                $"Numero Identificador:{equipos.numIdentificador}, " +
+                $"Descripcion:{equipos.descripcion}, " +
+                $"Marca:{equipos.marca}, " +
+                $"Modelo:{equipos.modelo}, " +
+                $"Fecha de Registro:{equipos.fechadeRegistro}, " +
+                $"Ubicacion:{equipos.Ubicaciones.nombre}, " +
+                $"Unidad:{equipos.Unidades.nombre}, " +
+                $"Estatus:{equipos.Estatus.nombre}, " +
+                $"Tipo de Maquinaria:{equipos.TiposMaquinarias.nombre}, " +
+                $"Se encuentra en:{equipos.Lugares.Where(r=>r.idfEquipos == equipos.idEquipos).Select(y=>y.nombreLugar).Distinct()}";
+            var qrImagen = QrCodeGeneratorHelper.GenerateQRCode(datos); 
+
+            var qrBase64 = Convert.ToBase64String(qrImagen);
+            
+            var qrEquipo = new QrEquipos
+            {
+                idEquipos = equipos.idEquipos,
+                claveQR = qrBase64
+            };
+
+            db.QrEquipos.Add(qrEquipo);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = equipos.idEquipos }, equipos);
+            return CreatedAtRoute("DefaultApi", new { id = equipos.idEquipos }, new
+            {
+                Equipo = equipos,
+                Qr = qrEquipo
+            });
         }
 
         // DELETE: api/Equipos/5
@@ -114,5 +189,6 @@ namespace apiMIRAI_Construcciones.Controllers
         {
             return db.Equipos.Count(e => e.idEquipos == id) > 0;
         }
+
     }
 }

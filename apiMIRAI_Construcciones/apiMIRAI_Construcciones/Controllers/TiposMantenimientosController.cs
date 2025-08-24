@@ -8,31 +8,48 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using apiMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Models;
 
-namespace apiMIRAI_Construcciones.Controllers
+namespace APIMIRAI_Construcciones.Controllers
 {
     public class TiposMantenimientosController : ApiController
     {
-        private AlmacenTAEPIEntities db = new AlmacenTAEPIEntities();
+        private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/TiposMantenimientos
-        public IQueryable<TiposMantenimientos> GetTiposMantenimientos()
+        public IHttpActionResult GetTiposMantenimientos()
         {
-            return db.TiposMantenimientos;
+            var empresas = db.TiposMantenimientos
+                .Select(e => new TiposMantenimientosDto
+                {
+                    idTiposMantenimientos = e.idTiposMantenimientos,
+                    nombre = e.nombre,
+                })
+                .ToList();
+
+            return Ok(empresas);
         }
 
         // GET: api/TiposMantenimientos/5
         [ResponseType(typeof(TiposMantenimientos))]
         public IHttpActionResult GetTiposMantenimientos(int id)
         {
-            TiposMantenimientos tiposMantenimientos = db.TiposMantenimientos.Find(id);
-            if (tiposMantenimientos == null)
+            var empresa = db.TiposMantenimientos
+        .Where(e => e.idTiposMantenimientos == id)
+        .Select(e => new TiposMantenimientosDto
+        {
+            idTiposMantenimientos = e.idTiposMantenimientos,
+            nombre = e.nombre,
+        })
+        .FirstOrDefault();
+
+            if (empresa == null)
             {
                 return NotFound();
             }
 
-            return Ok(tiposMantenimientos);
+            return Ok(empresa);
         }
 
         // PUT: api/TiposMantenimientos/5

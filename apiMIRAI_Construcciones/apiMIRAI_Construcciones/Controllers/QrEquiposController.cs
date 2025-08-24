@@ -3,26 +3,25 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using System.Web.Mvc;
-using apiMIRAI_Construcciones.Data;
-using apiMIRAI_Construcciones.Helper;
+using APIMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Helper;
 using iTextSharp.text.pdf;
 using iTextSharp.text;
-using System.Runtime.Remoting.Contexts;
-using apiMIRAI_Construcciones.Infraestructura;
-using apiMIRAI_Construcciones.Services;
+using APIMIRAI_Construcciones.Infraestructura;
+using APIMIRAI_Construcciones.Services;
+using System.IO;
+using APIMIRAI_Construcciones.Models;
 
-namespace apiMIRAI_Construcciones.Controllers
+namespace APIMIRAI_Construcciones.Controllers
 {
     public class QrEquiposController : ApiController
     {
-        private AlmacenTAEPIEntities db = new AlmacenTAEPIEntities();
+        private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
         private readonly IUnitOfWork _unitOfWork;
 
         public QrEquiposController()
@@ -31,22 +30,40 @@ namespace apiMIRAI_Construcciones.Controllers
         }
 
         // GET: api/QrEquipos
-        public IQueryable<QrEquipos> GetQrEquipos()
+        public IHttpActionResult GetQrEquipos()
         {
-            return db.QrEquipos;
+            var empresas = db.QrEquipos
+                .Select(e => new QrEquiposDto
+                {
+                    idQrEquipos = e.idQrEquipos,
+                    claveQR = e.claveQR,
+                    idEquipos = e.idEquipos,
+                })
+                .ToList();
+
+            return Ok(empresas);
         }
 
         // GET: api/QrEquipos/5
         [ResponseType(typeof(QrEquipos))]
         public IHttpActionResult GetQrEquipos(int id)
         {
-            QrEquipos qrEquipos = db.QrEquipos.Find(id);
-            if (qrEquipos == null)
+            var empresa = db.QrEquipos
+        .Where(e => e.idQrEquipos == id)
+        .Select(e => new QrEquiposDto
+        {
+            idQrEquipos = e.idQrEquipos,
+            claveQR = e.claveQR,
+            idEquipos = e.idEquipos,
+        })
+        .FirstOrDefault();
+
+            if (empresa == null)
             {
                 return NotFound();
             }
 
-            return Ok(qrEquipos);
+            return Ok(empresa);
         }
 
         // PUT: api/QrEquipos/5
@@ -129,134 +146,48 @@ namespace apiMIRAI_Construcciones.Controllers
             return db.QrEquipos.Count(e => e.idQrEquipos == id) > 0;
         }
 
+        //-------------------------------------------**********************************
 
-
-        //--------------------------*****************************
-
-        // GenerarQR: api/QrEquipos/5
-        public FileResult GenerarQR(int id)
+        //Ya esta solo tienes que ejecutar la api y abrir la url https://localhost:44333/api/qr/VerQRenIMG/1
+        [HttpGet]
+        [Route("api/qr/VerQRenIMG/{id}")]
+        [ResponseType(typeof(void))]
+        public HttpResponseMessage VerQRImagen(int id)
         {
-            // Obtener un solo equipo por id
-            var equipo = db.QrEquipos
-                           .Include(q => q.Equipos) // si tienes relación con la tabla Equipos
-                           .FirstOrDefault(p => p.idQrEquipos == id);
+            var qrEquipo = db.QrEquipos.FirstOrDefault(e => e.idQrEquipos == id);
+            if (qrEquipo == null)
+                return new HttpResponseMessage(HttpStatusCode.NotFound);
 
-            if (equipo == null) return null;
-
-            // Aquí colocas los datos que quieres que aparezcan en el QR
-            var datos1 = $"{equipo.Equipos.codigoArticulo}, " +
-                $"{equipo.Equipos.nombreArticulo}, " +
-                $"{equipo.Equipos.nombreComercial}, " +
-                $"{equipo.Equipos.numIdentificador}, " +
-                $"{equipo.Equipos.descripcion}, " +
-                $"{equipo.Equipos.marca}, " +
-                $"{equipo.Equipos.modelo}, " +
-                $"{equipo.Equipos.idfEstatus}, " +
-                $"{equipo.Equipos.idfTiposMaquinarias}";
-
-            // Generar QR con esos datos
-            var qrBytes = QrCodeGeneratorHelper.GenerateQRCode(datos1);
-
-            if (qrBytes != null)
-            {
-                _unitOfWork.GuardarCambios(id, qrBytes);
-            }
-
-            return new FileContentResult(qrBytes, "image/png");
-        }
-
-        public FileResult VerQR(int id)
-        {
-            var persona = db.QrEquipos.GetById(id);
-            if (persona == null) return null;
-
-            // Validación del contenido
-            if (string.IsNullOrWhiteSpace(persona.ProviderKey)) return null;
+            if (string.IsNullOrWhiteSpace(qrEquipo.claveQR))
+                return new HttpResponseMessage(HttpStatusCode.BadRequest)
+                {
+                    Content = new StringContent("El QR no existe o no tiene datos.")
+                };
 
             byte[] qrBytes;
-
             try
             {
-                qrBytes = Convert.FromBase64String(persona.ProviderKey);
+                qrBytes = Convert.FromBase64String(qrEquipo.claveQR);
             }
             catch
             {
-                // Base64 inválido
-                return null;
+                return new HttpResponseMessage(HttpStatusCode.BadRequest)
+                {
+                    Content = new StringContent("El QR almacenado no es válido.")
+                };
             }
 
-            return File(qrBytes, "image/png");
-        }
-
-        /*public FileResult VerQR(int id)
-        {
-            var persona = _unitOfWork.Usuarios.GetById(id);
-            if(persona == null) return null;
-
-            var QR = persona.ProviderKey;
-
-
-            //var datos = $"{persona.Nombres} {persona.Apellidos} {persona.Email}";
-
-            //var qrBytes = Helper.QrCodeGeneratorHelper.GenerateQRCode(datos); //es una imagen
-            //ViewBag.QRCodeImage = Convert.ToBase64String(qrBytes); //en un string convierte qrBytes
-
-            //var qrImage = QR;
-            //var qrImage = StringConverter.StringToByteArray(QR);
-
-            //return File(StringConverter.StringToByteArray(QR), "image/png");
-            //return File(StringConverter.StringToByteArray(QR), "image/jpg");
-
-
-            //ImagenDesdeSQL.MostrarImagen(QR, persona.Id, pictureBox1);
-
-            byte[] qrBytes = StringConverter.StringToByteArray(persona.ProviderKey); // si ya lo tienes como Base64
-            string base64Image = Convert.ToBase64String(qrBytes);
-
-            //ViewBag.QRImage = base64Image;
-            //return View(persona);
-
-
-
-            return File(qrBytes, "image/png", "qrCode.png");
-
-
-            /*var persona = _unitOfWork.Usuarios.GetById(id);
-            if(persona == null) return HttpNotFound();
-            var datos = $"{persona.Nombres} {persona.Apellidos} {persona.Email}";
-
-            var qrBytes = Helper.QrCodeGeneratorHelper.GenerateQRCode(datos); //es una imagen
-            ViewBag.QRCodeImage = Convert.ToBase64String(qrBytes); //en un string convierte qrBytes
-            return View(persona);*
-        }*/
-
-        public FileResult DescargarPDF(int id)
-        {
-            var persona = db.QrEquipos.GetById(id);
-            //if(persona is null) return null;
-            if (persona is null)
+            var result = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                return null;
-            }
-            var datos = $"{persona.Nombres} {persona.Apellidos} {persona.Email}";
-            var qrBytes = Helper.QrCodeGeneratorHelper.GenerateQRCode(datos);
-
-            using (var es = new MemoryStream())
+                Content = new ByteArrayContent(qrBytes)
+            };
+            result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/png");
+            result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("inline")
             {
-                var document = new Document();
-                PdfWriter.GetInstance(document, es);
-                document.Open();
-                var qrImage = Image.GetInstance(qrBytes);
-                qrImage.ScaleToFit(200f, 200f);
-                document.Add(new Paragraph("Codigo QR para: "));
-                document.Add(new Paragraph($"{persona.Nombres} {persona.Apellidos} {persona.Email}"));
-                document.Add(qrImage);
-                document.Close();
-                return File(es.ToArray(),
-                    "aplication/pdf", $"QR_{persona.Nombres}.pdf"
-                    );
-            }
+                FileName = $"QR_{qrEquipo.Equipos?.numIdentificador ?? "Equipo"}.png"
+            };
 
+            return result;
         }
     }
 }

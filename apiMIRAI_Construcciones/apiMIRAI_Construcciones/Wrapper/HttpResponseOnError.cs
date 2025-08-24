@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace apiMIRAI_Construcciones.Wrapper
+namespace APIMIRAI_Construcciones.Wrapper
 {
     public class HttpResponseOnError
     {

@@ -1,17 +1,14 @@
 ﻿using AutoMapper;
-using apiMIRAI_Construcciones.Models;
-using apiMIRAI_Construcciones.Data;
-using apiMIRAI_Construcciones.Models.QRDB;
-using apiMIRAI_Construcciones.Data.QRDB;
+using APIMIRAI_Construcciones.Models;
+using APIMIRAI_Construcciones.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using apiMIRAI_Construcciones.Models.QRDB;
 
-namespace apiMIRAI_Construcciones.Mapping
+namespace APIMIRAI_Construcciones.Mapping
 {
-	public class WebProfile : Profile
+    public class WebProfile : Profile
     {
         public WebProfile()
         {
@@ -21,6 +18,7 @@ namespace apiMIRAI_Construcciones.Mapping
 
             CreateMap<DetallesPreventivosDto, DetallesPreventivos>()
                 .ForMember(dest => dest.CategoriasPreventivas, opt => opt.MapFrom(src => src.CategoriasPreventivasDto))
+                .ForMember(dest => dest.Prioridades, opt => opt.MapFrom(src => src.PrioridadesDto))
                 .ForMember(dest => dest.Revisiones, opt => opt.MapFrom(src => src.RevisionesDto))
                 .ReverseMap();
 
@@ -48,7 +46,9 @@ namespace apiMIRAI_Construcciones.Mapping
                 .ReverseMap();
 
             CreateMap<PrioridadesDto, Prioridades>()
+                .ForMember(dest => dest.DetallesPreventivos, opt => opt.MapFrom(src => src.DetallesPreventivosDto))
                 .ForMember(dest => dest.Recordatorios, opt => opt.MapFrom(src => src.RecordatoriosDto))
+                .ForMember(dest => dest.Refacciones, opt => opt.MapFrom(src => src.RefaccionesDto))
                 .ReverseMap();
 
             CreateMap<QrEquiposDto, QrEquipos>()
@@ -66,6 +66,7 @@ namespace apiMIRAI_Construcciones.Mapping
             CreateMap<RefaccionesDto, Refacciones>()
                 .ForMember(dest => dest.Revisiones, opt => opt.MapFrom(src => src.RevisionesDto))
                 .ForMember(dest => dest.Unidades, opt => opt.MapFrom(src => src.UnidadesDto))
+                .ForMember(dest => dest.Prioridades, opt => opt.MapFrom(src => src.PrioridadesDto))
                 .ReverseMap();
 
             CreateMap<RevisionesDto, Revisiones>()
@@ -109,9 +110,6 @@ namespace apiMIRAI_Construcciones.Mapping
                 .ForMember(dest => dest.Recordatorios, opt => opt.MapFrom(src => src.RecordatoriosDto))
                 .ForMember(dest => dest.Revisiones, opt => opt.MapFrom(src => src.RevisionesDto))
                 .ForMember(dest => dest.Roles, opt => opt.MapFrom(src => src.RolesDto))
-                .ReverseMap();
-
-            CreateMap<MaquinariasDto, Maquinarias>()
                 .ReverseMap();
         }
 

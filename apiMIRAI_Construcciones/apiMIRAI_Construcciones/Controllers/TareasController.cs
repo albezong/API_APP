@@ -8,31 +8,50 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using apiMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Models;
 
-namespace apiMIRAI_Construcciones.Controllers
+namespace APIMIRAI_Construcciones.Controllers
 {
     public class TareasController : ApiController
     {
-        private AlmacenTAEPIEntities db = new AlmacenTAEPIEntities();
+        private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/Tareas
-        public IQueryable<Tareas> GetTareas()
+        public IHttpActionResult GetTareas()
         {
-            return db.Tareas;
+            var empresas = db.Tareas
+                .Select(e => new TareasDto
+                {
+                    idTareas = e.idTareas,
+                    idTiposMantenimientos = e.idTiposMantenimientos,
+                    descripcion = e.descripcion,
+                })
+                .ToList();
+
+            return Ok(empresas);
         }
 
         // GET: api/Tareas/5
         [ResponseType(typeof(Tareas))]
         public IHttpActionResult GetTareas(int id)
         {
-            Tareas tareas = db.Tareas.Find(id);
-            if (tareas == null)
+            var empresa = db.Tareas
+        .Where(e => e.idTareas == id)
+        .Select(e => new TareasDto
+        {
+            idTareas = e.idTareas,
+            idTiposMantenimientos = e.idTiposMantenimientos,
+            descripcion = e.descripcion,
+        })
+        .FirstOrDefault();
+
+            if (empresa == null)
             {
                 return NotFound();
             }
 
-            return Ok(tareas);
+            return Ok(empresa);
         }
 
         // PUT: api/Tareas/5
@@ -80,22 +99,7 @@ namespace apiMIRAI_Construcciones.Controllers
             }
 
             db.Tareas.Add(tareas);
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (TareasExists(tareas.idTareas))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = tareas.idTareas }, tareas);
         }

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace apiMIRAI_Construcciones.Data
+namespace APIMIRAI_Construcciones.Data
 {
     using System;
     using System.Collections.Generic;
@@ -18,14 +18,14 @@ namespace apiMIRAI_Construcciones.Data
         public Nullable<int> idfRevisiones { get; set; }
         public Nullable<int> idfCategoriasPreventivas { get; set; }
         public string nombreParte { get; set; }
+        public Nullable<int> idfEstadoPrioridades { get; set; }
         public string comentarios { get; set; }
         public string observaciones { get; set; }
         public Nullable<System.DateTime> fecha { get; set; }
         public int numeroReporte { get; set; }
-        public Nullable<int> idfEstadoPrioridades { get; set; }
     
         public virtual CategoriasPreventivas CategoriasPreventivas { get; set; }
-        public virtual Revisiones Revisiones { get; set; }
         public virtual Prioridades Prioridades { get; set; }
+        public virtual Revisiones Revisiones { get; set; }
     }
 }

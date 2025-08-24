@@ -8,31 +8,58 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using apiMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Models;
 
-namespace apiMIRAI_Construcciones.Controllers
+namespace APIMIRAI_Construcciones.Controllers
 {
     public class RevisionesController : ApiController
     {
-        private AlmacenTAEPIEntities db = new AlmacenTAEPIEntities();
+        private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/Revisiones
-        public IQueryable<Revisiones> GetRevisiones()
+        public IHttpActionResult GetRevisiones()
         {
-            return db.Revisiones;
+            var empresas = db.Revisiones
+                .Select(e => new RevisionesDto
+                {
+                    idRevisiones = e.idRevisiones,
+                    idfTiposMantenimientos = e.idfTiposMantenimientos,
+                    idfEquipos = e.idfEquipos,
+                    idfUsuarios = e.idfUsuarios,
+                    idfEmpresas = e.idfEmpresas,
+                    fecha = e.fecha,
+                    descripcion = e.descripcion,
+                })
+                .ToList();
+
+            return Ok(empresas);
         }
 
         // GET: api/Revisiones/5
         [ResponseType(typeof(Revisiones))]
         public IHttpActionResult GetRevisiones(int id)
         {
-            Revisiones revisiones = db.Revisiones.Find(id);
-            if (revisiones == null)
+            var empresa = db.Revisiones
+        .Where(e => e.idRevisiones == id)
+        .Select(e => new RevisionesDto
+        {
+            idRevisiones = e.idRevisiones,
+            idfTiposMantenimientos = e.idfTiposMantenimientos,
+            idfEquipos = e.idfEquipos,
+            idfUsuarios = e.idfUsuarios,
+            idfEmpresas = e.idfEmpresas,
+            fecha = e.fecha,
+            descripcion = e.descripcion,
+        })
+        .FirstOrDefault();
+
+            if (empresa == null)
             {
                 return NotFound();
             }
 
-            return Ok(revisiones);
+            return Ok(empresa);
         }
 
         // PUT: api/Revisiones/5

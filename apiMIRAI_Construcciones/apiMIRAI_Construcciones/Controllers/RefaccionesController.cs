@@ -8,31 +8,64 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using apiMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Models;
 
-namespace apiMIRAI_Construcciones.Controllers
+namespace APIMIRAI_Construcciones.Controllers
 {
     public class RefaccionesController : ApiController
     {
-        private AlmacenTAEPIEntities db = new AlmacenTAEPIEntities();
+        private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/Refacciones
-        public IQueryable<Refacciones> GetRefacciones()
+        public IHttpActionResult GetRefacciones()
         {
-            return db.Refacciones;
+            var empresas = db.Refacciones
+                .Select(e => new RefaccionesDto
+                {
+                    idRefacciones = e.idRefacciones,
+                    idfRevisiones = e.idfRevisiones,
+                    idfUnidades = e.idfUnidades,
+                    nombreRefaccion = e.nombreRefaccion,
+                    idfDescripcionPrioridades = e.idfDescripcionPrioridades,
+                    cantidad = e.cantidad,
+                    observaciones = e.observaciones,
+                    fecha = e.fecha,
+                    numeroReporte = e.numeroReporte,
+                    descripcion = e.descripcion,
+                })
+                .ToList();
+
+            return Ok(empresas);
         }
 
         // GET: api/Refacciones/5
         [ResponseType(typeof(Refacciones))]
         public IHttpActionResult GetRefacciones(int id)
         {
-            Refacciones refacciones = db.Refacciones.Find(id);
-            if (refacciones == null)
+            var empresa = db.Refacciones
+        .Where(e => e.idRefacciones == id)
+        .Select(e => new RefaccionesDto
+        {
+            idRefacciones = e.idRefacciones,
+            idfRevisiones = e.idfRevisiones,
+            idfUnidades = e.idfUnidades,
+            nombreRefaccion = e.nombreRefaccion,
+            idfDescripcionPrioridades = e.idfDescripcionPrioridades,
+            cantidad = e.cantidad,
+            observaciones = e.observaciones,
+            fecha = e.fecha,
+            numeroReporte  = e.numeroReporte,
+            descripcion = e.descripcion,
+        })
+        .FirstOrDefault();
+
+            if (empresa == null)
             {
                 return NotFound();
             }
 
-            return Ok(refacciones);
+            return Ok(empresa);
         }
 
         // PUT: api/Refacciones/5
@@ -79,23 +112,11 @@ namespace apiMIRAI_Construcciones.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Refacciones.Add(refacciones);
+            /*var numeroReporteService = new SumarNoReporte();
+            refacciones.numeroReporte = numeroReporteService.GenerarNuevoNumeroReporte();*/
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (RefaccionesExists(refacciones.idRefacciones))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            db.Refacciones.Add(refacciones);
+            db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = refacciones.idRefacciones }, refacciones);
         }
@@ -128,6 +149,17 @@ namespace apiMIRAI_Construcciones.Controllers
         private bool RefaccionesExists(int id)
         {
             return db.Refacciones.Count(e => e.idRefacciones == id) > 0;
+        }
+
+        [HttpGet]
+        [Route("api/UltimoReporte")]
+        public IHttpActionResult UltimoReporte()
+        {
+            int ultimoRefacciones = db.Refacciones.Any()
+                ? db.Refacciones.Max(r => r.numeroReporte): 0;
+
+            //return ultimoRefacciones;
+            return Ok(ultimoRefacciones);
         }
     }
 }

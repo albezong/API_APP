@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35825.156
+VisualStudioVersion = 17.13.35825.156 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "apiMIRAI_Construcciones", "apiMIRAI_Construcciones\apiMIRAI_Construcciones.csproj", "{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIMIRAI_Construcciones", "APIMIRAI_Construcciones\APIMIRAI_Construcciones.csproj", "{F7F5AAAC-7C8F-4403-AFEF-61B45CDD823F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FE9255EF-4D66-4FF5-BE03-CDFAD1D0A3D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7F5AAAC-7C8F-4403-AFEF-61B45CDD823F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7F5AAAC-7C8F-4403-AFEF-61B45CDD823F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7F5AAAC-7C8F-4403-AFEF-61B45CDD823F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7F5AAAC-7C8F-4403-AFEF-61B45CDD823F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E55F6960-FB17-4A22-AAF8-9B4B0FB342CB}
+		SolutionGuid = {ABA257ED-798F-49C7-AA50-E0029AE23CF2}
 	EndGlobalSection
 EndGlobal

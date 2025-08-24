@@ -8,31 +8,48 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using apiMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Models;
 
-namespace apiMIRAI_Construcciones.Controllers
+namespace APIMIRAI_Construcciones.Controllers
 {
     public class EstatusController : ApiController
     {
-        private AlmacenTAEPIEntities db = new AlmacenTAEPIEntities();
+        private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/Estatus
-        public IQueryable<Estatus> GetEstatus()
+        public IHttpActionResult GetEstatus()
         {
-            return db.Estatus;
+            var empresas = db.Estatus
+                .Select(e => new EstatusDto
+                {
+                    idEstatus = e.idEstatus,
+                    nombre = e.nombre,
+                })
+                .ToList();
+
+            return Ok(empresas);
         }
 
         // GET: api/Estatus/5
         [ResponseType(typeof(Estatus))]
         public IHttpActionResult GetEstatus(int id)
         {
-            Estatus estatus = db.Estatus.Find(id);
-            if (estatus == null)
+            var empresa = db.Estatus
+        .Where(e => e.idEstatus == id)
+        .Select(e => new EstatusDto
+        {
+            idEstatus = e.idEstatus,
+            nombre = e.nombre,
+        })
+        .FirstOrDefault();
+
+            if (empresa == null)
             {
                 return NotFound();
             }
 
-            return Ok(estatus);
+            return Ok(empresa);
         }
 
         // PUT: api/Estatus/5

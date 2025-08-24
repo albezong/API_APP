@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace apiMIRAI_Construcciones.Data
+namespace APIMIRAI_Construcciones.Data
 {
     using System;
     using System.Collections.Generic;
@@ -27,6 +27,7 @@ namespace apiMIRAI_Construcciones.Data
         public string apellidoMaterno { get; set; }
         public string contraseña { get; set; }
         public Nullable<int> idfRoles { get; set; }
+        public string telefono { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Recordatorios> Recordatorios { get; set; }

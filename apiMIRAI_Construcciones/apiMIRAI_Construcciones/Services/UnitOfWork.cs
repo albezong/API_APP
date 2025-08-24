@@ -1,21 +1,21 @@
-﻿using apiMIRAI_Construcciones.Data;
+﻿using APIMIRAI_Construcciones.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using apiMIRAI_Construcciones.Infraestructura;
-using apiMIRAI_Construcciones.Data.QRDB;
+using APIMIRAI_Construcciones.Infraestructura;
+using APIMIRAI_Construcciones.Services;
 
-namespace apiMIRAI_Construcciones.Services
+namespace APIMIRAI_Construcciones.Services
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly AlmacenTAEPIEntities _context;
+        private readonly PruebaAlmacenTAEPIEntities1 _context;
         public IRepository<QrEquipos> QrEquipos { get; private set; }
 
         public UnitOfWork()
         {
-            this._context = new AlmacenTAEPIEntities();
+            this._context = new PruebaAlmacenTAEPIEntities1();
             QrEquipos = new EquiposRepository();
         }
 
@@ -35,17 +35,6 @@ namespace apiMIRAI_Construcciones.Services
             {
                 return false;
             }
-
-
-            /*
-            if (QR != null)
-            {
-
-                 = Convert.ToBase64String(QR);
-                _context.SaveChanges();
-                return true;
-            }
-            else { return false;  }*/
         }
 
         public int Complete()

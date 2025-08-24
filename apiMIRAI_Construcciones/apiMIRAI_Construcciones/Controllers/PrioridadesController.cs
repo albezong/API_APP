@@ -8,31 +8,48 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using apiMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Models;
 
-namespace apiMIRAI_Construcciones.Controllers
+namespace APIMIRAI_Construcciones.Controllers
 {
     public class PrioridadesController : ApiController
     {
-        private AlmacenTAEPIEntities db = new AlmacenTAEPIEntities();
+        private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/Prioridades
-        public IQueryable<Prioridades> GetPrioridades()
+        public IHttpActionResult GetPrioridades()
         {
-            return db.Prioridades;
+            var empresas = db.Prioridades
+                .Select(e => new PrioridadesDto
+                {
+                    idPrioridades = e.idPrioridades,
+                    nombre = e.nombre,
+                })
+                .ToList();
+
+            return Ok(empresas);
         }
 
         // GET: api/Prioridades/5
         [ResponseType(typeof(Prioridades))]
         public IHttpActionResult GetPrioridades(int id)
         {
-            Prioridades prioridades = db.Prioridades.Find(id);
-            if (prioridades == null)
+            var empresa = db.Prioridades
+        .Where(e => e.idPrioridades == id)
+        .Select(e => new PrioridadesDto
+        {
+            idPrioridades = e.idPrioridades,
+            nombre = e.nombre,
+        })
+        .FirstOrDefault();
+
+            if (empresa == null)
             {
                 return NotFound();
             }
 
-            return Ok(prioridades);
+            return Ok(empresa);
         }
 
         // PUT: api/Prioridades/5

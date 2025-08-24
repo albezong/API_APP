@@ -1,15 +1,17 @@
-﻿using apiMIRAI_Construcciones.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using APIMIRAI_Construcciones.Data;
+using System.Web.Http.Description;
+using System.Web.Http;
 
-namespace apiMIRAI_Construcciones.Models
+namespace APIMIRAI_Construcciones.Models
 {
-	public class RecordatoriosDto
-	{
+    public class RecordatoriosDto
+    {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int idRecordatorios { get; set; }

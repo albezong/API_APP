@@ -8,31 +8,48 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using apiMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Data;
+using APIMIRAI_Construcciones.Models;
 
-namespace apiMIRAI_Construcciones.Controllers
+namespace APIMIRAI_Construcciones.Controllers
 {
     public class CategoriasPreventivasController : ApiController
     {
-        private AlmacenTAEPIEntities db = new AlmacenTAEPIEntities();
+        private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/CategoriasPreventivas
-        public IQueryable<CategoriasPreventivas> GetCategoriasPreventivas()
+        public IHttpActionResult GetCategoriasPreventivas()
         {
-            return db.CategoriasPreventivas;
+            var catPreventivas = db.CategoriasPreventivas
+                .Select(e => new CategoriasPreventivasDto
+                {
+                    idCategoriasPreventivas = e.idCategoriasPreventivas,
+                    nombreCategorias = e.nombreCategorias,
+                })
+                .ToList();
+
+            return Ok(catPreventivas);
         }
 
         // GET: api/CategoriasPreventivas/5
         [ResponseType(typeof(CategoriasPreventivas))]
         public IHttpActionResult GetCategoriasPreventivas(int id)
         {
-            CategoriasPreventivas categoriasPreventivas = db.CategoriasPreventivas.Find(id);
-            if (categoriasPreventivas == null)
+            var empresa = db.CategoriasPreventivas
+        .Where(e => e.idCategoriasPreventivas== id)
+        .Select(e => new CategoriasPreventivasDto
+        {
+            idCategoriasPreventivas = e.idCategoriasPreventivas,
+            nombreCategorias = e.nombreCategorias,
+        })
+        .FirstOrDefault();
+
+            if (empresa == null)
             {
                 return NotFound();
             }
 
-            return Ok(categoriasPreventivas);
+            return Ok(empresa);
         }
 
         // PUT: api/CategoriasPreventivas/5
