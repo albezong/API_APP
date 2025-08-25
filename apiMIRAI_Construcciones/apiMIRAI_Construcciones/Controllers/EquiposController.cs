@@ -124,22 +124,30 @@ namespace APIMIRAI_Construcciones.Controllers
             }
 
             db.Equipos.Add(equipos);
-            db.SaveChanges(); 
+            db.SaveChanges();
+
+            var equipoCompleto = db.Equipos
+    .Include("Ubicaciones")
+    .Include("Unidades")
+    .Include("Estatus")
+    .Include("TiposMaquinarias")
+    .Include("Lugares")
+    .FirstOrDefault(e => e.idEquipos == equipos.idEquipos);
 
             var datos =
-                $"Codigo del Articulo:{equipos.codigoArticulo}, " +
-                $"Nombre del Articulo:{equipos.nombreArticulo}, " +
-                $"Nombre Comercial:{equipos.nombreComercial}, " +
-                $"Numero Identificador:{equipos.numIdentificador}, " +
-                $"Descripcion:{equipos.descripcion}, " +
-                $"Marca:{equipos.marca}, " +
-                $"Modelo:{equipos.modelo}, " +
-                $"Fecha de Registro:{equipos.fechadeRegistro}, " +
-                $"Ubicacion:{equipos.Ubicaciones.nombre}, " +
-                $"Unidad:{equipos.Unidades.nombre}, " +
-                $"Estatus:{equipos.Estatus.nombre}, " +
-                $"Tipo de Maquinaria:{equipos.TiposMaquinarias.nombre}, " +
-                $"Se encuentra en:{equipos.Lugares.Where(r=>r.idfEquipos == equipos.idEquipos).Select(y=>y.nombreLugar).Distinct()}";
+    $"Codigo del Articulo:{equipoCompleto.codigoArticulo}, " +
+    $"Nombre del Articulo:{equipoCompleto.nombreArticulo}, " +
+    $"Nombre Comercial:{equipoCompleto.nombreComercial}, " +
+    $"Numero Identificador:{equipoCompleto.numIdentificador}, " +
+    $"Descripcion:{equipoCompleto.descripcion}, " +
+    $"Marca:{equipoCompleto.marca}, " +
+    $"Modelo:{equipoCompleto.modelo}, " +
+    $"Fecha de Registro:{equipoCompleto.fechadeRegistro}, " +
+    $"Ubicacion:{equipoCompleto.Ubicaciones?.nombre ?? "Sin Ubicación"}, " +
+    $"Unidad:{equipoCompleto.Unidades?.nombre ?? "Sin Unidad"}, " +
+    $"Estatus:{equipoCompleto.Estatus?.nombre ?? "Sin Estatus"}, " +
+    $"Tipo de Maquinaria:{equipoCompleto.TiposMaquinarias?.nombre ?? "Sin Tipo"}, " +
+    $"Se encuentra en:{equipoCompleto.Lugares.FirstOrDefault()?.nombreLugar ?? "Sin Lugar"}";
             var qrImagen = QrCodeGeneratorHelper.GenerateQRCode(datos); 
 
             var qrBase64 = Convert.ToBase64String(qrImagen);
@@ -155,8 +163,7 @@ namespace APIMIRAI_Construcciones.Controllers
 
             return CreatedAtRoute("DefaultApi", new { id = equipos.idEquipos }, new
             {
-                Equipo = equipos,
-                Qr = qrEquipo
+                Equipo = equipos
             });
         }
 

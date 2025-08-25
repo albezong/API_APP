@@ -1,5 +1,7 @@
 package mx.edu.utt.dsi_code.appmiraiconstrucciones.data.model
 
+import com.google.gson.annotations.SerializedName
+
 data class Post_MaquinariasYVehiculosDto(
     val total: Int,
     val page: Int,
@@ -21,5 +23,6 @@ data class Maquinaria(
     val unidad_nombre: String,
     val estatus_nombre: String,
     val tipo_maquinaria_nombre: String,
-    val nombreLugar: String
+    //val nombreLugar: String
+    @SerializedName("nombre_lugar") val nombreLugar: String
 )

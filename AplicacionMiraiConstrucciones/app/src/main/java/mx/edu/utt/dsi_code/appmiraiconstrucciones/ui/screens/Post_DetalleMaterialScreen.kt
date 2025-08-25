@@ -16,7 +16,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.model.Post_MaquinariasYVehiculosDto
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_MaquinariasYVehiculosDto_ViewModel
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -67,3 +69,18 @@ fun DetalleMaterialScreen(
         }
     }
 }
+
+
+/*
+@Composable
+fun DetalleMaquinariaScreen(maquinaria: Post_MaquinariasYVehiculosDto_ViewModel) {
+    Column(modifier = Modifier.padding(16.dp)) {
+        Text("Detalle de Maquinaria", style = MaterialTheme.typography.headlineMedium)
+        Spacer(Modifier.height(8.dp))
+        Text("Nombre: ${maquinaria.nombreArticulo}")
+        Text("Descripción: ${maquinaria.descripcion}")
+        Text("Categoría: ${maquinaria.nom}")
+        // 👈 aquí agregas más campos o UI
+    }
+}
+*/

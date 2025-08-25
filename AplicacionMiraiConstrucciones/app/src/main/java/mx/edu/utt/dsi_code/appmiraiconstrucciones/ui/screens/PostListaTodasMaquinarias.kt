@@ -5,122 +5,148 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text2.input.TextFieldState
+import androidx.compose.material.SnackbarDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.isTraversalGroup
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.model.Maquinaria
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.theme.Grey80
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_MaquinariasYVehiculosDto_ViewModel
 
 /*
-data class Material(
-    val nombre: String,
-    val cantidad: String,
-    val unidad: String,
-    val codigo: String,
-    val categoria: String
-)*/
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PostListaTodasMaquiunarias(
     navController: NavController,
     viewModel: Post_MaquinariasYVehiculosDto_ViewModel,
+) {*/
+
+@Composable
+fun PostListaTodasMaquiunarias(
+    navController: NavHostController,
+    viewModel: Post_MaquinariasYVehiculosDto_ViewModel,
 ) {
-    // Dentro de tu Composable
-    val posts = viewModel.posts.collectAsState(initial = emptyList()).value
+    val posts by viewModel.posts.collectAsState()
+    var query by remember { mutableStateOf("") }
 
-    //Esto toma todos los items de cada Post_MaquinariasYVehiculosDto
-    val materiales = posts.flatMap { it.items }
-
-
-    var search by remember { mutableStateOf("") }
-
-    // Cuando entra la pantalla, dispara la carga inicial
+    // Esto asegura que se cargue la lista completa al abrir la pantalla
     LaunchedEffect(Unit) {
-        viewModel.fetchPosts()
+        viewModel.fetchPosts(search = "") // o sin parámetro si tu función lo permite
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Lista de toda la Maquinaria y/o equipo, herramientas y consumibles") }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        // Título
+        Box(
+            modifier = Modifier
+                .fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "Lista de toda la Maquinaria y /o equipo",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.SemiBold
             )
         }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .padding(16.dp)
-                .fillMaxSize()
+
+        Spacer(modifier = Modifier.height(16.dp)) // Espacio entre título y barra
+
+        // Barra de búsqueda
+        CustomizableSearchBar(
+            query = query,
+            onQueryChange = { newQuery ->
+                query = newQuery
+                viewModel.fetchPosts(search = newQuery)
+            },
+            onSearch = { searchText ->
+                viewModel.fetchPosts(search = searchText)
+            },
+            posts = posts,
+            onResultClick = { selected ->
+                navController.navigate("detalle_maquinaria/${selected.id_equipos}")
+            },
+            placeholder = { Text("Buscar maquinaria...") },
+            leadingIcon = {
+                Icon(Icons.Default.Search, contentDescription = "Buscar")
+            },
+        )
+    }
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CustomizableSearchBar(
+    query: String,
+    onQueryChange: (String) -> Unit,
+    onSearch: (String) -> Unit,
+    posts: List<Maquinaria>, // 👈 recibe la lista completa del tipo que tengas
+    onResultClick: (Maquinaria) -> Unit,
+    placeholder: @Composable () -> Unit,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+    ) {
+        TextField(
+            value = query,
+            onValueChange = { onQueryChange(it) },
+            placeholder = placeholder,
+            leadingIcon = leadingIcon,
+            trailingIcon = trailingIcon,
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        LazyColumn(
+            modifier = Modifier.fillMaxSize()
+            //.background(Color.Gray)
         ) {
-            OutlinedTextField(
-                value = search,
-                onValueChange = {
-                    search = it
-                    // cada vez que cambia, vuelve a buscar filtrado
-                    //viewModel.fetchPosts(search = it)
-                },
-                label = { Text("Buscar") },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            LazyColumn {
-                // Agrupamos por tipo o categoría si tu DTO lo tiene (ejemplo: it.tipo)
-                //val agrupados = materiales.groupBy { it.id_equipos ?: "General" }
-                //agrupados.forEach { (categoria, lista) ->
-                /*
-                item {
-                    Text(
-                        text = categoria,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(Color.LightGray)
-                            .padding(8.dp)
-                    )
-                }*/
-
-                items(materiales) { material ->
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 8.dp),
-                        verticalAlignment = Alignment.CenterVertically
+            items(posts) { post ->
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                        .clickable {
+                            onResultClick(post)
+                        },
+                ) {
+                    Column(modifier = Modifier
+                        .padding(16.dp)
+                        //.background(Color.Gray)
                     ) {
-                        Column(
-                            modifier = Modifier.weight(1f)
-                        ) {
-                            Text(text = "Maquinaria/Equipo: ${material.nombre_comercial ?: "-"}")
-                            Text(text = "Cantidad: 1")
-                            Text(text = "Unidad: ${material.unidad_nombre ?: "-"}")
-                            Text(text = "Código: ${material.codigo_articulo ?: "-"}")
-                        }
-
-                        Icon(
-                            imageVector = Icons.Default.Info,
-                            contentDescription = "Info",
-                            tint = Color.Blue,
-                            modifier = Modifier
-                                .size(28.dp)
-                                .clickable {
-                                    // navegación al detalle con el id
-                                    navController.navigate("detalle/${material.id_equipos}")
-                                }
+                        Text(
+                            text = post.nombre_articulo,
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        Text(
+                            text = post.descripcion ?: "",
+                            style = MaterialTheme.typography.bodyMedium
                         )
                     }
-                    Divider()
-
                 }
             }
         }

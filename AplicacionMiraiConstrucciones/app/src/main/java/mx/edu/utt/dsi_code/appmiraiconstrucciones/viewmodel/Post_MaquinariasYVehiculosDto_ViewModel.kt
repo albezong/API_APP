@@ -11,39 +11,38 @@ import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_Maquinari
 
 class Post_MaquinariasYVehiculosDto_ViewModel(private val repository: Post_MaquinariasYVehiculosDto_Repository): ViewModel() {
 
-    private val _posts = MutableStateFlow<List<Post_MaquinariasYVehiculosDto>>(emptyList())
-    val posts: StateFlow<List<Post_MaquinariasYVehiculosDto>> = _posts
+    private val _posts = MutableStateFlow<List<Maquinaria>>(emptyList())
+    val posts: StateFlow<List<Maquinaria>> = _posts
 
-    val _selectedPost = MutableStateFlow<Maquinaria?>(null)
+    private val _selectedPost = MutableStateFlow<Maquinaria?>(null)
     val selectedPost: StateFlow<Maquinaria?> = _selectedPost
 
-    fun fetchPosts(search: String? = null,
-                   tipo: String? = null,
-                   tipoId: Int? = null,
-                   page: Int? = null,
-                   pageSize: Int? = null) {
+    fun fetchPosts(
+        search: String? = null,
+        tipo: String? = null,
+        tipoId: Int? = null,
+        page: Int? = null,
+        pageSize: Int? = null
+    ) {
         viewModelScope.launch {
             try {
-            //_posts.value =
-                repository.getMaquinarias(search, tipo, tipoId, page, pageSize)
-                fetchPosts()
-            } catch (e: Exception) {
-               e.printStackTrace()
-            }
-        }
-    }
-
-
-    fun getPostById(id: Int) {
-        viewModelScope.launch {
-            try {
-                _selectedPost.value = repository.getMaquinariaById(id)
+                val response = repository.getMaquinarias(search, tipo, tipoId, page, pageSize)
+                _posts.value = response.items  // asumiendo que tu DTO tiene `items: List<Maquinaria>`
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
     }
 
-
+    fun getPostById(id: Int) {
+        viewModelScope.launch {
+            try {
+                val result = repository.getMaquinariaById(id) // aquí vas a tu API o DB
+                _selectedPost.value = result
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
 
 }

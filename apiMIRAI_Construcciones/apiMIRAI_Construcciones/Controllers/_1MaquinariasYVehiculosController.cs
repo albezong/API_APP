@@ -33,6 +33,7 @@ namespace APIMIRAI_Construcciones.Controllers
             public string estatus_nombre { get; set; }
             public int? idf_tipos_maquinarias { get; set; }
             public string tipo_maquinaria_nombre { get; set; }
+            public string nombre_Lugar { get; set; }
         }
 
         [HttpGet, Route("")]
@@ -154,7 +155,8 @@ namespace APIMIRAI_Construcciones.Controllers
                 idf_estatus = e.idfEstatus,
                 estatus_nombre = e.Estatus != null ? e.Estatus.nombre : null,
                 idf_tipos_maquinarias = e.idfTiposMaquinarias,
-                tipo_maquinaria_nombre = e.TiposMaquinarias != null ? e.TiposMaquinarias.nombre : null
+                tipo_maquinaria_nombre = e.TiposMaquinarias != null ? e.TiposMaquinarias.nombre : null,
+                nombre_Lugar = e.Lugares != null ? e.Lugares.FirstOrDefault().nombreLugar : null
             };
 
             return Ok(dto);

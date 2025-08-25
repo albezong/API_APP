@@ -3,15 +3,13 @@
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\DELL\Documents\Estadias-6to-GitHub-21_05_2025-15_08_2025\APIMIRAI_Construcciones\APIMIRAI_Construcciones\bin\app.publish\</_PublishTargetUrl>
-    <History>True|2025-08-24T01:13:36.0482946Z||;</History>
-    <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/APIMIRAI_Construcciones.dll">
-      <publishTime>08/23/2025 19:13:30</publishTime>
+      <publishTime>08/24/2025 12:55:57</publishTime>
     </File>
     <File Include="bin/APIMIRAI_Construcciones.pdb">
-      <publishTime>08/23/2025 19:13:30</publishTime>
+      <publishTime>08/24/2025 12:55:57</publishTime>
     </File>
     <File Include="bin/AutoMapper.dll">
       <publishTime>11/17/2018 04:14:56</publishTime>

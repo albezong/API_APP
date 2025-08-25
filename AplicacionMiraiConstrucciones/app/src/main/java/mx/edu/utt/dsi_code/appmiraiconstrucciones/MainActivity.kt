@@ -10,14 +10,24 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.layout.size
+//-------------------------------------------------
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 
+import androidx.compose.material.*
+
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
+import kotlinx.coroutines.launch
+//-------------------------------------------------
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -26,7 +36,6 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -49,7 +58,11 @@ import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.Destinos
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.Destinos.ico_info
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.Destinos.ico_search
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.NavigationHost
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.screens.DetalleMaterialScreen
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.screens.PostListaTodasMaquiunarias
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.screens.Post_LogIn
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.theme.APPMiraiConstruccionesTheme
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.theme.Grey80
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_MaquinariasYVehiculosDto_ViewModel
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_MaquinariasYVehiculosDto_ViewModel_Factory
 
@@ -60,13 +73,38 @@ class MainActivity : ComponentActivity() {
         val viewModelFactory = Post_MaquinariasYVehiculosDto_ViewModel_Factory(repository)
         val postViewModel = ViewModelProvider(this, viewModelFactory)[Post_MaquinariasYVehiculosDto_ViewModel::class.java]
 
+        /*
         setContent {
             APPMiraiConstruccionesTheme {
                 val navController = rememberNavController()
 
-                NavHost(navController = navController, startDestination = "post_list") {
-                    composable("post_list") {
+                NavHost(navController = navController, startDestination = "login") {
+                    composable("login") {
+                        Post_LogIn(navController)
+                    }
+                    *composable("/lista_maquinarias") {
                         PantallaPrincipal(viewModel = postViewModel, navController = navController)
+                    }*
+                }
+            }
+        }*/
+
+        setContent {
+            APPMiraiConstruccionesTheme {
+                val navController = rememberNavController()
+
+                NavHost(navController = navController, startDestination = "login") {
+                    composable("login") {
+                        Post_LogIn(navController) // login SIN barra
+                    }
+                    composable("lista_maquinarias") {
+                        PantallaPrincipal(viewModel = postViewModel, navController = navController)
+                    }
+                    composable("detalle_maquinaria/{id}") { backStackEntry ->
+                        val id = backStackEntry.arguments?.getString("id")?.toIntOrNull()
+                        if (id != null) {
+                            DetalleMaterialScreen(navController, id, postViewModel)
+                        }
                     }
                 }
             }
@@ -81,7 +119,7 @@ fun PantallaPrincipal(
     viewModel: Post_MaquinariasYVehiculosDto_ViewModel,
     navController: androidx.navigation.NavHostController
 ) {
-    val navController = rememberNavController()
+    //val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     val navigationItems = listOf(
@@ -100,9 +138,9 @@ fun PantallaPrincipal(
                 menu_items = navigationItems
             )
         }
-    ) {
-        //PostListScreen_list(navController = navController, viewModel = viewModel)
-        NavigationHost(navController = navController, viewModel = viewModel)
+    ) {innerPadding ->
+        // contenido principal: por ejemplo tu lista
+        PostListaTodasMaquiunarias(navController = navController, viewModel = viewModel)
     }
 }
 
@@ -113,6 +151,9 @@ fun TopBar(
 ) {
     TopAppBar(
         title = { androidx.compose.material.Text(text = "MIRAI CONSTRUCCIONES") },
+        /*colors = TopAppBarDefaults.smallTopAppBarColors(
+            containerColor = Color(0xFF009688) // aquí pones el color que quieras
+        ),*/
         navigationIcon = {
             IconButton(onClick = {
                 scope.launch {
@@ -121,7 +162,8 @@ fun TopBar(
             }) {
                 Icon(imageVector = Icons.Filled.Menu, contentDescription = "Icono de menú")
             }
-        }
+        },
+        backgroundColor = Grey80
     )
 }
 
@@ -130,33 +172,31 @@ fun Drawer(
     scope: CoroutineScope,
     scaffoldState: ScaffoldState,
     navController: NavHostController,
-    menu_items: List<Destinos>) {
-    /*
-    val menuItems = listOf(
-        "Tu mascota",
-        "Contenidos",
-        "Busca una mascota",
-        "Eventos",
-        "Premium"
-    )
-    */
-
-    Column(){
+    menu_items: List<Destinos>
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Grey80) // 👈 Fondo con tu color Grey80
+            .padding(16.dp)     // opcional, para dar espacio interno
+    ) {
         Image(
             painterResource(id = R.drawable.baseline_account_circle_24),
-            contentDescription = "Menu de ociones",
+            contentDescription = "Menu de opciones",
             modifier = Modifier
                 .size(65.dp)
-                .clip(RoundedCornerShape(50)), // opcional, para que quede redonda
+                .clip(RoundedCornerShape(35)), // opcional, para que quede redonda
             contentScale = ContentScale.Crop
         )
-        Spacer(modifier = Modifier
-            .fillMaxWidth()
-            .height(15.dp))
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(15.dp)
+        )
 
         menu_items.forEach { item ->
-            DrawerItem(item = item){
-                navController.navigate(item.ruta){
+            DrawerItem(item = item) {
+                navController.navigate(item.ruta) {
                     launchSingleTop = true
                 }
                 scope.launch {
@@ -166,6 +206,7 @@ fun Drawer(
         }
     }
 }
+
 
 @Composable
 fun DrawerItem(item: Destinos,
@@ -189,6 +230,9 @@ fun DrawerItem(item: Destinos,
     }
 }
 
+
+
+//
 @Preview(showBackground = true)
 @Composable
 fun PantallaPrincipalPreview() {

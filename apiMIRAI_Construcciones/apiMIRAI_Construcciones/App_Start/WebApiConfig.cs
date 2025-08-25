@@ -15,6 +15,10 @@ namespace APIMIRAI_Construcciones
             config.EnableCors(cors);
             // Configuración y servicios de Web API
 
+            var json = config.Formatters.JsonFormatter;
+            json.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+
+
             // Rutas de Web API
             config.MapHttpAttributeRoutes();
 
