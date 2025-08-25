@@ -12,3 +12,14 @@ class Post_UsuariosDto_ViewModel_Factory(private val repository: Post_UsuariosDt
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
+
+
+class UsuariosViewModelFactory(private val repo: Post_UsuariosDto_Repository) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(UsuariosViewModelLogeo::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return UsuariosViewModelLogeo(repo) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+}

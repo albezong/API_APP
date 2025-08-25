@@ -17,10 +17,10 @@ class Post_UsuariosDto_ViewModel(private val repository: Post_UsuariosDto_Reposi
     val _selectedPost = MutableStateFlow<Post_UsuariosDto?>(null)
     val selectedPost: StateFlow<Post_UsuariosDto?> = _selectedPost
 
-    fun getAllUsuarios() {
+    fun fetchPosts() {
         viewModelScope.launch {
             //try {
-            _posts.value = repository.getAllUsuarios()
+            _posts.value = repository.getAll()
             //} catch (e: Exception) {
             //   e.printStackTrace()
             //}
@@ -30,29 +30,8 @@ class Post_UsuariosDto_ViewModel(private val repository: Post_UsuariosDto_Reposi
     fun createUsuario(post: Create_UsuariosDto_2) {
         viewModelScope.launch {
             try {
-                repository.getUsuarioById(post)
-                getAllUsuarios()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-    }
-
-    fun getUsuarioById(id: Int) {
-        viewModelScope.launch {
-            try {
-                _selectedPost.value = repository.createUsuario(id)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-    }
-
-    fun updateUsuario(id: Int, post: Create_UsuariosDto_2) {
-        viewModelScope.launch {
-            try {
-                repository.updateUsuario(id, post)
-                getAllUsuarios()
+                repository.create(post)
+                fetchPosts()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -62,11 +41,66 @@ class Post_UsuariosDto_ViewModel(private val repository: Post_UsuariosDto_Reposi
     fun deleteUsuario(id: Int) {
         viewModelScope.launch {
             try {
-                repository.deleteUsuario(id)
-                getAllUsuarios()
+                repository.delete(id)
+                fetchPosts()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
+    }
+
+    fun getUsuarioById(id: Int) {
+        viewModelScope.launch {
+            try {
+                _selectedPost.value = repository.getById(id)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun updateUsuario(id: Int, post: Create_UsuariosDto_2) {
+        viewModelScope.launch {
+            try {
+                repository.update(id, post)
+                fetchPosts()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+}
+
+sealed class LoginState {
+    object Idle : LoginState()
+    object Loading : LoginState()
+    data class Success(val usuario: Post_UsuariosDto) : LoginState()
+    data class Error(val message: String) : LoginState()
+}
+
+class UsuariosViewModelLogeo(private val repository: Post_UsuariosDto_Repository) : ViewModel() {
+
+    private val _loginState = MutableStateFlow<LoginState>(LoginState.Idle)
+    val loginState: StateFlow<LoginState> = _loginState
+
+    fun authenticate(nombre: String, password: String) {
+        viewModelScope.launch {
+            _loginState.value = LoginState.Loading
+            try {
+                val user = repository.authenticate(nombre.trim(), password)
+                if (user != null) {
+                    _loginState.value = LoginState.Success(user)
+                } else {
+                    _loginState.value = LoginState.Error("Correo o contraseña incorrectos")
+                }
+            } catch (e: Exception) {
+                _loginState.value = LoginState.Error(e.message ?: "Error de red")
+            }
+        }
+    }
+
+    fun reset() {
+        _loginState.value = LoginState.Idle
     }
 }

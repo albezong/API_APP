@@ -16,6 +16,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
@@ -25,17 +26,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.R
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.model.Maquinaria
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.theme.Grey80
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_MaquinariasYVehiculosDto_ViewModel
-
-/*
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun PostListaTodasMaquiunarias(
-    navController: NavController,
-    viewModel: Post_MaquinariasYVehiculosDto_ViewModel,
-) {*/
 
 @Composable
 fun PostListaTodasMaquiunarias(
@@ -65,6 +59,10 @@ fun PostListaTodasMaquiunarias(
                 text = "Lista de toda la Maquinaria y /o equipo",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.SemiBold
+            )
+            Icon(
+                painter = painterResource(R.drawable.baseline_add_circle_outline_24),
+                contentDescription = "addCircle"
             )
         }
 

@@ -61,6 +61,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.api.RetrofitClient
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_MaquinariasYVehiculosDto_Repository
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_UsuariosDto_Repository
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.Destinos
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.Destinos.ico_info
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.Destinos.ico_search
@@ -72,57 +73,33 @@ import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.theme.APPMiraiConstruccione
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.theme.Grey80
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_MaquinariasYVehiculosDto_ViewModel
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_MaquinariasYVehiculosDto_ViewModel_Factory
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.UsuariosViewModelFactory
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.UsuariosViewModelLogeo
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val repository = Post_MaquinariasYVehiculosDto_Repository(RetrofitClient.apiService)
-        val viewModelFactory = Post_MaquinariasYVehiculosDto_ViewModel_Factory(repository)
-        val postViewModel = ViewModelProvider(
-            this,
-            viewModelFactory
-        )[Post_MaquinariasYVehiculosDto_ViewModel::class.java]
 
-        /*
-        setContent {
-            APPMiraiConstruccionesTheme {
-                val navController = rememberNavController()
+        // Repo y factory para maquinarias (ya lo tenías)
+        val repoMaquinas = Post_MaquinariasYVehiculosDto_Repository(RetrofitClient.apiService)
+        val factoryMaquinas = Post_MaquinariasYVehiculosDto_ViewModel_Factory(repoMaquinas)
+        val postViewModel = ViewModelProvider(this, factoryMaquinas)[Post_MaquinariasYVehiculosDto_ViewModel::class.java]
 
-                NavHost(navController = navController, startDestination = "login") {
-                    composable("login") {
-                        Post_LogIn(navController)
-                    }
-                    *composable("/lista_maquinarias") {
-                        PantallaPrincipal(viewModel = postViewModel, navController = navController)
-                    }*
-                }
-            }
-        }*/
+        // Repo y factory para usuarios (nuevo)
+        val usuariosRepo = Post_UsuariosDto_Repository(RetrofitClient.apiService)
+        val usuariosFactory = UsuariosViewModelFactory(usuariosRepo)
+        val usuariosViewModel = ViewModelProvider(this, usuariosFactory)[UsuariosViewModelLogeo::class.java]
 
         setContent {
             APPMiraiConstruccionesTheme {
                 val navController = rememberNavController()
-                var correo by remember { mutableStateOf("") }
 
-
-                NavHost(navController = navController, startDestination = "login") {
-                    composable("login") {
-                        Post_LogIn(navController) // login SIN barra
-                    }
-                    composable("lista_maquinarias") {
-                        PantallaPrincipal(
-                            viewModel = postViewModel,
-                            navController = navController,
-                            correo = correo
-                        )
-                    }
-                    composable("detalle_maquinaria/{id}") { backStackEntry ->
-                        val id = backStackEntry.arguments?.getString("id")?.toIntOrNull()
-                        if (id != null) {
-                            DetalleMaterialScreen(navController, id, postViewModel)
-                        }
-                    }
-                }
+                // Llamamos a un NavigationHost que recibe ambos viewModels
+                NavigationHost(
+                    postMaquinasViewModel = postViewModel,
+                    usuariosViewModel = usuariosViewModel,
+                    navController = navController
+                )
             }
         }
     }
@@ -134,7 +111,7 @@ class MainActivity : ComponentActivity() {
 fun PantallaPrincipal(
     viewModel: Post_MaquinariasYVehiculosDto_ViewModel,
     navController: androidx.navigation.NavHostController,
-    correo: String,
+    nombre: String,
 ) {
     //val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()
@@ -153,7 +130,7 @@ fun PantallaPrincipal(
                 scaffoldState,
                 navController,
                 menu_items = navigationItems,
-                correo = correo
+                nombre = nombre
             )
         }
     ) { innerPadding ->
@@ -191,7 +168,7 @@ fun Drawer(
     scaffoldState: ScaffoldState,
     navController: NavHostController,
     menu_items: List<Destinos>,
-    correo: String,
+    nombre: String,
 ) {
     Column(
         modifier = Modifier
@@ -217,7 +194,7 @@ fun Drawer(
 
             // Texto del usuario
             Text(
-                text = "Hola, $correo",
+                text = "Hola, $nombre",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black, // 👈 texto en negro
