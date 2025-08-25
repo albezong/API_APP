@@ -1,6 +1,7 @@
 package mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.screens
 
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -13,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -69,6 +71,9 @@ fun cuerpoLogin(
     ) {
     var correo by remember { mutableStateOf("") }
     var contraseña by remember { mutableStateOf("") }
+    var contexto =  LocalContext.current
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -145,9 +150,13 @@ fun cuerpoLogin(
 
         Button(
             onClick = {
-                navListaMaquinaria.navigate("lista_maquinarias"){
-                    popUpTo("login") { inclusive = true }
-                    launchSingleTop = true
+                if(correo!="" && contraseña!="") {
+                    navListaMaquinaria.navigate("lista_maquinarias") {
+                        popUpTo("login") { inclusive = true }
+                        launchSingleTop = true
+                    }
+                }else{
+                    Toast.makeText(contexto, "Correo/contraseña invalido(s)", Toast.LENGTH_LONG).show()
                 }
                       },
             modifier = Modifier

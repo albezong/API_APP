@@ -38,13 +38,20 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -71,7 +78,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val repository = Post_MaquinariasYVehiculosDto_Repository(RetrofitClient.apiService)
         val viewModelFactory = Post_MaquinariasYVehiculosDto_ViewModel_Factory(repository)
-        val postViewModel = ViewModelProvider(this, viewModelFactory)[Post_MaquinariasYVehiculosDto_ViewModel::class.java]
+        val postViewModel = ViewModelProvider(
+            this,
+            viewModelFactory
+        )[Post_MaquinariasYVehiculosDto_ViewModel::class.java]
 
         /*
         setContent {
@@ -92,13 +102,19 @@ class MainActivity : ComponentActivity() {
         setContent {
             APPMiraiConstruccionesTheme {
                 val navController = rememberNavController()
+                var correo by remember { mutableStateOf("") }
+
 
                 NavHost(navController = navController, startDestination = "login") {
                     composable("login") {
                         Post_LogIn(navController) // login SIN barra
                     }
                     composable("lista_maquinarias") {
-                        PantallaPrincipal(viewModel = postViewModel, navController = navController)
+                        PantallaPrincipal(
+                            viewModel = postViewModel,
+                            navController = navController,
+                            correo = correo
+                        )
                     }
                     composable("detalle_maquinaria/{id}") { backStackEntry ->
                         val id = backStackEntry.arguments?.getString("id")?.toIntOrNull()
@@ -117,7 +133,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun PantallaPrincipal(
     viewModel: Post_MaquinariasYVehiculosDto_ViewModel,
-    navController: androidx.navigation.NavHostController
+    navController: androidx.navigation.NavHostController,
+    correo: String,
 ) {
     //val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()
@@ -135,10 +152,11 @@ fun PantallaPrincipal(
                 scope,
                 scaffoldState,
                 navController,
-                menu_items = navigationItems
+                menu_items = navigationItems,
+                correo = correo
             )
         }
-    ) {innerPadding ->
+    ) { innerPadding ->
         // contenido principal: por ejemplo tu lista
         PostListaTodasMaquiunarias(navController = navController, viewModel = viewModel)
     }
@@ -147,7 +165,7 @@ fun PantallaPrincipal(
 @Composable
 fun TopBar(
     scope: CoroutineScope,
-    scaffoldState: ScaffoldState
+    scaffoldState: ScaffoldState,
 ) {
     TopAppBar(
         title = { androidx.compose.material.Text(text = "MIRAI CONSTRUCCIONES") },
@@ -172,7 +190,8 @@ fun Drawer(
     scope: CoroutineScope,
     scaffoldState: ScaffoldState,
     navController: NavHostController,
-    menu_items: List<Destinos>
+    menu_items: List<Destinos>,
+    correo: String,
 ) {
     Column(
         modifier = Modifier
@@ -180,14 +199,54 @@ fun Drawer(
             .background(Grey80) // 👈 Fondo con tu color Grey80
             .padding(16.dp)     // opcional, para dar espacio interno
     ) {
-        Image(
-            painterResource(id = R.drawable.baseline_account_circle_24),
-            contentDescription = "Menu de opciones",
+        Row(
             modifier = Modifier
-                .size(65.dp)
-                .clip(RoundedCornerShape(35)), // opcional, para que quede redonda
-            contentScale = ContentScale.Crop
-        )
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Icono de usuario
+            Icon(
+                painter = painterResource(id = R.drawable.baseline_account_circle_24),
+                contentDescription = "Usuario",
+                tint = Color.Black, // 👈 icono en negro
+                modifier = Modifier.size(40.dp)
+            )
+
+            Spacer(modifier = Modifier.width(12.dp))
+
+            // Texto del usuario
+            Text(
+                text = "Hola, $correo",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black, // 👈 texto en negro
+                modifier = Modifier.weight(1f) // ocupa el espacio libre
+            )
+
+            // Botón salir (solo el ícono)
+            IconButton(
+                onClick = {
+                    navController.navigate("login") {
+                        popUpTo("lista_maquinarias") { inclusive = true }
+                        launchSingleTop = true
+                    }
+                }
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.baseline_exit_to_app_24),
+                    contentDescription = "Salir",
+                    tint = Color.Black, // 👈 icono en negro
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+        }
+
+
+
+
+
+
         Spacer(
             modifier = Modifier
                 .fillMaxWidth()
@@ -209,9 +268,10 @@ fun Drawer(
 
 
 @Composable
-fun DrawerItem(item: Destinos,
-               onItemClick: (Destinos)->Unit
-){
+fun DrawerItem(
+    item: Destinos,
+    onItemClick: (Destinos) -> Unit,
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -220,29 +280,33 @@ fun DrawerItem(item: Destinos,
             .clip(RoundedCornerShape(12))
             .padding(8.dp)
             .clickable { onItemClick(item) }
-    ){
+    ) {
         Image(
             painterResource(id = item.icon),
-            contentDescription = item.title)
+            contentDescription = item.title
+        )
         Spacer(modifier = Modifier.width(12.dp))
-        Text(text = item.title,
-            style = MaterialTheme.typography.body1)
+        Text(
+            text = item.title,
+            style = MaterialTheme.typography.body1
+        )
     }
 }
 
 
-
-//
+/*/
 @Preview(showBackground = true)
 @Composable
 fun PantallaPrincipalPreview() {
     APPMiraiConstruccionesTheme {
         // Simulación de datos para el preview
-        val dummyViewModel = Post_MaquinariasYVehiculosDto_ViewModel(Post_MaquinariasYVehiculosDto_Repository(RetrofitClient.apiService))
+        val dummyViewModel = Post_MaquinariasYVehiculosDto_ViewModel(
+            Post_MaquinariasYVehiculosDto_Repository(RetrofitClient.apiService)
+        )
         val navController = rememberNavController()
         PantallaPrincipal(viewModel = dummyViewModel, navController = navController)
     }
-}
+}*/
 /*
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
