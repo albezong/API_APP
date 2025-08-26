@@ -20,12 +20,14 @@ import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.model.Maquinaria
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_EquiposDto_ViewModel
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_MaquinariasYVehiculosDto_ViewModel
 
+@Composable
+fun Post_EditMaquinariaScreen(){}
+/*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Post_EditMaquinariaScreen(
     navController: NavHostController,
     id: Int,
-    //updateListMaqVehi: List<Maquinaria>,
     viewModel: Post_EquiposDto_ViewModel,
     viewModelMaquinariaYVehi: Post_MaquinariasYVehiculosDto_ViewModel,
 ) {
@@ -123,9 +125,20 @@ fun Post_EditMaquinariaScreen(
                 .padding(16.dp),
             horizontalAlignment = Alignment.Start
         ) {
+            // justo antes de Column:
             if (material == null) {
-                Text("Cargando...", modifier = Modifier.padding(8.dp))
-                return@Column
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        CircularProgressIndicator()
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text("Cargando...", modifier = Modifier.padding(8.dp))
+                    }
+                }
+                return
             }
 
             // Campos libres
@@ -305,4 +318,4 @@ fun Post_EditMaquinariaScreen(
             Spacer(modifier = Modifier.height(24.dp))
         }
     }
-}
+}*/

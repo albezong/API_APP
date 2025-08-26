@@ -49,7 +49,7 @@ fun PostListaTodasMaquiunarias(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        // Título
+        /*/ Título
         Box(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -64,7 +64,25 @@ fun PostListaTodasMaquiunarias(
                 painter = painterResource(R.drawable.baseline_add_circle_outline_24),
                 contentDescription = "addCircle"
             )
+        }*/
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center // 👈 centra toda la fila
+        ) {
+            Text(
+                text = "Lista de toda la Maquinaria y /o equipo",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+            Spacer(modifier = Modifier.width(8.dp)) // espacio entre texto e icono
+            Icon(
+                painter = painterResource(R.drawable.baseline_add_circle_outline_24),
+                contentDescription = "addCircle"
+            )
         }
+
 
         Spacer(modifier = Modifier.height(16.dp)) // Espacio entre título y barra
 
@@ -79,7 +97,7 @@ fun PostListaTodasMaquiunarias(
                 viewModel.fetchPosts(search = searchText)
             },
             posts = posts,
-            onResultClick = { selected ->
+            onResultClick = {  selected ->
                 navController.navigate("detalle_maquinaria/${selected.id_equipos}")
             },
             placeholder = { Text("Buscar maquinaria...") },
@@ -123,7 +141,7 @@ fun CustomizableSearchBar(
             modifier = Modifier.fillMaxSize()
             //.background(Color.Gray)
         ) {
-            items(posts) { post ->
+            items(posts, key = { it.id_equipos ?: it.hashCode() }) { post ->
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()

@@ -60,19 +60,24 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.api.RetrofitClient
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_EquiposDto_Repository
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_MaquinariasYVehiculosDto_Repository
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_UsuariosDto_Repository
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.Destinos
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.Destinos.ico_info
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.Destinos.ico_search
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.NavigationHost
-import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.screens.DetalleMaterialScreen
+//import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.screens.DetalleMaterialScreen
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.screens.PostListaTodasMaquiunarias
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.screens.Post_LogIn
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.theme.APPMiraiConstruccionesTheme
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.theme.Grey80
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_EquiposDto_ViewModel
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_EquiposDto_ViewModel_Factory
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_MaquinariasYVehiculosDto_ViewModel
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_MaquinariasYVehiculosDto_ViewModel_Factory
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_UsuariosDto_ViewModel
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_UsuariosDto_ViewModel_Factory
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.UsuariosViewModelFactory
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.UsuariosViewModelLogeo
 
@@ -80,24 +85,29 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Repo y factory para maquinarias (ya lo tenías)
+        // --- crear repos y factories fuera de setContent ---
         val repoMaquinas = Post_MaquinariasYVehiculosDto_Repository(RetrofitClient.apiService)
         val factoryMaquinas = Post_MaquinariasYVehiculosDto_ViewModel_Factory(repoMaquinas)
-        val postViewModel = ViewModelProvider(this, factoryMaquinas)[Post_MaquinariasYVehiculosDto_ViewModel::class.java]
+        val postMaquinasVm = ViewModelProvider(this, factoryMaquinas)[Post_MaquinariasYVehiculosDto_ViewModel::class.java]
 
-        // Repo y factory para usuarios (nuevo)
+        val repoEquipos = Post_EquiposDto_Repository(RetrofitClient.apiService)
+        // Si tienes un factory para equipos:
+        val factoryEquipos = Post_EquiposDto_ViewModel_Factory(repoEquipos)
+        val postEquiposVm = ViewModelProvider(this, factoryEquipos)[Post_EquiposDto_ViewModel::class.java]
+
         val usuariosRepo = Post_UsuariosDto_Repository(RetrofitClient.apiService)
-        val usuariosFactory = UsuariosViewModelFactory(usuariosRepo)
-        val usuariosViewModel = ViewModelProvider(this, usuariosFactory)[UsuariosViewModelLogeo::class.java]
+        val usuariosFactory = UsuariosViewModelFactory(usuariosRepo) // o Post_UsuariosDto_ViewModel_Factory según tu implementación
+        val usuariosVm = ViewModelProvider(this, usuariosFactory)[UsuariosViewModelLogeo::class.java]
 
+        // --- sólo UI dentro de setContent ---
         setContent {
             APPMiraiConstruccionesTheme {
                 val navController = rememberNavController()
 
-                // Llamamos a un NavigationHost que recibe ambos viewModels
                 NavigationHost(
-                    postMaquinasViewModel = postViewModel,
-                    usuariosViewModel = usuariosViewModel,
+                    postMaquinasViewModel = postMaquinasVm,
+                    postEquiposViewModel = postEquiposVm,
+                    usuariosViewModel = usuariosVm,
                     navController = navController
                 )
             }

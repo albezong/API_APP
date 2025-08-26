@@ -77,6 +77,7 @@ dependencies {
 
     // Material (Scaffold, etc.)
     implementation("androidx.compose.material:material")
+    implementation(libs.androidx.appcompat)
 
     //------------------ Testing --------------------
     testImplementation(libs.junit)
