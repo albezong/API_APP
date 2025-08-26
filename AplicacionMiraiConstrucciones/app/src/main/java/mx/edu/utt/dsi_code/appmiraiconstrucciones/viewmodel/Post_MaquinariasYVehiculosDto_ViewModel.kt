@@ -15,7 +15,7 @@ class Post_MaquinariasYVehiculosDto_ViewModel(private val repository: Post_Maqui
     val posts: StateFlow<List<Maquinaria>> = _posts
 
     private val _selectedPost = MutableStateFlow<Maquinaria?>(null)
-    val selectedPost: StateFlow<Maquinaria?> = _selectedPost
+    val selectedPost: StateFlow<Maquinaria?> = _selectedPost//***
 
     fun fetchPosts(
         search: String? = null,

@@ -8,6 +8,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.model.Create_EquiposDto_2
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.model.Post_EquiposDto
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.model.Post_LugaresDto
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.model.Post_TiposMaquinariasDto
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.model.Post_UbicacionesDto
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_EquiposDto_Repository
 
 class Post_EquiposDto_ViewModel (private val repository: Post_EquiposDto_Repository): ViewModel() {
@@ -18,9 +21,20 @@ class Post_EquiposDto_ViewModel (private val repository: Post_EquiposDto_Reposit
     val _selectedPost = MutableStateFlow<Post_EquiposDto?>(null)
     val selectedPost: StateFlow<Post_EquiposDto?> = _selectedPost
 
-    // --- nuevo estado para la actualización
+
     private val _updateState = MutableStateFlow<Result<Post_EquiposDto>?>(null)
-    val updateState: StateFlow<Result<Post_EquiposDto>?> = _updateState.asStateFlow()
+    val updateState: StateFlow<Result<Post_EquiposDto>?> = _updateState
+
+    // --- Catálogos ---
+    private val _ubicaciones = MutableStateFlow<List<Post_UbicacionesDto>>(emptyList())
+    val ubicaciones: StateFlow<List<Post_UbicacionesDto>> = _ubicaciones
+
+    private val _tiposMaquinarias = MutableStateFlow<List<Post_TiposMaquinariasDto>>(emptyList())
+    val tiposMaquinarias: StateFlow<List<Post_TiposMaquinariasDto>> = _tiposMaquinarias
+
+    private val _lugares = MutableStateFlow<List<Post_LugaresDto>>(emptyList())
+    val lugares: StateFlow<List<Post_LugaresDto>> = _lugares
+
 
 
     fun fetchPosts() {
@@ -75,4 +89,21 @@ class Post_EquiposDto_ViewModel (private val repository: Post_EquiposDto_Reposit
             }
         }
     }
+
+    // --- funciones para cargar catálogos ---
+    fun loadCatalogs() {
+        viewModelScope.launch {
+            try {
+                _ubicaciones.value = repository.getAllUbicaciones()
+            } catch (e: Exception) { e.printStackTrace() }
+            try {
+                _tiposMaquinarias.value = repository.getAllTiposMaquinarias()
+            } catch (e: Exception) { e.printStackTrace() }
+            try {
+                _lugares.value = repository.getAllLugares()
+            } catch (e: Exception) { e.printStackTrace() }
+        }
+    }
+
+    fun clearUpdateState() { _updateState.value = null }
 }

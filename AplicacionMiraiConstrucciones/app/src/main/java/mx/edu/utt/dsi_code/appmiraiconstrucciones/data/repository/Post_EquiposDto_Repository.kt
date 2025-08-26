@@ -6,6 +6,11 @@ import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.model.Post_EquiposDto
 
 
 class Post_EquiposDto_Repository(private val apiService: ApiService){
+    // Catálogos
+    suspend fun getAllUbicaciones() = apiService.getAllUbicaciones()
+    suspend fun getAllTiposMaquinarias() = apiService.getAllTiposMaquinarias()
+    suspend fun getAllLugares() = apiService.getAllLugares()
+
     suspend fun getAll(): List<Post_EquiposDto> = apiService.getAllEquipos()
 
     suspend fun create(post: Create_EquiposDto_2): Post_EquiposDto = apiService.createEquipo(post)

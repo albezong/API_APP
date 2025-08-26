@@ -21,11 +21,6 @@ class Post_UnidadesDto_ViewModel (private val repository: Post_UnidadesDto_Repos
     val _selectedPost = MutableStateFlow<Post_UnidadesDto?>(null)
     val selectedPost: StateFlow<Post_UnidadesDto?> = _selectedPost
 
-    // --- nuevo estado para la actualización
-    private val _updateState = MutableStateFlow<Result<Post_EquiposDto>?>(null)
-    val updateState: StateFlow<Result<Post_EquiposDto>?> = _updateState.asStateFlow()
-
-
     fun fetchPosts() {
         viewModelScope.launch {
             //try {

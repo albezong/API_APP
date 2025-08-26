@@ -4,6 +4,8 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -13,6 +15,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.launch
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.model.Create_EquiposDto_2
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.model.Maquinaria
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_EquiposDto_ViewModel
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_MaquinariasYVehiculosDto_ViewModel
@@ -22,63 +25,80 @@ import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_MaquinariasYVeh
 fun Post_EditMaquinariaScreen(
     navController: NavHostController,
     id: Int,
-    viewModel: Post_EquiposDto_ViewModel
+    //updateListMaqVehi: List<Maquinaria>,
+    viewModel: Post_EquiposDto_ViewModel,
+    viewModelMaquinariaYVehi: Post_MaquinariasYVehiculosDto_ViewModel,
 ) {
     val contexto = LocalContext.current
     val scope = rememberCoroutineScope()
-    val material by viewModel.selectedPost.collectAsState()
     val updateState by viewModel.updateState.collectAsState()
 
-    // estados locales para los campos (inicializados cuando llega `material`)
-    var codigo by remember { mutableStateOf(TextFieldValue("")) }
-    var nombre by remember { mutableStateOf(TextFieldValue("")) }
-    var nombreComercial by remember { mutableStateOf(TextFieldValue("")) }
-    var numIdentificador by remember { mutableStateOf(TextFieldValue("")) }
-    var descripcion by remember { mutableStateOf(TextFieldValue("")) }
-    var marca by remember { mutableStateOf(TextFieldValue("")) }
-    var modelo by remember { mutableStateOf(TextFieldValue("")) }
-    var fechaRegistro by remember { mutableStateOf(TextFieldValue("")) }
-    var ubicacion by remember { mutableStateOf(TextFieldValue("")) }
-    var unidad by remember { mutableStateOf(TextFieldValue("")) }
-    var estatus by remember { mutableStateOf(TextFieldValue("")) }
-    var tipoMaquina by remember { mutableStateOf(TextFieldValue("")) }
-    var nombreLugar by remember { mutableStateOf(TextFieldValue("")) }
+    val material by viewModel.selectedPost.collectAsState()
+    // no uses el nombre duplicado: usa el selectedPost del otro viewmodel solo si lo necesitas
+    val detalleMaqui by viewModelMaquinariaYVehi.selectedPost.collectAsState()
 
-    // carga inicial
+
+    // campos locales
+    var codigo by remember { mutableStateOf("") }
+    var nombre by remember { mutableStateOf("") }
+    var nombreComercial by remember { mutableStateOf("") }
+    var numIdentificador by remember { mutableStateOf("") }
+    var descripcion by remember { mutableStateOf("") }
+    var marca by remember { mutableStateOf("") }
+    var modelo by remember { mutableStateOf("") }
+    var fechaRegistro by remember { mutableStateOf("") }
+
+    // --- DROPDOWNS: guardan id seleccionado ---
+    var selectedUbicacionId by remember { mutableStateOf<Int?>(null) }
+    var selectedTipoId by remember { mutableStateOf<Int?>(null) }
+    var selectedLugarId by remember { mutableStateOf<Int?>(null) }
+
+    // Exposed dropdown expanded flags
+    var expandedUb by remember { mutableStateOf(false) }
+    var expandedTipo by remember { mutableStateOf(false) }
+    var expandedLugar by remember { mutableStateOf(false) }
+
+    // Catálogos desde viewModel (asegúrate de llamar loadCatalogs())
+    val ubicaciones by viewModel.ubicaciones.collectAsState()
+    val tipos by viewModel.tiposMaquinarias.collectAsState()
+    val lugares by viewModel.lugares.collectAsState()
+
+    // carga inicial: traer el material y catálogos
     LaunchedEffect(id) {
         viewModel.getPostById(id)
+        viewModel.loadCatalogs()
+        viewModelMaquinariaYVehi.getPostById(id) // si lo necesitas
     }
 
-    // cuando llegue material, mapear a los estados locales
+    // cuando llegue material, poblar campos y selected ids
     LaunchedEffect(material) {
         material?.let { m ->
-            codigo = TextFieldValue(m.codigoArticulo ?: "")
-            nombre = TextFieldValue(m.nombreArticulo ?: "")
-            nombreComercial = TextFieldValue(m.nombreComercial ?: "")
-            numIdentificador = TextFieldValue(m.numIdentificador ?: "")
-            descripcion = TextFieldValue(m.descripcion ?: "")
-            marca = TextFieldValue(m.marca ?: "")
-            modelo = TextFieldValue(m.modelo ?: "")
-            fechaRegistro = TextFieldValue(m.fechadeRegistro ?: "")
-            ubicacion = TextFieldValue(m.idfUbicaciones ?: "")
-            unidad = TextFieldValue(m.idfUnidades ?: "")
-            estatus = TextFieldValue(m.estatus_nombre ?: "")
-            tipoMaquina = TextFieldValue(m.tipo_maquinaria_nombre ?: "")
-            nombreLugar = TextFieldValue(m.nombreLugar ?: "")
+            codigo = m.codigoArticulo ?: ""
+            nombre = m.nombreArticulo ?: ""
+            nombreComercial = m.nombreComercial ?: ""
+            numIdentificador = m.numIdentificador ?: ""
+            descripcion = m.descripcion ?: ""
+            marca = m.marca ?: ""
+            modelo = m.modelo ?: ""
+            fechaRegistro = m.fechadeRegistro ?: ""
+
+            // Asignar ids del equipo si existen en el DTO (ajusta nombres)
+            selectedUbicacionId = (m.idfUbicaciones).takeIf { it != 0 } // si 0 no válido
+            selectedTipoId = (m.idfTiposMaquinarias).takeIf { it != 0 }
+            // selectedLugarId = m.idLugar ?: selectedLugarId
         }
     }
 
-    // reaccionar al resultado de update
+    // reaccionar al update
     LaunchedEffect(updateState) {
         updateState?.let { res ->
             if (res.isSuccess) {
                 Toast.makeText(contexto, "Actualización correcta", Toast.LENGTH_SHORT).show()
                 viewModel.clearUpdateState()
-                navController.popBackStack() // volver
+                navController.popBackStack()
             } else {
                 val ex = res.exceptionOrNull()
                 Toast.makeText(contexto, "Error al actualizar: ${ex?.localizedMessage}", Toast.LENGTH_LONG).show()
-                viewModel.clearUpdateState()
             }
         }
     }
@@ -103,62 +123,54 @@ fun Post_EditMaquinariaScreen(
                 .padding(16.dp),
             horizontalAlignment = Alignment.Start
         ) {
-            // Si no llegó todavía, mostrar mensaje
             if (material == null) {
                 Text("Cargando...", modifier = Modifier.padding(8.dp))
                 return@Column
             }
 
-            // Form fields
+            // Campos libres
             OutlinedTextField(
                 value = codigo,
                 onValueChange = { codigo = it },
                 label = { Text("Código del artículo") },
                 modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp)
             )
-
             OutlinedTextField(
                 value = nombre,
                 onValueChange = { nombre = it },
                 label = { Text("Nombre del artículo") },
                 modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp)
             )
-
             OutlinedTextField(
                 value = nombreComercial,
                 onValueChange = { nombreComercial = it },
                 label = { Text("Nombre comercial") },
                 modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp)
             )
-
             OutlinedTextField(
                 value = numIdentificador,
                 onValueChange = { numIdentificador = it },
                 label = { Text("Número identificador") },
                 modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp)
             )
-
             OutlinedTextField(
                 value = descripcion,
                 onValueChange = { descripcion = it },
                 label = { Text("Descripción") },
                 modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp)
             )
-
             OutlinedTextField(
                 value = marca,
                 onValueChange = { marca = it },
                 label = { Text("Marca") },
                 modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp)
             )
-
             OutlinedTextField(
                 value = modelo,
                 onValueChange = { modelo = it },
                 label = { Text("Modelo") },
                 modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp)
             )
-
             OutlinedTextField(
                 value = fechaRegistro,
                 onValueChange = { fechaRegistro = it },
@@ -166,73 +178,125 @@ fun Post_EditMaquinariaScreen(
                 modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp)
             )
 
-            OutlinedTextField(
-                value = ubicacion,
-                onValueChange = { ubicacion = it },
-                label = { Text("Ubicación (nombre)") },
-                modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp)
-            )
+            Spacer(modifier = Modifier.height(12.dp))
 
-            OutlinedTextField(
-                value = unidad,
-                onValueChange = { unidad = it },
-                label = { Text("Unidad") },
-                modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp)
-            )
+            // --- Dropdown Ubicaciones ---
+            ExposedDropdownMenuBox(
+                expanded = expandedUb,
+                onExpandedChange = { expandedUb = !expandedUb }
+            ) {
+                val selectedUbText = ubicaciones.firstOrNull { it.idUbicaciones == selectedUbicacionId }?.nombre ?: "Seleccionar ubicación"
+                OutlinedTextField(
+                    value = selectedUbText,
+                    onValueChange = {},
+                    label = { Text("Ubicación") },
+                    readOnly = true,
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedUb) },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                ExposedDropdownMenu(
+                    expanded = expandedUb,
+                    onDismissRequest = { expandedUb = false }
+                ) {
+                    ubicaciones.forEach { u ->
+                        DropdownMenuItem(text = { Text(u.nombre) }, onClick = {
+                            selectedUbicacionId = u.idUbicaciones
+                            expandedUb = false
+                        })
+                    }
+                }
+            }
 
-            OutlinedTextField(
-                value = estatus,
-                onValueChange = { estatus = it },
-                label = { Text("Estatus") },
-                modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp)
-            )
+            Spacer(modifier = Modifier.height(8.dp))
 
-            OutlinedTextField(
-                value = tipoMaquina,
-                onValueChange = { tipoMaquina = it },
-                label = { Text("Tipo de maquinaria") },
-                modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp)
-            )
+            // --- Dropdown Tipos Maquinarias ---
+            ExposedDropdownMenuBox(
+                expanded = expandedTipo,
+                onExpandedChange = { expandedTipo = !expandedTipo }
+            ) {
+                val selectedTipoText = tipos.firstOrNull { it.idTiposMaquinarias == selectedTipoId }?.nombre ?: "Seleccionar tipo"
+                OutlinedTextField(
+                    value = selectedTipoText,
+                    onValueChange = {},
+                    label = { Text("Tipo de maquinaria") },
+                    readOnly = true,
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedTipo) },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                ExposedDropdownMenu(
+                    expanded = expandedTipo,
+                    onDismissRequest = { expandedTipo = false }
+                ) {
+                    tipos.forEach { t ->
+                        DropdownMenuItem(text = { Text(t.nombre) }, onClick = {
+                            selectedTipoId = t.idTiposMaquinarias
+                            expandedTipo = false
+                        })
+                    }
+                }
+            }
 
-            OutlinedTextField(
-                value = nombreLugar,
-                onValueChange = { nombreLugar = it },
-                label = { Text("Nombre del lugar") },
-                modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp)
-            )
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // --- Dropdown Lugares (si corresponde) ---
+            ExposedDropdownMenuBox(
+                expanded = expandedLugar,
+                onExpandedChange = { expandedLugar = !expandedLugar }
+            ) {
+                val selectedLugarText = lugares.firstOrNull { it.idLugares == selectedLugarId }?.nombreLugar ?: "Seleccionar lugar"
+                OutlinedTextField(
+                    value = selectedLugarText,
+                    onValueChange = {},
+                    label = { Text("Lugar") },
+                    readOnly = true,
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedLugar) },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                ExposedDropdownMenu(
+                    expanded = expandedLugar,
+                    onDismissRequest = { expandedLugar = false }
+                ) {
+                    lugares.forEach { l ->
+                        DropdownMenuItem(text = { Text(l.nombreLugar) }, onClick = {
+                            selectedLugarId = l.idLugares
+                            expandedLugar = false
+                        })
+                    }
+                }
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Botones: Guardar y Cancelar
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
+            // Guardar/Cancelar
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 TextButton(onClick = { navController.popBackStack() }) {
                     Text("Cancelar")
                 }
 
                 Button(onClick = {
-                    // Construir objeto actualizado (usa las mismas propiedades que tu modelo)
-                    // Asegúrate de usar la clase de datos/DTO correcta. Aquí uso Maquinaria tal como la tienes.
-                    val updated = material!!.copy(
-                        codigo_articulo = codigo.text,
-                        nombre_articulo = nombre.text,
-                        nombre_comercial = nombreComercial.text,
-                        num_identificador = numIdentificador.text,
-                        descripcion = descripcion.text,
-                        marca = marca.text,
-                        modelo = modelo.text,
-                        fechade_registro = fechaRegistro.text,
-                        ubicacion_nombre = ubicacion.text,
-                        unidad_nombre = unidad.text,
-                        estatus_nombre = estatus.text,
-                        tipo_maquinaria_nombre = tipoMaquina.text,
-                        nombreLugar = nombreLugar.text
+                    // Validaciones básicas
+                    if (selectedUbicacionId == null || selectedTipoId == null) {
+                        Toast.makeText(contexto, "Selecciona ubicación y tipo.", Toast.LENGTH_LONG).show()
+                        return@Button
+                    }
+
+                    // Construir payload (ajusta nombres a Create_EquiposDto_2)
+                    val payload = Create_EquiposDto_2(
+                        codigoArticulo = codigo,
+                        nombreArticulo = nombre,
+                        nombreComercial = nombreComercial,
+                        numIdentificador = numIdentificador,
+                        descripcion = descripcion,
+                        marca = marca,
+                        modelo = modelo,
+                        fechadeRegistro = fechaRegistro,
+                        idfUbicaciones = selectedUbicacionId!!,
+                        idfUnidades = material?.idfUnidades ?: 0, // si tienes unidad dropdown añade su select
+                        idfEstatus = material?.idfEstatus ?: 0,   // si tienes estatus dropdown añade su select
+                        idfTiposMaquinarias = selectedTipoId!!
                     )
 
-                    // Llamar al ViewModel para hacer PUT
-                    viewModel.updateMaquinaria(id, updated)
+                    viewModel.updatePost(id, payload)
                 }) {
                     Text("Guardar cambios")
                 }
