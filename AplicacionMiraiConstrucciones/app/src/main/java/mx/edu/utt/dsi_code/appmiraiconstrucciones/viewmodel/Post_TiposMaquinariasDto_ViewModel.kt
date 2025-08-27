@@ -15,7 +15,7 @@ import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_TiposMaqu
 
 class Post_TiposMaquinariasDto_ViewModel (private val repository: Post_TiposMaquinariasDto_Repository): ViewModel() {
 
-    private val _posts = MutableStateFlow<List<Post_TiposMaquinariasDto>>(emptyList())
+    var _posts = MutableStateFlow<List<Post_TiposMaquinariasDto>>(emptyList())
     val posts: StateFlow<List<Post_TiposMaquinariasDto>> = _posts
 
     val _selectedPost = MutableStateFlow<Post_TiposMaquinariasDto?>(null)

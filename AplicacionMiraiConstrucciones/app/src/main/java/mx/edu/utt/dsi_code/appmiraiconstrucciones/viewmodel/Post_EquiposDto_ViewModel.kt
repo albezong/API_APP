@@ -21,7 +21,7 @@ class Post_EquiposDto_ViewModel (private val repository: Post_EquiposDto_Reposit
     val _selectedPost = MutableStateFlow<Post_EquiposDto?>(null)
     val selectedPost: StateFlow<Post_EquiposDto?> = _selectedPost
 
-
+/*
     private val _updateState = MutableStateFlow<Result<Post_EquiposDto>?>(null)
     val updateState: StateFlow<Result<Post_EquiposDto>?> = _updateState
 
@@ -34,6 +34,7 @@ class Post_EquiposDto_ViewModel (private val repository: Post_EquiposDto_Reposit
 
     private val _lugares = MutableStateFlow<List<Post_LugaresDto>>(emptyList())
     val lugares: StateFlow<List<Post_LugaresDto>> = _lugares
+*/
 
 
 
@@ -90,6 +91,7 @@ class Post_EquiposDto_ViewModel (private val repository: Post_EquiposDto_Reposit
         }
     }
 
+/*
     // --- funciones para cargar catálogos ---
     fun loadCatalogs() {
         viewModelScope.launch {
@@ -106,4 +108,5 @@ class Post_EquiposDto_ViewModel (private val repository: Post_EquiposDto_Reposit
     }
 
     fun clearUpdateState() { _updateState.value = null }
+*/
 }

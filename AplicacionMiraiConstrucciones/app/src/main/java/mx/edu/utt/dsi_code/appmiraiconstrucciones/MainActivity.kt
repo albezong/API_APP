@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-//import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -19,9 +18,6 @@ import androidx.compose.foundation.layout.size
 //-------------------------------------------------
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-
-import androidx.compose.material.*
-
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.draw.clip
@@ -38,46 +34,41 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.api.RetrofitClient
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_EquiposDto_Repository
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_EstatusDto_Repository
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_MaquinariasYVehiculosDto_Repository
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_TiposMaquinariasDto_Repository
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_UbicacionesDto_Repository
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_UnidadesDto_Repository
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_UsuariosDto_Repository
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.Destinos
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.Destinos.ico_info
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.Destinos.ico_search
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.NavigationHost
-//import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.screens.DetalleMaterialScreen
-import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.screens.PostListaTodasMaquiunarias
-import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.screens.Post_LogIn
-import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.theme.APPMiraiConstruccionesTheme
-import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.theme.Grey80
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.screens.*
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.theme.*
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_EquiposDto_ViewModel
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_EquiposDto_ViewModel_Factory
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_EstatusDto_ViewModel
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_EstatusDto_ViewModel_Factory
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_MaquinariasYVehiculosDto_ViewModel
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_MaquinariasYVehiculosDto_ViewModel_Factory
-import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_UsuariosDto_ViewModel
-import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_UsuariosDto_ViewModel_Factory
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_TiposMaquinariasDto_ViewModel
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_TiposMaquinariasDto_ViewModel_Factory
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_UbicacionesDto_ViewModel
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_UbicacionesDto_ViewModel_Factory
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_UnidadesDto_ViewModel
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_UnidadesDto_ViewModel_Factory
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.UsuariosViewModelFactory
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.UsuariosViewModelLogeo
 
@@ -85,21 +76,35 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // --- crear repos y factories fuera de setContent ---
+        // Repos + factories + viewmodels (instancias)
         val repoMaquinas = Post_MaquinariasYVehiculosDto_Repository(RetrofitClient.apiService)
         val factoryMaquinas = Post_MaquinariasYVehiculosDto_ViewModel_Factory(repoMaquinas)
         val postMaquinasVm = ViewModelProvider(this, factoryMaquinas)[Post_MaquinariasYVehiculosDto_ViewModel::class.java]
 
         val repoEquipos = Post_EquiposDto_Repository(RetrofitClient.apiService)
-        // Si tienes un factory para equipos:
         val factoryEquipos = Post_EquiposDto_ViewModel_Factory(repoEquipos)
         val postEquiposVm = ViewModelProvider(this, factoryEquipos)[Post_EquiposDto_ViewModel::class.java]
 
         val usuariosRepo = Post_UsuariosDto_Repository(RetrofitClient.apiService)
-        val usuariosFactory = UsuariosViewModelFactory(usuariosRepo) // o Post_UsuariosDto_ViewModel_Factory según tu implementación
+        val usuariosFactory = UsuariosViewModelFactory(usuariosRepo)
         val usuariosVm = ViewModelProvider(this, usuariosFactory)[UsuariosViewModelLogeo::class.java]
 
-        // --- sólo UI dentro de setContent ---
+        val ubicacionesRepo = Post_UbicacionesDto_Repository(RetrofitClient.apiService)
+        val ubicacionesFactory = Post_UbicacionesDto_ViewModel_Factory(ubicacionesRepo)
+        val ubicacionesVm = ViewModelProvider(this, ubicacionesFactory)[Post_UbicacionesDto_ViewModel::class.java]
+
+        val unidadesRepo = Post_UnidadesDto_Repository(RetrofitClient.apiService)
+        val unidadesFactory = Post_UnidadesDto_ViewModel_Factory(unidadesRepo)
+        val unidadesVm = ViewModelProvider(this, unidadesFactory)[Post_UnidadesDto_ViewModel::class.java]
+
+        val estatusRepo = Post_EstatusDto_Repository(RetrofitClient.apiService)
+        val estatusFactory = Post_EstatusDto_ViewModel_Factory(estatusRepo)
+        val estatusVm = ViewModelProvider(this, estatusFactory)[Post_EstatusDto_ViewModel::class.java]
+
+        val tiposMaquinariasRepo = Post_TiposMaquinariasDto_Repository(RetrofitClient.apiService)
+        val tiposMaquinariasFactory = Post_TiposMaquinariasDto_ViewModel_Factory(tiposMaquinariasRepo)
+        val tiposMaquinariasVm = ViewModelProvider(this, tiposMaquinariasFactory)[Post_TiposMaquinariasDto_ViewModel::class.java]
+
         setContent {
             APPMiraiConstruccionesTheme {
                 val navController = rememberNavController()
@@ -108,6 +113,10 @@ class MainActivity : ComponentActivity() {
                     postMaquinasViewModel = postMaquinasVm,
                     postEquiposViewModel = postEquiposVm,
                     usuariosViewModel = usuariosVm,
+                    viewModelUbicaciones = ubicacionesVm,
+                    viewModelUnidades = unidadesVm,
+                    viewModelEstatus = estatusVm,
+                    viewModelTiposMaquinarias = tiposMaquinariasVm,
                     navController = navController
                 )
             }

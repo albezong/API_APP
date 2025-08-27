@@ -1,6 +1,5 @@
 package mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.screens
 
-
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border

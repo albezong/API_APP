@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text2.input.TextFieldState
 import androidx.compose.material.SnackbarDefaults
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
@@ -21,11 +22,13 @@ import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.R
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.model.Maquinaria
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.theme.Grey80
@@ -38,10 +41,9 @@ fun PostListaTodasMaquiunarias(
 ) {
     val posts by viewModel.posts.collectAsState()
     var query by remember { mutableStateOf("") }
-
-    // Esto asegura que se cargue la lista completa al abrir la pantalla
+    // Llamamos a la API al cargar el Composable
     LaunchedEffect(Unit) {
-        viewModel.fetchPosts(search = "") // o sin parámetro si tu función lo permite
+        viewModel.fetchPosts()
     }
 
     Column(
@@ -67,20 +69,36 @@ fun PostListaTodasMaquiunarias(
         }*/
         Row(
             modifier = Modifier
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center // 👈 centra toda la fila
+                .fillMaxWidth()
+                .padding(vertical = 4.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = "Lista de toda la Maquinaria y /o equipo",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.SemiBold
-            )
-            Spacer(modifier = Modifier.width(8.dp)) // espacio entre texto e icono
-            Icon(
-                painter = painterResource(R.drawable.baseline_add_circle_outline_24),
-                contentDescription = "addCircle"
-            )
+            // Caja con peso para centrar el texto en todo el ancho disponible
+            Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                Text(
+                    text = "Lista de toda la Maquinaria y /o equipo",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    textAlign = TextAlign.Center
+                )
+            }
+
+            // Botón para agregar — area táctil correcta y navegación
+            IconButton(
+                onClick = {
+                    // navega a la pantalla de agregar/registrar maquinaria
+                    navController.navigate("post_maquinarias")
+                },
+                modifier = Modifier.size(48.dp) // área táctil
+            ) {
+                // Si prefieres usar el drawable: painterResource(R.drawable.baseline_add_circle_outline_24)
+                Icon(
+                    //imageVector = Icons.Default.Add
+                    painterResource(R.drawable.baseline_add_circle_outline_24),
+                    contentDescription = "Agregar maquinaria",
+                    tint = MaterialTheme.colorScheme.primary
+                )
+            }
         }
 
 

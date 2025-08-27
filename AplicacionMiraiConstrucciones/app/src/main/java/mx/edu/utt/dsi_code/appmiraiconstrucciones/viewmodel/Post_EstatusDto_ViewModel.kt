@@ -15,7 +15,7 @@ import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_EstatusDt
 
 class Post_EstatusDto_ViewModel(private val repository: Post_EstatusDto_Repository): ViewModel() {
 
-    private val _posts = MutableStateFlow<List<Post_EstatusDto>>(emptyList())
+    var _posts = MutableStateFlow<List<Post_EstatusDto>>(emptyList())
     val posts: StateFlow<List<Post_EstatusDto>> = _posts
 
     val _selectedPost = MutableStateFlow<Post_EstatusDto?>(null)

@@ -21,7 +21,73 @@ import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_EquiposDto_View
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_MaquinariasYVehiculosDto_ViewModel
 
 @Composable
-fun Post_EditMaquinariaScreen(){}
+fun Post_EditMaquinariaScreen(
+    navController: NavHostController,
+    id: Int,
+    viewModel: Post_EquiposDto_ViewModel,
+    viewModelMaquinariaYVehi: Post_MaquinariasYVehiculosDto_ViewModel,
+){
+    //val contexto = LocalContext.current
+    //val scope = rememberCoroutineScope()
+    //val updateState by viewModel.updateState.collectAsState()
+
+    val material by viewModel.selectedPost.collectAsState()
+    // no uses el nombre duplicado: usa el selectedPost del otro viewmodel solo si lo necesitas
+    val detalleMaqui by viewModelMaquinariaYVehi.selectedPost.collectAsState()
+
+
+    // campos locales
+    var codigo by remember { mutableStateOf("") }
+    var nombre by remember { mutableStateOf("") }
+    var nombreComercial by remember { mutableStateOf("") }
+    var numIdentificador by remember { mutableStateOf("") }
+    var descripcion by remember { mutableStateOf("") }
+    var marca by remember { mutableStateOf("") }
+    var modelo by remember { mutableStateOf("") }
+    var fechaRegistro by remember { mutableStateOf("") }
+
+    // --- DROPDOWNS: guardan id seleccionado ---
+    var selectedUbicacionId by remember { mutableStateOf<Int?>(null) }
+    var selectedTipoId by remember { mutableStateOf<Int?>(null) }
+    var selectedLugarId by remember { mutableStateOf<Int?>(null) }
+
+    // Exposed dropdown expanded flags
+    var expandedUb by remember { mutableStateOf(false) }
+    var expandedTipo by remember { mutableStateOf(false) }
+    var expandedLugar by remember { mutableStateOf(false) }
+
+ /*
+    // Catálogos desde viewModel (asegúrate de llamar loadCatalogs())
+    //val ubicaciones by viewModel.ubicaciones.collectAsState()
+    val tipos by viewModel.tiposMaquinarias.collectAsState()
+    val lugares by viewModel.lugares.collectAsState()
+*/
+    // carga inicial: traer el material y catálogos
+    LaunchedEffect(id) {
+        viewModel.getPostById(id)
+        //viewModel.loadCatalogs()
+        viewModelMaquinariaYVehi.getPostById(id) // si lo necesitas
+    }
+
+    // cuando llegue material, poblar campos y selected ids
+    LaunchedEffect(material) {
+        material?.let { m ->
+            codigo = m.codigoArticulo ?: ""
+            nombre = m.nombreArticulo ?: ""
+            nombreComercial = m.nombreComercial ?: ""
+            numIdentificador = m.numIdentificador ?: ""
+            descripcion = m.descripcion ?: ""
+            marca = m.marca ?: ""
+            modelo = m.modelo ?: ""
+            fechaRegistro = m.fechadeRegistro ?: ""
+
+            // Asignar ids del equipo si existen en el DTO (ajusta nombres)
+            selectedUbicacionId = (m.idfUbicaciones).takeIf { it != 0 } // si 0 no válido
+            selectedTipoId = (m.idfTiposMaquinarias).takeIf { it != 0 }
+            //selectedLugarId = m.idLugar ?: selectedLugarId
+        }
+    }
+}
 /*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -72,6 +138,7 @@ fun Post_EditMaquinariaScreen(
         viewModelMaquinariaYVehi.getPostById(id) // si lo necesitas
     }
 
+
     // cuando llegue material, poblar campos y selected ids
     LaunchedEffect(material) {
         material?.let { m ->
@@ -90,6 +157,8 @@ fun Post_EditMaquinariaScreen(
             // selectedLugarId = m.idLugar ?: selectedLugarId
         }
     }
+
+    //********************************----------------------------
 
     // reaccionar al update
     LaunchedEffect(updateState) {

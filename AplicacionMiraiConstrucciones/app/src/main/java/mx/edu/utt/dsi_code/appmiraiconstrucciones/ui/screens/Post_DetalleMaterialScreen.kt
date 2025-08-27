@@ -1,3 +1,5 @@
+package mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.screens
+
 // imports: asegúrate de usar sólo material3 aquí
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -34,7 +36,7 @@ fun KeyValueRow(label: String, value: String, modifier: Modifier = Modifier) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetalleMaterialScreen(
+fun Post_DetalleMaterialScreen(
     navController: NavHostController,
     id: Int,
     viewModel: Post_MaquinariasYVehiculosDto_ViewModel
