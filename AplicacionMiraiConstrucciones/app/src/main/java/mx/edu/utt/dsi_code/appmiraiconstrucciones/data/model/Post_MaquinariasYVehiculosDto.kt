@@ -2,27 +2,28 @@ package mx.edu.utt.dsi_code.appmiraiconstrucciones.data.model
 
 import com.google.gson.annotations.SerializedName
 
+// ---------------- MAQUINARIAS Y VEHICULOS ----------------
 data class Post_MaquinariasYVehiculosDto(
-    val total: Int,
-    val page: Int,
-    val page_size: Int,
-    val items: List<Maquinaria>
+    @SerializedName("total") val total: Int,
+    @SerializedName("page") val page: Int,
+    @SerializedName("page_size") val pageSize: Int,
+    @SerializedName("items") val items: List<Maquinaria>
 )
 
 data class Maquinaria(
-    val id_equipos: Int,
-    val codigo_articulo: String,
-    val nombre_articulo: String,
-    val nombre_comercial: String,
-    val num_identificador: String,
-    val descripcion: String,
-    val marca: String,
-    val modelo: String,
-    val fechade_registro: String,
-    val ubicacion_nombre: String,
-    val unidad_nombre: String,
-    val estatus_nombre: String,
-    val tipo_maquinaria_nombre: String,
-    //val nombreLugar: String
+    @SerializedName("id_equipos") val idEquipos: Int,
+    @SerializedName("codigo_articulo") val codigoArticulo: String,
+    @SerializedName("nombre_articulo") val nombreArticulo: String,
+    @SerializedName("nombre_comercial") val nombreComercial: String,
+    @SerializedName("num_identificador") val numIdentificador: String,
+    @SerializedName("descripcion") val descripcion: String,
+    @SerializedName("marca") val marca: String,
+    @SerializedName("modelo") val modelo: String,
+    @SerializedName("fechade_registro") val fechadeRegistro: String,
+    @SerializedName("ubicacion_nombre") val ubicacionNombre: String,
+    @SerializedName("unidad_nombre") val unidadNombre: String,
+    @SerializedName("estatus_nombre") val estatusNombre: String,
+    @SerializedName("tipo_maquinaria_nombre") val tipoMaquinariaNombre: String,
     @SerializedName("nombre_lugar") val nombreLugar: String
 )
+

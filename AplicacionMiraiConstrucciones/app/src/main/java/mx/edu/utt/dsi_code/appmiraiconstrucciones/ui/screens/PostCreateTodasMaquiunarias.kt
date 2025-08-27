@@ -94,11 +94,12 @@ fun PostCreateTodasMaquiunarias(
 
     // Llamamos a la API al cargar el Composable
     LaunchedEffect(Unit) {
-        //viewModelUbicaciones.fetchPosts()
         viewModelUbicaciones.fetchPosts()
-        viewModelUnidades.fetchPosts()
-        viewModelEstatus.fetchPosts()
-        viewModelTiposMaquinarias.fetchPosts()
+        // esperar un momento a que collectAsState actualice y luego loguear
+    }
+    LaunchedEffect(viewModelUbicaciones.posts.collectAsState().value) {
+        val list = viewModelUbicaciones.posts.value
+        list.forEach { Log.d("DebugUbicaciones", "ubi.id=${it.idUbicaciones} nombre=${it.nombre}") }
     }
 
     Column(
@@ -218,40 +219,51 @@ fun PostCreateTodasMaquiunarias(
             label = { Text("Ubicaciones")},
             modifier = Modifier.fillMaxWidth()
         )*/
+        // --- Ubicaciones (ejemplo completo) ---
+        val ubicaciones by viewModelUbicaciones.posts.collectAsState() // usa la propiedad pública posts
+        var seleccionUbicacionesName by remember { mutableStateOf("") }
+
         ExposedDropdownMenuBox(
             expanded = expandidoUbicaciones,
-            onExpandedChange = { expandidoUbicaciones = !expandidoUbicaciones }
+            onExpandedChange = { expandidoUbicaciones = it }
         ) {
+            // muestra el nombre seleccionado o placeholder
             TextField(
-                value = seleccionUbicaciones?.nombre ?: "Selecciona una Ubicacion",
+                value = if (seleccionUbicacionesName.isNotBlank()) seleccionUbicacionesName else "Selecciona una Ubicación",
                 onValueChange = {},
                 readOnly = true,
-                label = { Text("Ubicacion") },
-                trailingIcon = {
-                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandidoUbicaciones)
-                },
-                modifier = Modifier.menuAnchor()
+                label = { Text("Ubicación") },
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandidoUbicaciones) },
+                modifier = Modifier
+                    .menuAnchor()
+                    .fillMaxWidth()
             )
 
             ExposedDropdownMenu(
                 expanded = expandidoUbicaciones,
                 onDismissRequest = { expandidoUbicaciones = false }
             ) {
-                ubicacionesCollectToDropDown.forEach { ubicacioDropDown ->
-                    DropdownMenuItem(
-                        text = { Text(ubicacioDropDown.nombre) },
-                        onClick = {
-                            seleccionUbicaciones = ubicacioDropDown
-                            idfUbicaciones = ubicacioDropDown.idUbicaciones
-                            expandidoUbicaciones = false
-                        }
-                    )
+                if (ubicaciones.isEmpty()) {
+                    DropdownMenuItem(text = { Text("Cargando...") }, onClick = { })
+                } else {
+                    ubicaciones.forEach { ubi ->
+                        DropdownMenuItem(
+                            text = { Text(ubi.nombre) },
+                            onClick = {
+                                seleccionUbicaciones = ubi
+                                seleccionUbicacionesName = ubi.nombre
+                                idfUbicaciones = ubi.idUbicaciones             // <-- guardas el INT real
+                                expandidoUbicaciones = false
+                                Log.d("Dropdown", "Seleccion Ubicacion -> id=${idfUbicaciones}, nombre=${ubi.nombre}")
+                            }
+                        )
+                    }
                 }
             }
         }
-
         Spacer(modifier = Modifier.height(8.dp))
 
+/*
         /*/idfUnidades
         OutlinedTextField(
             value = idfUnidades,
@@ -371,7 +383,7 @@ fun PostCreateTodasMaquiunarias(
                     )
                 }
             }
-        }
+        }*****/
 
         Spacer(modifier = Modifier.height(8.dp))
 

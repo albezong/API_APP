@@ -1,10 +1,13 @@
 package mx.edu.utt.dsi_code.appmiraiconstrucciones.data.model
 
+import com.google.gson.annotations.SerializedName
+
+// ---------------- ROLES ----------------
 data class Post_RolesDto(
-    val idRoles: Int,
-    val nombre: String,
+    @SerializedName("id_roles") val idRoles: Int,
+    @SerializedName("nombre") val nombre: String,
 )
 
 data class Create_RolesDto_2(
-    val nombre: String,
+    @SerializedName("nombre") val nombre: String,
 )

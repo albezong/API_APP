@@ -1,26 +1,30 @@
 package mx.edu.utt.dsi_code.appmiraiconstrucciones.data.model
 
+import com.google.gson.annotations.SerializedName
+
+// ---------------- DETALLES PREVENTIVOS ----------------
 data class Post_DetallesPreventivosDto(
-    val idDetallesPreventivos: Int,
-    val idfRevisiones: Int,
-    val idfCategoriasPreventivas: Int,
-    val nombreParte: String,
-    val idfEstadoPrioridades: Int,
-    val comentarios: String,
-    val observaciones: String,
-    //yyyy-MM-dd'T'HH:mm:ss
-    val fecha: String,
-    val numeroReporte: Int,
+    @SerializedName("id_detalles_preventivos") val idDetallesPreventivos: Int,
+    @SerializedName("idf_revisiones") val idfRevisiones: Int,
+    @SerializedName("idf_categorias_preventivas") val idfCategoriasPreventivas: Int,
+    @SerializedName("nombre_parte") val nombreParte: String,
+    @SerializedName("idf_estado_prioridades") val idfEstadoPrioridades: Int,
+    @SerializedName("comentarios") val comentarios: String,
+    @SerializedName("observaciones") val observaciones: String,
+    @SerializedName("fecha") val fecha: String, // yyyy-MM-dd'T'HH:mm:ss
+    @SerializedName("numero_reporte") val numeroReporte: Int,
 )
 
 data class Create_DetallesPreventivosDto_2(
-    val idfRevisiones: Int,
-    val idfCategoriasPreventivas: Int,
-    val nombreParte: String,
-    val idfEstadoPrioridades: Int,
-    val comentarios: String,
-    val observaciones: String,
-    //yyyy-MM-dd'T'HH:mm:ss
-    val fecha: String,
-    val numeroReporte: Int,
+    @SerializedName("idf_revisiones") val idfRevisiones: Int,
+    @SerializedName("idf_categorias_preventivas") val idfCategoriasPreventivas: Int,
+    @SerializedName("nombre_parte") val nombreParte: String,
+    @SerializedName("idf_estado_prioridades") val idfEstadoPrioridades: Int,
+    @SerializedName("comentarios") val comentarios: String,
+    @SerializedName("observaciones") val observaciones: String,
+    @SerializedName("fecha") val fecha: String,
+    @SerializedName("numero_reporte") val numeroReporte: Int,
 )
+
+
+

@@ -1,28 +1,31 @@
 package mx.edu.utt.dsi_code.appmiraiconstrucciones.data.model
 
+import com.google.gson.annotations.SerializedName
+
+// ---------------- RECORDATORIOS ----------------
 data class Post_RecordatoriosDto(
-    val idRecordatorios: Int,
-    val idfEquipos: Int,//--
-    val idfTareas: Int,
-    val idfUsuarios: Int,
-    val idfPrioridades: Int,
-    val idfTiposMantenimientos: Int,
-    val recordarS_N: Byte,
-    val fechaRecordatorio: String,
-    val numeroReporte: Int,
-    //yyyy-MM-dd'T'HH:mm:ss
-    val descripcion: String
+    @SerializedName("id_recordatorios") val idRecordatorios: Int,
+    @SerializedName("idf_equipos") val idfEquipos: Int,
+    @SerializedName("idf_tareas") val idfTareas: Int,
+    @SerializedName("idf_usuarios") val idfUsuarios: Int,
+    @SerializedName("idf_prioridades") val idfPrioridades: Int,
+    @SerializedName("idf_tipos_mantenimientos") val idfTiposMantenimientos: Int,
+    @SerializedName("recordar_s_n") val recordarS_N: Byte,
+    @SerializedName("fecha_recordatorio") val fechaRecordatorio: String,
+    @SerializedName("numero_reporte") val numeroReporte: Int,
+    @SerializedName("descripcion") val descripcion: String,
 )
 
 data class Create_RecordatoriosDto_2(
-    val idfEquipos: Int,//--
-    val idfTareas: Int,
-    val idfUsuarios: Int,
-    val idfPrioridades: Int,
-    val idfTiposMantenimientos: Int,
-    val recordarS_N: Byte,
-    val fechaRecordatorio: String,
-    val numeroReporte: Int,
-    //yyyy-MM-dd'T'HH:mm:ss
-    val descripcion: String
+    @SerializedName("idf_equipos") val idfEquipos: Int,
+    @SerializedName("idf_tareas") val idfTareas: Int,
+    @SerializedName("idf_usuarios") val idfUsuarios: Int,
+    @SerializedName("idf_prioridades") val idfPrioridades: Int,
+    @SerializedName("idf_tipos_mantenimientos") val idfTiposMantenimientos: Int,
+    @SerializedName("recordar_s_n") val recordarS_N: Byte,
+    @SerializedName("fecha_recordatorio") val fechaRecordatorio: String,
+    @SerializedName("numero_reporte") val numeroReporte: Int,
+    @SerializedName("descripcion") val descripcion: String,
 )
+
+

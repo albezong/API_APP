@@ -1,12 +1,15 @@
 package mx.edu.utt.dsi_code.appmiraiconstrucciones.data.model
 
+import com.google.gson.annotations.SerializedName
+
+// ---------------- EMPRESAS ----------------
 data class Post_EmpresasDto(
-    val idEmpresas: Int,
-    val nombre: String,
-    val reportaOsolicita: String,
+    @SerializedName("id_empresas") val idEmpresas: Int,
+    @SerializedName("nombre") val nombre: String,
+    @SerializedName("reporta_osolicita") val reportaOsolicita: String,
 )
 
 data class Create_EmpresasDto_2(
-    val nombre: String,
-    val reportaOsolicita: String,
+    @SerializedName("nombre") val nombre: String,
+    @SerializedName("reporta_osolicita") val reportaOsolicita: String,
 )
