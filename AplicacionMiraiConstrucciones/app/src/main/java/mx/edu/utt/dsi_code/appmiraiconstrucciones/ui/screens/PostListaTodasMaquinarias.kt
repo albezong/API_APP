@@ -33,7 +33,7 @@ import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_MaquinariasYVeh
 
 @Composable
 fun PostListaTodasMaquiunarias(
-    navController: NavHostController,
+    navController: NavController,
     viewModel: Post_MaquinariasYVehiculosDto_ViewModel,
 ) {
     val posts by viewModel.posts.collectAsState()

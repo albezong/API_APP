@@ -21,6 +21,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.R
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.LoginState
@@ -31,7 +32,7 @@ import java.nio.charset.StandardCharsets
 
 @Composable
 fun Post_LogIn(
-    navListaMaquinaria: NavHostController,
+    navListaMaquinaria: NavController,
     usuarioViewModelLogeo: UsuariosViewModelLogeo,
 ) {
     encabezadoLogin()
@@ -66,7 +67,7 @@ fun encabezadoLogin(
 
 @Composable
 fun cuerpoLogin(
-    navListaMaquinaria: NavHostController,
+    navListaMaquinaria: NavController,
     usuariosViewModel: UsuariosViewModelLogeo,
 ) {
     var nombre by remember { mutableStateOf("") }

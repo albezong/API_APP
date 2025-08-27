@@ -4,299 +4,141 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-//import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.layout.size
-//-------------------------------------------------
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-
-import androidx.compose.material.*
-
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
-import kotlinx.coroutines.launch
-//-------------------------------------------------
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ScaffoldState
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.api.RetrofitClient
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_MaquinariasYVehiculosDto_Repository
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_UsuariosDto_Repository
-import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.Destinos
-import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.Destinos.ico_info
-import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.Destinos.ico_search
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.HistorialServiciosRepository
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.RevisionesRepository
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.screens.components.AppDrawer
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.NavigationHost
-import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.screens.DetalleMaterialScreen
-import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.screens.PostListaTodasMaquiunarias
-import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.screens.Post_LogIn
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.utils.NavigationUtils
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.theme.APPMiraiConstruccionesTheme
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.theme.Grey80
-import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_MaquinariasYVehiculosDto_ViewModel
-import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_MaquinariasYVehiculosDto_ViewModel_Factory
-import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.UsuariosViewModelFactory
-import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.UsuariosViewModelLogeo
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Repo y factory para maquinarias (ya lo tenías)
-        val repoMaquinas = Post_MaquinariasYVehiculosDto_Repository(RetrofitClient.apiService)
+        // 👇 edge-to-edge
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        // Inicialización de repositorios
+        val apiService = RetrofitClient.apiService
+
+        // Repositorio de maquinarias
+        val repoMaquinas = Post_MaquinariasYVehiculosDto_Repository(apiService)
         val factoryMaquinas = Post_MaquinariasYVehiculosDto_ViewModel_Factory(repoMaquinas)
         val postViewModel = ViewModelProvider(this, factoryMaquinas)[Post_MaquinariasYVehiculosDto_ViewModel::class.java]
 
-        // Repo y factory para usuarios (nuevo)
-        val usuariosRepo = Post_UsuariosDto_Repository(RetrofitClient.apiService)
+        // Repositorio de usuarios
+        val usuariosRepo = Post_UsuariosDto_Repository(apiService)
         val usuariosFactory = UsuariosViewModelFactory(usuariosRepo)
         val usuariosViewModel = ViewModelProvider(this, usuariosFactory)[UsuariosViewModelLogeo::class.java]
 
+        // Repositorio de historial de servicios
+        val historialServiciosRepo = HistorialServiciosRepository(apiService)
+        val historialServiciosFactory = HistorialServiciosViewModelFactory(historialServiciosRepo)
+        val historialServiciosViewModel = ViewModelProvider(this, historialServiciosFactory)[HistorialServiciosViewModel::class.java]
+
+        // Repositorio de revisiones
+        val revisionesRepo = RevisionesRepository(apiService)
+        val revisionPreventivaFactory = RevisionPreventivaViewModelFactory(revisionesRepo)
+        val revisionPreventivaViewModel = ViewModelProvider(this, revisionPreventivaFactory)[RevisionPreventivaViewModel::class.java]
+
+        // ViewModel de detalle de revisión preventiva
+        val detalleRevisionFactory = DetalleRevisionPreventivaViewModelFactory(revisionesRepo)
+        val detalleRevisionPreventivaViewModel = ViewModelProvider(this, detalleRevisionFactory)[DetalleRevisionPreventivaViewModel::class.java]
+
         setContent {
             APPMiraiConstruccionesTheme {
-                val navController = rememberNavController()
-
-                // Llamamos a un NavigationHost que recibe ambos viewModels
-                NavigationHost(
+                AppMainScreen(
                     postMaquinasViewModel = postViewModel,
                     usuariosViewModel = usuariosViewModel,
-                    navController = navController
+                    revisionPreventivaViewModel = revisionPreventivaViewModel,
+                    historialServiciosViewModel = historialServiciosViewModel,
+                    detalleRevisionPreventivaViewModel = detalleRevisionPreventivaViewModel
                 )
             }
         }
     }
 }
-
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun PantallaPrincipal(
-    viewModel: Post_MaquinariasYVehiculosDto_ViewModel,
-    navController: androidx.navigation.NavHostController,
-    nombre: String,
+fun AppMainScreen(
+    postMaquinasViewModel: Post_MaquinariasYVehiculosDto_ViewModel,
+    usuariosViewModel: UsuariosViewModelLogeo,
+    revisionPreventivaViewModel: RevisionPreventivaViewModel,
+    historialServiciosViewModel: HistorialServiciosViewModel,
+    detalleRevisionPreventivaViewModel: DetalleRevisionPreventivaViewModel
 ) {
-    //val navController = rememberNavController()
+    val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
-    val navigationItems = listOf(
-        ico_info,
-        ico_search,
-    )
 
-    androidx.compose.material.Scaffold(
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+    var userName by remember { mutableStateOf("Usuario") }
+
+    Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { TopBar(scope, scaffoldState) },
-        drawerContent = {
-            Drawer(
-                scope,
-                scaffoldState,
-                navController,
-                menu_items = navigationItems,
-                nombre = nombre
-            )
-        }
-    ) { innerPadding ->
-        // contenido principal: por ejemplo tu lista
-        PostListaTodasMaquiunarias(navController = navController, viewModel = viewModel)
-    }
-}
-
-@Composable
-fun TopBar(
-    scope: CoroutineScope,
-    scaffoldState: ScaffoldState,
-) {
-    TopAppBar(
-        title = { androidx.compose.material.Text(text = "MIRAI CONSTRUCCIONES") },
-        /*colors = TopAppBarDefaults.smallTopAppBarColors(
-            containerColor = Color(0xFF009688) // aquí pones el color que quieras
-        ),*/
-        navigationIcon = {
-            IconButton(onClick = {
-                scope.launch {
-                    scaffoldState.drawerState.open()
-                }
-            }) {
-                Icon(imageVector = Icons.Filled.Menu, contentDescription = "Icono de menú")
-            }
-        },
-        backgroundColor = Grey80
-    )
-}
-
-@Composable
-fun Drawer(
-    scope: CoroutineScope,
-    scaffoldState: ScaffoldState,
-    navController: NavHostController,
-    menu_items: List<Destinos>,
-    nombre: String,
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Grey80) // 👈 Fondo con tu color Grey80
-            .padding(16.dp)     // opcional, para dar espacio interno
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            // Icono de usuario
-            Icon(
-                painter = painterResource(id = R.drawable.baseline_account_circle_24),
-                contentDescription = "Usuario",
-                tint = Color.Black, // 👈 icono en negro
-                modifier = Modifier.size(40.dp)
-            )
-
-            Spacer(modifier = Modifier.width(12.dp))
-
-            // Texto del usuario
-            Text(
-                text = "Hola, $nombre",
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black, // 👈 texto en negro
-                modifier = Modifier.weight(1f) // ocupa el espacio libre
-            )
-
-            // Botón salir (solo el ícono)
-            IconButton(
-                onClick = {
-                    navController.navigate("login") {
-                        popUpTo("lista_maquinarias") { inclusive = true }
-                        launchSingleTop = true
-                    }
-                }
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.baseline_exit_to_app_24),
-                    contentDescription = "Salir",
-                    tint = Color.Black, // 👈 icono en negro
-                    modifier = Modifier.size(24.dp)
+        topBar = {
+            if (NavigationUtils.shouldShowTopBar(currentRoute)) {
+                TopAppBar(
+                    title = { Text(text = NavigationUtils.getTopBarTitle(currentRoute)) },
+                    navigationIcon = if (NavigationUtils.shouldShowDrawer(currentRoute)) {
+                        {
+                            IconButton(onClick = {
+                                scope.launch { scaffoldState.drawerState.open() }
+                            }) {
+                                Icon(Icons.Filled.Menu, contentDescription = "Menú")
+                            }
+                        }
+                    } else null,
+                    backgroundColor = Grey80,
+                    modifier = Modifier.statusBarsPadding()
                 )
             }
-        }
-
-
-
-
-
-
-        Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(15.dp)
-        )
-
-        menu_items.forEach { item ->
-            DrawerItem(item = item) {
-                navController.navigate(item.ruta) {
-                    launchSingleTop = true
-                }
-                scope.launch {
-                    scaffoldState.drawerState.close()
-                }
+        },
+        drawerContent = if (NavigationUtils.shouldShowDrawer(currentRoute)) {
+            {
+                AppDrawer(
+                    scope = scope,
+                    scaffoldState = scaffoldState,
+                    navController = navController,
+                    nombre = userName
+                )
             }
+        } else null,
+        contentWindowInsets = WindowInsets.systemBars
+    ) { paddingValues ->
+        Box(modifier = Modifier.padding(paddingValues)) {
+            NavigationHost(
+                postMaquinasViewModel = postMaquinasViewModel,
+                usuariosViewModel = usuariosViewModel,
+                revisionPreventivaViewModel = revisionPreventivaViewModel,
+                historialServiciosViewModel = historialServiciosViewModel,
+                detalleRevisionPreventivaViewModel = detalleRevisionPreventivaViewModel,
+                navController = navController
+            )
         }
     }
 }
-
-
-@Composable
-fun DrawerItem(
-    item: Destinos,
-    onItemClick: (Destinos) -> Unit,
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(56.dp)
-            .padding(6.dp)
-            .clip(RoundedCornerShape(12))
-            .padding(8.dp)
-            .clickable { onItemClick(item) }
-    ) {
-        Image(
-            painterResource(id = item.icon),
-            contentDescription = item.title
-        )
-        Spacer(modifier = Modifier.width(12.dp))
-        Text(
-            text = item.title,
-            style = MaterialTheme.typography.body1
-        )
-    }
-}
-
-
-/*/
-@Preview(showBackground = true)
-@Composable
-fun PantallaPrincipalPreview() {
-    APPMiraiConstruccionesTheme {
-        // Simulación de datos para el preview
-        val dummyViewModel = Post_MaquinariasYVehiculosDto_ViewModel(
-            Post_MaquinariasYVehiculosDto_Repository(RetrofitClient.apiService)
-        )
-        val navController = rememberNavController()
-        PantallaPrincipal(viewModel = dummyViewModel, navController = navController)
-    }
-}*/
-/*
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    APPMiraiConstruccionesTheme {
-        Greeting("Android")
-    }
-}*/

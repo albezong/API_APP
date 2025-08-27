@@ -374,4 +374,43 @@ interface ApiService {
     @PUT("api/Usuarios/{id}")
     suspend fun updateUsuario(@Path("idUsuarios") id: Int, @Body usuario: Create_UsuariosDto_2): Create_UsuariosDto_2
 
+    // ---------- HISTORIAL DE SERVICIOS ---------------
+    @GET("api/historialServicios")
+    suspend fun getAllHistorialServicios(): List<Post_HistorialServiciosDto>
+
+    @POST("api/historialServicios")
+    suspend fun createHistorialServicio(@Body historial: Create_HistorialServiciosDto): Post_HistorialServiciosDto
+
+    @DELETE("api/historialServicios/{id}")
+    suspend fun deleteHistorialServicio(@Path("id") id: Int)
+
+    @GET("api/historialServicios/{id}")
+    suspend fun getHistorialServicioById(@Path("id") id: Int): Post_HistorialServiciosDto
+
+    @PUT("api/historialServicios/{id}")
+    suspend fun updateHistorialServicio(
+        @Path("id") id: Int,
+        @Body historial: Create_HistorialServiciosDto
+    ): Create_HistorialServiciosDto
+
+
+    // ------------ PROGRAMAR MANTENIMIENTOS ----------------
+    @GET("api/programaciones")
+    suspend fun getAllProgramaciones(): List<Post_ProgramacionesDto>
+
+    @POST("api/programaciones")
+    suspend fun createProgramacion(@Body programacion: Create_ProgramacionesDto): Post_ProgramacionesDto
+
+    @DELETE("api/programaciones/{id}")
+    suspend fun deleteProgramacion(@Path("id") id: Int)
+
+    @GET("api/programaciones/{id}")
+    suspend fun getProgramacionById(@Path("id") id: Int): Post_ProgramacionesDto
+
+    @PUT("api/programaciones/{id}")
+    suspend fun updateProgramacion(
+        @Path("id") id: Int,
+        @Body programacion: Create_ProgramacionesDto
+    ): Create_ProgramacionesDto
+
 }
