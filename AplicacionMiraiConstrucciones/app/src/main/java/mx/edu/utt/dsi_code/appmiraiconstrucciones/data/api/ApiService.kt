@@ -26,11 +26,10 @@ interface ApiService {
     suspend fun getMaquinariaById(
         @Path("id") id: Int
     ): Maquinaria
-
 /*
-    // ----------- HistorialServicios -----------
+    // ----------- HistorialServicios -----------<<
     @GET("api/historialServicios")
-    suspend fun getAllHistorialServicios(): List<HistorialServicio>
+    suspend fun getAllHistorialServicios(): List<HistorialServicioDto>
 
     @POST("api/historialServicios")
     suspend fun createHistorialServicio(@Body historial: HistorialServicioCreate): HistorialServicio
@@ -59,9 +58,8 @@ interface ApiService {
     suspend fun getProgramacionById(@Path("id") id: Int): Programacion
 
     @PUT("api/programaciones/{id}")
-    suspend fun updateProgramacion(@Path("id") id: Int, @Body programacion: ProgramacionCreate): ProgramacionCreate*/
-
-
+    suspend fun updateProgramacion(@Path("id") id: Int, @Body programacion: ProgramacionCreate): ProgramacionCreate
+*/
     // ----------- CategoriasPreventivas -----------
     @GET("api/CategoriasPreventivas")
     suspend fun getAllCategoriasPreventivas(): List<Post_CategoriasPreventivasDto>
