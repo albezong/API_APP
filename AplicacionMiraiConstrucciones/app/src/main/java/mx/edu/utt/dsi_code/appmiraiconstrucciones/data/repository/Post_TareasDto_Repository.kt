@@ -13,6 +13,6 @@ class Post_TareasDto_Repository(private val apiService: ApiService){
 
     suspend fun getById(id: Int): Post_TareasDto = apiService.getTareaById(id)
 
-    suspend fun update(id: Int, post: Create_TareasDto_2): Create_TareasDto_2 = apiService.updateTarea(id, post)
+    suspend fun update(id: Int, post: Post_TareasDto): Post_TareasDto = apiService.updateTarea(id, post)
 
 }

@@ -33,7 +33,8 @@ namespace APIMIRAI_Construcciones.Controllers
             public string estatus_nombre { get; set; }
             public int? idf_tipos_maquinarias { get; set; }
             public string tipo_maquinaria_nombre { get; set; }
-            public string nombre_Lugar { get; set; }
+            public int? idf_lugares { get; set; }
+            public string lugares_nombre { get; set; }
         }
 
         [HttpGet, Route("")]
@@ -77,6 +78,7 @@ namespace APIMIRAI_Construcciones.Controllers
                     (e.numIdentificador ?? "").ToLower().Contains(s) ||
                     (e.marca ?? "").ToLower().Contains(s) ||
                     (e.modelo ?? "").ToLower().Contains(s) ||
+                    (e.Lugares!= null && e.Lugares.FirstOrDefault().nombreLugar.ToLower().Contains(s)) ||
                     (e.TiposMaquinarias != null && e.TiposMaquinarias.nombre.ToLower().Contains(s)) ||
                     (e.Unidades != null && e.Unidades.nombre.ToLower().Contains(s)) ||
                     (e.Ubicaciones != null && e.Ubicaciones.nombre.ToLower().Contains(s))
@@ -133,6 +135,7 @@ namespace APIMIRAI_Construcciones.Controllers
                 .Include(x => x.Estatus)
                 .Include(x => x.Unidades)
                 .Include(x => x.Ubicaciones)
+                .Include(x => x.Lugares)
                 .FirstOrDefault(x => x.idEquipos == id);
 
             if (e == null) return NotFound();
@@ -156,7 +159,8 @@ namespace APIMIRAI_Construcciones.Controllers
                 estatus_nombre = e.Estatus != null ? e.Estatus.nombre : null,
                 idf_tipos_maquinarias = e.idfTiposMaquinarias,
                 tipo_maquinaria_nombre = e.TiposMaquinarias != null ? e.TiposMaquinarias.nombre : null,
-                nombre_Lugar = e.Lugares != null ? e.Lugares.FirstOrDefault().nombreLugar : null
+                /*idf_lugares= e.Lugares.FirstOrDefault().idLugares,
+                lugares_nombre = e.Lugares != null ? e.Lugares.FirstOrDefault().nombreLugar : null,*/
             };
 
             return Ok(dto);

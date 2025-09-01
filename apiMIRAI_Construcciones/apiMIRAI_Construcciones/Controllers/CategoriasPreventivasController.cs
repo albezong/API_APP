@@ -13,11 +13,14 @@ using APIMIRAI_Construcciones.Models;
 
 namespace APIMIRAI_Construcciones.Controllers
 {
+    [RoutePrefix("api/CategoriasPreventivas")]
     public class CategoriasPreventivasController : ApiController
     {
         private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/CategoriasPreventivas
+        [HttpGet]
+        [Route("")]
         public IHttpActionResult GetCategoriasPreventivas()
         {
             var catPreventivas = db.CategoriasPreventivas
@@ -32,7 +35,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // GET: api/CategoriasPreventivas/5
-        [ResponseType(typeof(CategoriasPreventivas))]
+        //[ResponseType(typeof(CategoriasPreventivas))]
+        [HttpGet]
+        [Route("{id:int}")]
         public IHttpActionResult GetCategoriasPreventivas(int id)
         {
             var empresa = db.CategoriasPreventivas
@@ -53,8 +58,10 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // PUT: api/CategoriasPreventivas/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutCategoriasPreventivas(int id, CategoriasPreventivas categoriasPreventivas)
+        //[ResponseType(typeof(void))]
+        [HttpPut]
+        [Route("{id:int}")]
+        public IHttpActionResult PutCategoriasPreventivas(int id, CategoriasPreventivasDto categoriasPreventivas)
         {
             if (!ModelState.IsValid)
             {
@@ -88,7 +95,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // POST: api/CategoriasPreventivas
-        [ResponseType(typeof(CategoriasPreventivas))]
+        //[ResponseType(typeof(CategoriasPreventivas))]
+        [HttpPost]
+        [Route("")]
         public IHttpActionResult PostCategoriasPreventivas(CategoriasPreventivas categoriasPreventivas)
         {
             if (!ModelState.IsValid)
@@ -99,11 +108,13 @@ namespace APIMIRAI_Construcciones.Controllers
             db.CategoriasPreventivas.Add(categoriasPreventivas);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = categoriasPreventivas.idCategoriasPreventivas }, categoriasPreventivas);
+            return Ok(categoriasPreventivas);
         }
 
         // DELETE: api/CategoriasPreventivas/5
-        [ResponseType(typeof(CategoriasPreventivas))]
+        //[ResponseType(typeof(CategoriasPreventivas))]
+        [HttpDelete]
+        [Route("{id:int}")]
         public IHttpActionResult DeleteCategoriasPreventivas(int id)
         {
             CategoriasPreventivas categoriasPreventivas = db.CategoriasPreventivas.Find(id);

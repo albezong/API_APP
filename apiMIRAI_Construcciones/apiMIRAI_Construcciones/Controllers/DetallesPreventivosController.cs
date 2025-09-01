@@ -13,11 +13,14 @@ using APIMIRAI_Construcciones.Models;
 
 namespace APIMIRAI_Construcciones.Controllers
 {
+    [RoutePrefix("api/DetallesPreventivos")]
     public class DetallesPreventivosController : ApiController
     {
         private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/DetallesPreventivos
+        [HttpGet]
+        [Route("")]
         public IHttpActionResult GetDetallesPreventivos()
         {
             var empresas = db.DetallesPreventivos
@@ -39,7 +42,8 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // GET: api/DetallesPreventivos/5
-        [ResponseType(typeof(DetallesPreventivos))]
+        [HttpGet]
+        [Route("{id:int}")]
         public IHttpActionResult GetDetallesPreventivos(int id)
         {
             var empresa = db.DetallesPreventivos
@@ -67,7 +71,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // PUT: api/DetallesPreventivos/5
-        [ResponseType(typeof(void))]
+        //[ResponseType(typeof(void))]
+        [HttpPut]
+        [Route("{id:int}")]
         public IHttpActionResult PutDetallesPreventivos(int id, DetallesPreventivos detallesPreventivos)
         {
             if (!ModelState.IsValid)
@@ -102,7 +108,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // POST: api/DetallesPreventivos
-        [ResponseType(typeof(DetallesPreventivos))]
+        //[ResponseType(typeof(DetallesPreventivos))]
+        [HttpPost]
+        [Route("")]
         public IHttpActionResult PostDetallesPreventivos(DetallesPreventivos detallesPreventivos)
         {
             if (!ModelState.IsValid)
@@ -113,11 +121,13 @@ namespace APIMIRAI_Construcciones.Controllers
             db.DetallesPreventivos.Add(detallesPreventivos);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = detallesPreventivos.idDetallesPreventivos }, detallesPreventivos);
+            return Ok(detallesPreventivos);
         }
 
         // DELETE: api/DetallesPreventivos/5
-        [ResponseType(typeof(DetallesPreventivos))]
+        //[ResponseType(typeof(DetallesPreventivos))]
+        [HttpDelete]
+        [Route("{id:int}")]
         public IHttpActionResult DeleteDetallesPreventivos(int id)
         {
             DetallesPreventivos detallesPreventivos = db.DetallesPreventivos.Find(id);

@@ -13,11 +13,14 @@ using APIMIRAI_Construcciones.Models;
 
 namespace APIMIRAI_Construcciones.Controllers
 {
+    [RoutePrefix("api/Roles")]
     public class RolesController : ApiController
     {
         private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/Roles
+        [HttpGet]
+        [Route("")]
         public IHttpActionResult GetRoles()
         {
             var empresas = db.Roles
@@ -32,7 +35,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // GET: api/Roles/5
-        [ResponseType(typeof(Roles))]
+        //[ResponseType(typeof(Roles))]
+        [HttpGet]
+        [Route("{id:int}")]
         public IHttpActionResult GetRoles(int id)
         {
             var empresa = db.Roles
@@ -53,20 +58,26 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // PUT: api/Roles/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutRoles(int id, Roles roles)
+        //[ResponseType(typeof(void))]
+        [HttpPut]
+        [Route("{id:int}")]
+        public IHttpActionResult PutRoles(int id, RolesDto roles)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            var existingRoles = db.Roles.Find(id);
+            if (existingRoles == null)
+                return NotFound();
+
             if (id != roles.idRoles)
             {
                 return BadRequest();
             }
 
-            db.Entry(roles).State = EntityState.Modified;
+            existingRoles.nombre = roles.nombre;
 
             try
             {
@@ -88,7 +99,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // POST: api/Roles
-        [ResponseType(typeof(Roles))]
+        //[ResponseType(typeof(Roles))]
+        [HttpPost]
+        [Route("")]
         public IHttpActionResult PostRoles(Roles roles)
         {
             if (!ModelState.IsValid)
@@ -99,14 +112,16 @@ namespace APIMIRAI_Construcciones.Controllers
             db.Roles.Add(roles);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = roles.idRoles }, roles);
+            return Ok(roles);
         }
 
         // DELETE: api/Roles/5
-        [ResponseType(typeof(Roles))]
+        //[ResponseType(typeof(Roles))]
+        [HttpDelete]
+        [Route("{id:int}")]
         public IHttpActionResult DeleteRoles(int id)
         {
-            Roles roles = db.Roles.Find(id);
+            var roles = db.Roles.Find(id);
             if (roles == null)
             {
                 return NotFound();

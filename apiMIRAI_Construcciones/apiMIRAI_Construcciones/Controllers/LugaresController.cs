@@ -13,11 +13,14 @@ using APIMIRAI_Construcciones.Models;
 
 namespace APIMIRAI_Construcciones.Controllers
 {
+    [RoutePrefix("api/Lugares")]
     public class LugaresController : ApiController
     {
         private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/Lugares
+        [HttpGet]
+        [Route("")]
         public IHttpActionResult GetLugares()
         {
             var empresas = db.Lugares
@@ -33,7 +36,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // GET: api/Lugares/5
-        [ResponseType(typeof(Lugares))]
+        //[ResponseType(typeof(Lugares))]
+        [HttpGet]
+        [Route("{id:int}")]
         public IHttpActionResult GetLugares(int id)
         {
             var empresa = db.Lugares
@@ -55,20 +60,25 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // PUT: api/Lugares/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutLugares(int id, Lugares lugares)
+        //[ResponseType(typeof(void))]
+        [HttpPut]
+        [Route("{id:int}")]
+        public IHttpActionResult PutLugares(int id, LugaresDto lugares)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
+
+            var existingLugares = db.Lugares.Find(id);
+            if (existingLugares == null)
+                return NotFound();
 
             if (id != lugares.idLugares)
-            {
                 return BadRequest();
-            }
 
-            db.Entry(lugares).State = EntityState.Modified;
+            existingLugares.idLugares = lugares.idLugares;
+            existingLugares.nombreLugar = lugares.nombreLugar;
+
+            db.SaveChanges();
 
             try
             {
@@ -90,29 +100,29 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // POST: api/Lugares
-        [ResponseType(typeof(Lugares))]
+        //[ResponseType(typeof(Lugares))]
+        [HttpPost]
+        [Route("")]
         public IHttpActionResult PostLugares(Lugares lugares)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             db.Lugares.Add(lugares);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = lugares.idLugares }, lugares);
+            return Ok(lugares);
         }
 
         // DELETE: api/Lugares/5
-        [ResponseType(typeof(Lugares))]
+        //[ResponseType(typeof(Lugares))]
+        [HttpDelete]
+        [Route("{id:int}")]
         public IHttpActionResult DeleteLugares(int id)
         {
-            Lugares lugares = db.Lugares.Find(id);
+            var lugares = db.Lugares.Find(id);
             if (lugares == null)
-            {
                 return NotFound();
-            }
 
             db.Lugares.Remove(lugares);
             db.SaveChanges();

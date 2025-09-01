@@ -25,7 +25,7 @@ data class Create_HistorialServiciosDto(
     @SerializedName("descripcion") val descripcion: String
 )
 
-data class RefaccionDto(
+data class RefaccionDt(
     @SerializedName("id_refacciones") val idRefacciones: Int? = null,
     @SerializedName("idf_revisiones") val idfRevisiones: Int? = null,
     @SerializedName("idf_unidades") val idfUnidades: Int? = null,
@@ -41,7 +41,7 @@ data class RefaccionDto(
     @SerializedName("unidades") val unidades: Any? = null
 )
 
-data class DetallePreventivoDto(
+data class DetallePreventivoDt(
     @SerializedName("id_detalles_preventivos") val idDetallesPreventivos: Int? = null,
     @SerializedName("idf_revisiones") val idfRevisiones: Int? = null,
     @SerializedName("idf_categorias_preventivas") val idfCategoriasPreventivas: Int? = null,

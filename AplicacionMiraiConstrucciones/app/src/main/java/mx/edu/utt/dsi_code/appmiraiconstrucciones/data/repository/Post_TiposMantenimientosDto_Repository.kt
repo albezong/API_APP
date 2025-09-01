@@ -15,6 +15,6 @@ class Post_TiposMantenimientosDto_Repository(private val apiService: ApiService)
 
     suspend fun getById(id: Int): Post_TiposMantenimientosDto = apiService.getTipoMantenimientoById(id)
 
-    suspend fun update(id: Int, post: Create_TiposMantenimientosDto_2): Create_TiposMantenimientosDto_2 = apiService.updateTipoMantenimiento(id, post)
+    suspend fun update(id: Int, post: Post_TiposMantenimientosDto): Post_TiposMantenimientosDto = apiService.updateTipoMantenimiento(id, post)
 
 }

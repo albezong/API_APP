@@ -13,11 +13,14 @@ using APIMIRAI_Construcciones.Models;
 
 namespace APIMIRAI_Construcciones.Controllers
 {
+    [RoutePrefix("api/Prioridades")]
     public class PrioridadesController : ApiController
     {
         private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/Prioridades
+        [HttpGet]
+        [Route("")]
         public IHttpActionResult GetPrioridades()
         {
             var empresas = db.Prioridades
@@ -32,7 +35,8 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // GET: api/Prioridades/5
-        [ResponseType(typeof(Prioridades))]
+        [HttpGet]
+        [Route("{id:int}")]
         public IHttpActionResult GetPrioridades(int id)
         {
             var empresa = db.Prioridades
@@ -53,20 +57,24 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // PUT: api/Prioridades/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutPrioridades(int id, Prioridades prioridades)
+        //[ResponseType(typeof(void))]
+        [HttpPut]
+        [Route("{id:int}")]
+        public IHttpActionResult PutPrioridades(int id, PrioridadesDto prioridades)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
+
+            var existingPrioridades = db.Prioridades.Find(id);
+            if (existingPrioridades == null)
+                return NotFound();
 
             if (id != prioridades.idPrioridades)
-            {
                 return BadRequest();
-            }
 
-            db.Entry(prioridades).State = EntityState.Modified;
+            existingPrioridades.nombre = prioridades.nombre;
+
+            db.SaveChanges();
 
             try
             {
@@ -88,29 +96,29 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // POST: api/Prioridades
-        [ResponseType(typeof(Prioridades))]
+        //[ResponseType(typeof(Prioridades))]
+        [HttpPost]
+        [Route("")]
         public IHttpActionResult PostPrioridades(Prioridades prioridades)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             db.Prioridades.Add(prioridades);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = prioridades.idPrioridades }, prioridades);
+            return Ok(prioridades);
         }
 
         // DELETE: api/Prioridades/5
-        [ResponseType(typeof(Prioridades))]
+        //[ResponseType(typeof(Prioridades))]
+        [HttpDelete]
+        [Route("{id:int}")]
         public IHttpActionResult DeletePrioridades(int id)
         {
-            Prioridades prioridades = db.Prioridades.Find(id);
+            var prioridades = db.Prioridades.Find(id);
             if (prioridades == null)
-            {
                 return NotFound();
-            }
 
             db.Prioridades.Remove(prioridades);
             db.SaveChanges();

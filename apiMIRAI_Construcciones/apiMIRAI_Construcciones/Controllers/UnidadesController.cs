@@ -13,11 +13,14 @@ using APIMIRAI_Construcciones.Models;
 
 namespace APIMIRAI_Construcciones.Controllers
 {
+    [RoutePrefix("api/Unidades")]
     public class UnidadesController : ApiController
     {
         private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/Unidades
+        [HttpGet]
+        [Route("")]
         public IHttpActionResult GetUnidades()
         {
             var empresas = db.Unidades
@@ -32,7 +35,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // GET: api/Unidades/5
-        [ResponseType(typeof(Unidades))]
+        //[ResponseType(typeof(Unidades))]
+        [HttpGet]
+        [Route("{id:int}")]
         public IHttpActionResult GetUnidades(int id)
         {
             var empresa = db.Unidades
@@ -53,20 +58,26 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // PUT: api/Unidades/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutUnidades(int id, Unidades unidades)
+        //[ResponseType(typeof(void))]
+        [HttpPut]
+        [Route("{id:int}")]
+        public IHttpActionResult PutUnidades(int id, UnidadesDto unidades)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            var existingUnidades = db.Unidades.Find(id);
+            if (existingUnidades == null)
+                return NotFound();
+
             if (id != unidades.idUnidades)
             {
                 return BadRequest();
             }
 
-            db.Entry(unidades).State = EntityState.Modified;
+            existingUnidades.nombre = unidades.nombre;
 
             try
             {
@@ -88,7 +99,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // POST: api/Unidades
-        [ResponseType(typeof(Unidades))]
+        //[ResponseType(typeof(Unidades))]
+        [HttpPost]
+        [Route("")]
         public IHttpActionResult PostUnidades(Unidades unidades)
         {
             if (!ModelState.IsValid)
@@ -99,11 +112,13 @@ namespace APIMIRAI_Construcciones.Controllers
             db.Unidades.Add(unidades);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = unidades.idUnidades }, unidades);
+            return Ok(unidades);
         }
 
         // DELETE: api/Unidades/5
-        [ResponseType(typeof(Unidades))]
+        //[ResponseType(typeof(Unidades))]
+        [HttpDelete]
+        [Route("{id:int}")]
         public IHttpActionResult DeleteUnidades(int id)
         {
             Unidades unidades = db.Unidades.Find(id);

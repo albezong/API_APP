@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -17,11 +18,14 @@ using APIMIRAI_Construcciones.Models;
 
 namespace APIMIRAI_Construcciones.Controllers
 {
+    [RoutePrefix("api/Equipos")]
     public class EquiposController : ApiController
     {
         private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/Equipos
+        [HttpGet]
+        [Route("")]
         public IHttpActionResult GetEquipos()
         {
             var equipos = db.Equipos
@@ -36,7 +40,7 @@ namespace APIMIRAI_Construcciones.Controllers
                     marca = e.marca,
                     modelo = e.modelo,
                     fechadeRegistro = e.fechadeRegistro,
-                    idfUbicaciones = e.idfUbicaciones,
+                    idfUbicaciones = e.idfUbicaciones,//
                     idfUnidades = e.idfUnidades,
                     idfEstatus = e.idfEstatus,
                     idfTiposMaquinarias = e.idfTiposMaquinarias,
@@ -48,10 +52,12 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // GET: api/Equipos/5
-        [ResponseType(typeof(Equipos))]
+        //[ResponseType(typeof(Equipos))]
+        [HttpGet]
+        [Route("{id:int}")]
         public IHttpActionResult GetEquipos(int id)
         {
-            var empresa = db.Equipos
+            var equipos = db.Equipos
         .Where(e => e.idEquipos == id)
         .Select(e => new EquiposDto
         {
@@ -71,29 +77,44 @@ namespace APIMIRAI_Construcciones.Controllers
         })
         .FirstOrDefault();
 
-            if (empresa == null)
+            if (equipos == null)
             {
                 return NotFound();
             }
 
-            return Ok(empresa);
+            return Ok(equipos);
         }
 
         // PUT: api/Equipos/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutEquipos(int id, Equipos equipos)
+        //[ResponseType(typeof(void))]
+        [HttpPut]
+        [Route("{id:int}")]
+        public IHttpActionResult UpdateEquipo(int id, EquiposDto equipo)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
-            if (id != equipos.idEquipos)
-            {
+            var equipoExistente = db.Equipos.Find(id);
+            if (equipoExistente == null)
+                return NotFound();
+
+            if (id != equipo.idEquipos)
                 return BadRequest();
-            }
 
-            db.Entry(equipos).State = EntityState.Modified;
+            equipoExistente.codigoArticulo = equipo.codigoArticulo;
+            equipoExistente.nombreArticulo = equipo.nombreArticulo;
+            equipoExistente.nombreComercial = equipo.nombreComercial;
+            equipoExistente.numIdentificador = equipo.numIdentificador;
+            equipoExistente.descripcion = equipo.descripcion;
+            equipoExistente.marca = equipo.marca;
+            equipoExistente.modelo = equipo.modelo;
+            equipoExistente.fechadeRegistro = equipo.fechadeRegistro;
+            equipoExistente.idfUbicaciones = equipo.idfUbicaciones;
+            equipoExistente.idfUnidades = equipo.idfUnidades;
+            equipoExistente.idfEstatus = equipo.idfEstatus;
+            equipoExistente.idfTiposMaquinarias = equipo.idfTiposMaquinarias;
+
+            db.SaveChanges();
 
             try
             {
@@ -115,73 +136,133 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // POST: api/Equipos
-        [ResponseType(typeof(Equipos))]
-        public IHttpActionResult PostEquipos_Se_crea_QR_solo(Equipos equipos)
+        //[ResponseType(typeof(Equipos))]
+        /*[HttpPost]
+        [Route("")]
+        public IHttpActionResult PostEquipos_Se_crea_QR_solo(Equipos equipo)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Equipos.Add(equipos);
+            db.Equipos.Add(equipo);
             db.SaveChanges();
 
             var equipoCompleto = db.Equipos
-    .Include("Ubicaciones")
-    .Include("Unidades")
-    .Include("Estatus")
-    .Include("TiposMaquinarias")
-    .Include("Lugares")
-    .FirstOrDefault(e => e.idEquipos == equipos.idEquipos);
+                .Include("Ubicaciones")
+                .Include("Unidades")
+                .Include("Estatus")
+                .Include("TiposMaquinarias")
+                .FirstOrDefault(e => e.idEquipos == equipo.idEquipos);
 
             var datos =
-    $"Codigo del Articulo:{equipoCompleto.codigoArticulo}, " +
-    $"Nombre del Articulo:{equipoCompleto.nombreArticulo}, " +
-    $"Nombre Comercial:{equipoCompleto.nombreComercial}, " +
-    $"Numero Identificador:{equipoCompleto.numIdentificador}, " +
-    $"Descripcion:{equipoCompleto.descripcion}, " +
-    $"Marca:{equipoCompleto.marca}, " +
-    $"Modelo:{equipoCompleto.modelo}, " +
-    $"Fecha de Registro:{equipoCompleto.fechadeRegistro}, " +
-    $"Ubicacion:{equipoCompleto.Ubicaciones?.nombre ?? "Sin Ubicación"}, " +
-    $"Unidad:{equipoCompleto.Unidades?.nombre ?? "Sin Unidad"}, " +
-    $"Estatus:{equipoCompleto.Estatus?.nombre ?? "Sin Estatus"}, " +
-    $"Tipo de Maquinaria:{equipoCompleto.TiposMaquinarias?.nombre ?? "Sin Tipo"}, " +
-    $"Se encuentra en:{equipoCompleto.Lugares.FirstOrDefault()?.nombreLugar ?? "Sin Lugar"}";
-            var qrImagen = QrCodeGeneratorHelper.GenerateQRCode(datos); 
+                $"Codigo del Articulo:{equipoCompleto.codigoArticulo}, " +
+                $"Nombre del Articulo:{equipoCompleto.nombreArticulo}, " +
+                $"Nombre Comercial:{equipoCompleto.nombreComercial}, " +
+                $"Numero Identificador:{equipoCompleto.numIdentificador}, " +
+                $"Descripcion:{equipoCompleto.descripcion}, " +
+                $"Marca:{equipoCompleto.marca}, " +
+                $"Modelo:{equipoCompleto.modelo}, " +
+                $"Fecha de Registro:{equipoCompleto.fechadeRegistro}, " +
+                $"Ubicacion:{equipoCompleto.Ubicaciones?.nombre ?? "Sin Ubicación"}, " +
+                $"Unidad:{equipoCompleto.Unidades?.nombre ?? "Sin Unidad"}, " +
+                $"Estatus:{equipoCompleto.Estatus?.nombre ?? "Sin Estatus"}, " +
+                $"Tipo de Maquinaria:{equipoCompleto.TiposMaquinarias?.nombre ?? "Sin Tipo"}, ";
+                //$"Se encuentra en:{equipoCompleto.Lugares.FirstOrDefault()?.nombreLugar ?? "Sin Lugar"}";
+            var qrImagen = QrCodeGeneratorHelper.GenerateQRCode(datos);
 
             var qrBase64 = Convert.ToBase64String(qrImagen);
-            
+
             var qrEquipo = new QrEquipos
             {
-                idEquipos = equipos.idEquipos,
+                idEquipos = equipo.idEquipos,
                 claveQR = qrBase64
             };
 
             db.QrEquipos.Add(qrEquipo);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = equipos.idEquipos }, new
-            {
-                Equipo = equipos
-            });
-        }
-
-        // DELETE: api/Equipos/5
-        [ResponseType(typeof(Equipos))]
-        public IHttpActionResult DeleteEquipos(int id)
+            return Ok(equipo);
+        }*/
+        [HttpPost]
+        [Route("")]
+        public async Task<IHttpActionResult> PostEquipos_Se_crea_QR_solo(Equipos equipo)
         {
-            Equipos equipos = db.Equipos.Find(id);
-            if (equipos == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                return BadRequest(ModelState);
             }
 
-            db.Equipos.Remove(equipos);
+            db.Equipos.Add(equipo);
+            await db.SaveChangesAsync();
+
+            var equipoCompleto = await db.Equipos
+                .Include("Ubicaciones")
+                .Include("Unidades")
+                .Include("Estatus")
+                .Include("TiposMaquinarias")
+                .FirstOrDefaultAsync(e => e.idEquipos == equipo.idEquipos);
+
+            var datos =
+                $"Codigo del Articulo:{equipoCompleto.codigoArticulo}, " +
+                $"Nombre del Articulo:{equipoCompleto.nombreArticulo}, " +
+                $"Nombre Comercial:{equipoCompleto.nombreComercial}, " +
+                $"Numero Identificador:{equipoCompleto.numIdentificador}, " +
+                $"Descripcion:{equipoCompleto.descripcion}, " +
+                $"Marca:{equipoCompleto.marca}, " +
+                $"Modelo:{equipoCompleto.modelo}, " +
+                $"Fecha de Registro:{equipoCompleto.fechadeRegistro}, " +
+                $"Ubicacion:{equipoCompleto.Ubicaciones?.nombre ?? "Sin Ubicación"}, " +
+                $"Unidad:{equipoCompleto.Unidades?.nombre ?? "Sin Unidad"}, " +
+                $"Estatus:{equipoCompleto.Estatus?.nombre ?? "Sin Estatus"}, " +
+                $"Tipo de Maquinaria:{equipoCompleto.TiposMaquinarias?.nombre ?? "Sin Tipo"}";
+
+            var qrImagen = QrCodeGeneratorHelper.GenerateQRCode(datos);
+            var qrBase64 = Convert.ToBase64String(qrImagen);
+
+            var qrEquipo = new QrEquipos
+            {
+                idEquipos = equipo.idEquipos,
+                claveQR = qrBase64
+            };
+
+            db.QrEquipos.Add(qrEquipo);
+            await db.SaveChangesAsync();
+
+            // Devolver el objeto completo junto con el QR
+            /*return Ok(new
+            {
+                equipo = equipoCompleto,
+                qr = qrBase64
+            });*/
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+
+        // DELETE: api/Equipos/5
+        [HttpDelete]
+        [Route("{id:int}")]
+        public IHttpActionResult DeleteEquipo(int id)
+        {
+            var equipo = db.Equipos.Find(id);
+            if (equipo == null)
+                return NotFound();
+
+            // Buscar el QR relacionado
+            var qr = db.QrEquipos.FirstOrDefault(q => q.idEquipos == id);
+            if (qr != null)
+            {
+                db.QrEquipos.Remove(qr);
+            }
+
+            // Eliminar el equipo
+            db.Equipos.Remove(equipo);
             db.SaveChanges();
 
-            return Ok(equipos);
+            return Ok(new { message = "Equipo y QR eliminados correctamente", equipo });
         }
+
 
         protected override void Dispose(bool disposing)
         {

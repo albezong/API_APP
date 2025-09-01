@@ -13,11 +13,14 @@ using APIMIRAI_Construcciones.Models;
 
 namespace APIMIRAI_Construcciones.Controllers
 {
+    [RoutePrefix("api/Tareas")]
     public class TareasController : ApiController
     {
         private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/Tareas
+        [HttpGet]
+        [Route("")]
         public IHttpActionResult GetTareas()
         {
             var empresas = db.Tareas
@@ -33,7 +36,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // GET: api/Tareas/5
-        [ResponseType(typeof(Tareas))]
+        //[ResponseType(typeof(Tareas))]
+        [HttpGet]
+        [Route("{id:int}")]
         public IHttpActionResult GetTareas(int id)
         {
             var empresa = db.Tareas
@@ -55,20 +60,27 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // PUT: api/Tareas/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutTareas(int id, Tareas tareas)
+        //[ResponseType(typeof(void))]
+        [HttpPut]
+        [Route("{id:int}")]
+        public IHttpActionResult PutTareas(int id, TareasDto tareas)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            var existingTareas = db.Tareas.Find(id);
+            if (existingTareas == null)
+                return NotFound();
+
             if (id != tareas.idTareas)
             {
                 return BadRequest();
             }
 
-            db.Entry(tareas).State = EntityState.Modified;
+            existingTareas.idTiposMantenimientos = tareas.idTiposMantenimientos;
+            existingTareas.descripcion = tareas.descripcion;
 
             try
             {
@@ -90,7 +102,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // POST: api/Tareas
-        [ResponseType(typeof(Tareas))]
+        //[ResponseType(typeof(Tareas))]
+        [HttpPost]
+        [Route("")]
         public IHttpActionResult PostTareas(Tareas tareas)
         {
             if (!ModelState.IsValid)
@@ -101,14 +115,16 @@ namespace APIMIRAI_Construcciones.Controllers
             db.Tareas.Add(tareas);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = tareas.idTareas }, tareas);
+            return Ok(tareas);
         }
 
         // DELETE: api/Tareas/5
-        [ResponseType(typeof(Tareas))]
+        //[ResponseType(typeof(Tareas))]
+        [HttpDelete]
+        [Route("{id:int}")]
         public IHttpActionResult DeleteTareas(int id)
         {
-            Tareas tareas = db.Tareas.Find(id);
+            var tareas = db.Tareas.Find(id);
             if (tareas == null)
             {
                 return NotFound();

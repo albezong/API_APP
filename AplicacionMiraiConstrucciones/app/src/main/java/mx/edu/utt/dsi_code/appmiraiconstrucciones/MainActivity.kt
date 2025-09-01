@@ -2,6 +2,7 @@ package mx.edu.utt.dsi_code.appmiraiconstrucciones
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -41,9 +42,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.CoroutineScope
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.api.RetrofitClient
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.HistorialServiciosRepository
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_EquiposDto_Repository
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_EstatusDto_Repository
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_MaquinariasYVehiculosDto_Repository
@@ -51,12 +54,19 @@ import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_TiposMaqu
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_UbicacionesDto_Repository
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_UnidadesDto_Repository
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.Post_UsuariosDto_Repository
-import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.Destinos
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.repository.RevisionesRepository
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.appRoutes
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.enums.Routes
+/*import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.Destinos
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.Destinos.ico_info
-import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.Destinos.ico_search
-import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.NavigationHost
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.Destinos.ico_search*/
+//import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.NavigationHost
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.screens.*
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.theme.*
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.DetalleRevisionPreventivaViewModel
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.DetalleRevisionPreventivaViewModelFactory
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.HistorialServiciosViewModel
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.HistorialServiciosViewModelFactory
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_EquiposDto_ViewModel
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_EquiposDto_ViewModel_Factory
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_EstatusDto_ViewModel
@@ -69,6 +79,10 @@ import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_UbicacionesDto_
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_UbicacionesDto_ViewModel_Factory
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_UnidadesDto_ViewModel
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_UnidadesDto_ViewModel_Factory
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_UsuariosDto_ViewModel
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_UsuariosDto_ViewModel_Factory
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.RevisionPreventivaViewModel
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.RevisionPreventivaViewModelFactory
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.UsuariosViewModelFactory
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.UsuariosViewModelLogeo
 
@@ -105,11 +119,30 @@ class MainActivity : ComponentActivity() {
         val tiposMaquinariasFactory = Post_TiposMaquinariasDto_ViewModel_Factory(tiposMaquinariasRepo)
         val tiposMaquinariasVm = ViewModelProvider(this, tiposMaquinariasFactory)[Post_TiposMaquinariasDto_ViewModel::class.java]
 
+        val usuariosDtoRepo = Post_UsuariosDto_Repository(RetrofitClient.apiService)
+        val usuariosDtoFactory = Post_UsuariosDto_ViewModel_Factory(usuariosDtoRepo)
+        val usuariosDtoVm = ViewModelProvider(this, usuariosDtoFactory)[UsuariosViewModelLogeo::class.java]
+
+        val revisionesCompletoDtoRepo = RevisionesRepository(RetrofitClient.apiService)
+        val revisionesCompletoDtoFactory = RevisionPreventivaViewModelFactory(revisionesCompletoDtoRepo)
+        val revisionesCompletoDtoVm = ViewModelProvider(this, revisionesCompletoDtoFactory)[RevisionPreventivaViewModel::class.java]
+
+        val historialServiciosCompletoDtoRepo = HistorialServiciosRepository(RetrofitClient.apiService)
+        val historialServiciosCompletoDtoFactory = HistorialServiciosViewModelFactory(historialServiciosCompletoDtoRepo)
+        val historialServiciosCompletoDtoVm = ViewModelProvider(this, historialServiciosCompletoDtoFactory)[HistorialServiciosViewModel::class.java]
+
+        val detalleRevisionPreventivaCompletoDtoRepo = RevisionesRepository(RetrofitClient.apiService)
+        val detalleRevisionPreventivaCompletoDtoFactory = DetalleRevisionPreventivaViewModelFactory(detalleRevisionPreventivaCompletoDtoRepo)
+        val detalleRevisionPreventivaCompletoDtoVm = ViewModelProvider(this, detalleRevisionPreventivaCompletoDtoFactory)[DetalleRevisionPreventivaViewModel::class.java]
+
+
         setContent {
             APPMiraiConstruccionesTheme {
                 val navController = rememberNavController()
+                val nom = ""
 
-                NavigationHost(
+
+                /*NavigationHost(
                     postMaquinasViewModel = postMaquinasVm,
                     postEquiposViewModel = postEquiposVm,
                     usuariosViewModel = usuariosVm,
@@ -118,13 +151,35 @@ class MainActivity : ComponentActivity() {
                     viewModelEstatus = estatusVm,
                     viewModelTiposMaquinarias = tiposMaquinariasVm,
                     navController = navController
-                )
+                )*/
+                /*Post_LogIn(
+                    navController = navController,
+                    usuarioViewModelLogeo = usuariosDtoVm
+                )*/
+                NavHost(
+                    navController = navController,
+                    startDestination = Routes.LOGIN.name
+                ) {
+                    appRoutes(
+                        navController = navController,
+                        post_MaquinariasYVehiculosDto_ViewModel = postMaquinasVm,
+                        post_EquiposDto_ViewModel = postEquiposVm,
+                        post_UsuariosViewModelLogeo = usuariosVm, // el viewmodel que usa el login
+                        post_RevisionPreventivaViewModel = revisionesCompletoDtoVm/* tu RevisionPreventivaViewModel aquí */,
+                        post_HistorialServiciosViewModel = historialServiciosCompletoDtoVm/* tu HistorialServiciosViewModel aquí */,
+                        post_DetalleRevisionPreventivaViewModel = detalleRevisionPreventivaCompletoDtoVm/* tu DetalleRevisionPreventivaViewModel aquí */,
+                        post_UbicacionesDto_ViewModel = ubicacionesVm,
+                        post_UnidadesDto_ViewModel = unidadesVm,
+                        post_EstatusDto_ViewModel = estatusVm,
+                        post_TiposMaquinariasDto_ViewModel = tiposMaquinariasVm
+                    )
+                }
             }
         }
     }
 }
 
-
+/*
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun PantallaPrincipal(
@@ -156,7 +211,7 @@ fun PantallaPrincipal(
         // contenido principal: por ejemplo tu lista
         PostListaTodasMaquiunarias(navController = navController, viewModel = viewModel)
     }
-}
+}*/
 
 @Composable
 fun TopBar(
@@ -181,6 +236,7 @@ fun TopBar(
     )
 }
 
+/*
 @Composable
 fun Drawer(
     scope: CoroutineScope,
@@ -260,9 +316,9 @@ fun Drawer(
             }
         }
     }
-}
+}*/
 
-
+/*
 @Composable
 fun DrawerItem(
     item: Destinos,
@@ -287,7 +343,7 @@ fun DrawerItem(
             style = MaterialTheme.typography.body1
         )
     }
-}
+}*/
 
 
 /*/

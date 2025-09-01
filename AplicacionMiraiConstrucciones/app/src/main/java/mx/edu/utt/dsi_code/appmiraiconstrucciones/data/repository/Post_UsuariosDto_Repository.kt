@@ -13,7 +13,7 @@ class Post_UsuariosDto_Repository(private val apiService: ApiService) {
 
     suspend fun getById(id: Int): Post_UsuariosDto = apiService.getUsuarioById(id)
 
-    suspend fun update(id: Int, post: Create_UsuariosDto_2): Create_UsuariosDto_2 = apiService.updateUsuario(id, post)
+    suspend fun update(id: Int, post: Post_UsuariosDto): Post_UsuariosDto = apiService.updateUsuario(id, post)
 
     suspend fun authenticate(nombre: String, password: String): Post_UsuariosDto? {
         val usuarios: List<Post_UsuariosDto> = apiService.getAllUsuarios()

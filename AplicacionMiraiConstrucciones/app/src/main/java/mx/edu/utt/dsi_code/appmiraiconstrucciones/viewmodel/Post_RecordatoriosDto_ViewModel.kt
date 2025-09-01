@@ -62,7 +62,7 @@ class Post_RecordatoriosDto_ViewModel (private val repository: Post_Recordatorio
         }
     }
 
-    fun updatePost(id: Int, post: Create_RecordatoriosDto_2) {
+    fun updatePost(id: Int, post: Post_RecordatoriosDto) {
         viewModelScope.launch {
             try {
                 repository.update(id, post)

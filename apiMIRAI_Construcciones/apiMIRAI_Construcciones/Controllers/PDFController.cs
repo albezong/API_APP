@@ -20,11 +20,12 @@ using System.Windows.Controls;
 
 namespace APIMIRAI_Construcciones.Controllers
 {
+    [RoutePrefix("api/PDFs")]
     public class PDFController : ApiController
     {
         private readonly PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
-
+        /*
         // DESCARGAR PDF DescargarPdf_RevisionMantenimientoGETid_PREVENTIVOS
         [HttpGet]
         [Route("api/pdf_RevisionMantenimientoGETid_PREVENTIVOS/{id}")]
@@ -251,7 +252,7 @@ namespace APIMIRAI_Construcciones.Controllers
             }
         }
 
-
+        */
 
         // DESCARGAR PDF DescargarPdf_ProgramarRecordatoriosMantenimientoGETid
         [HttpGet]

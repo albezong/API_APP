@@ -63,7 +63,7 @@ class Post_PrioridadesDto_ViewModel(private val repository: Post_PrioridadesDto_
         }
     }
 
-    fun updatePost(id: Int, post: Create_PrioridadesDto_2) {
+    fun updatePost(id: Int, post: Post_PrioridadesDto) {
         viewModelScope.launch {
             try {
                 repository.update(id, post)

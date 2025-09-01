@@ -13,11 +13,14 @@ using APIMIRAI_Construcciones.Models;
 
 namespace APIMIRAI_Construcciones.Controllers
 {
+    [RoutePrefix("api/Recordatorios")]
     public class RecordatoriosController : ApiController
     {
         private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/Recordatorios
+        [HttpGet]
+        [Route("")]
         public IHttpActionResult GetRecordatorios()
         {
             var empresas = db.Recordatorios
@@ -40,7 +43,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // GET: api/Recordatorios/5
-        [ResponseType(typeof(Recordatorios))]
+        //[ResponseType(typeof(Recordatorios))]
+        [HttpGet]
+        [Route("{id:int}")]
         public IHttpActionResult GetRecordatorios(int id)
         {
             var empresa = db.Recordatorios
@@ -69,20 +74,34 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // PUT: api/Recordatorios/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutRecordatorios(int id, Recordatorios recordatorios)
+        //[ResponseType(typeof(void))]
+        [HttpPut]
+        [Route("{id:int}")]
+        public IHttpActionResult PutRecordatorios(int id, RecordatoriosDto recordatorios)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            var existingRecordatorios = db.Recordatorios.Find(id);
+            if (existingRecordatorios == null)
+                return NotFound();
+
             if (id != recordatorios.idRecordatorios)
             {
                 return BadRequest();
             }
 
-            db.Entry(recordatorios).State = EntityState.Modified;
+            existingRecordatorios.idfEquipos = recordatorios.idfEquipos;
+            existingRecordatorios.idfTareas = recordatorios.idfTareas;
+            existingRecordatorios.idfUsuarios = recordatorios.idfUsuarios;
+            existingRecordatorios.idfPrioridades = recordatorios.idfPrioridades;
+            existingRecordatorios.idfTiposMantenimientos = recordatorios.idfTiposMantenimientos;
+            existingRecordatorios.recordarS_N = recordatorios.recordarS_N;
+            existingRecordatorios.fechaRecordatorio = recordatorios.fechaRecordatorio;
+            existingRecordatorios.numeroReporte = recordatorios.numeroReporte;
+            existingRecordatorios.descripcion = recordatorios.descripcion;
 
             try
             {
@@ -104,7 +123,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // POST: api/Recordatorios
-        [ResponseType(typeof(Recordatorios))]
+        //[ResponseType(typeof(Recordatorios))]
+        [HttpPost]
+        [Route("")]
         public IHttpActionResult PostRecordatorios(Recordatorios recordatorios)
         {
             if (!ModelState.IsValid)
@@ -115,14 +136,16 @@ namespace APIMIRAI_Construcciones.Controllers
             db.Recordatorios.Add(recordatorios);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = recordatorios.idRecordatorios }, recordatorios);
+            return Ok(recordatorios);
         }
 
         // DELETE: api/Recordatorios/5
-        [ResponseType(typeof(Recordatorios))]
+        //[ResponseType(typeof(Recordatorios))]
+        [HttpDelete]
+        [Route("{id:int}")]
         public IHttpActionResult DeleteRecordatorios(int id)
         {
-            Recordatorios recordatorios = db.Recordatorios.Find(id);
+            var recordatorios = db.Recordatorios.Find(id);
             if (recordatorios == null)
             {
                 return NotFound();

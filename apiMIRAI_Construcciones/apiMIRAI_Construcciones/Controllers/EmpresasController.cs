@@ -13,11 +13,14 @@ using APIMIRAI_Construcciones.Models;
 
 namespace APIMIRAI_Construcciones.Controllers
 {
+    [RoutePrefix("api/Empresas")]
     public class EmpresasController : ApiController
     {
         private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/Empresas
+        [HttpGet]
+        [Route("")]
         public IHttpActionResult GetEmpresas()
         {
             var empresas = db.Empresas
@@ -34,7 +37,9 @@ namespace APIMIRAI_Construcciones.Controllers
 
 
         // GET: api/Empresas/5
-        [ResponseType(typeof(Empresas))]
+        //[ResponseType(typeof(Empresas))]
+        [HttpGet]
+        [Route("{id:int}")]
         public IHttpActionResult GetEmpresas(int id)
         {
             var empresa = db.Empresas
@@ -56,8 +61,10 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // PUT: api/Empresas/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutEmpresas(int id, Empresas empresas)
+        //[ResponseType(typeof(void))]
+        [HttpPut]
+        [Route("{id:int}")]
+        public IHttpActionResult PutEmpresas(int id, EmpresasDto empresas)
         {
             if (!ModelState.IsValid)
             {
@@ -91,7 +98,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // POST: api/Empresas
-        [ResponseType(typeof(Empresas))]
+        //[ResponseType(typeof(Empresas))]
+        [HttpPost]
+        [Route("")]
         public IHttpActionResult PostEmpresas(Empresas empresas)
         {
             if (!ModelState.IsValid)
@@ -102,14 +111,16 @@ namespace APIMIRAI_Construcciones.Controllers
             db.Empresas.Add(empresas);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = empresas.idEmpresas }, empresas);
+            return Ok(empresas);
         }
 
         // DELETE: api/Empresas/5
-        [ResponseType(typeof(Empresas))]
+        //[ResponseType(typeof(Empresas))]
+        [HttpDelete]
+        [Route("{id:int}")]
         public IHttpActionResult DeleteEmpresas(int id)
         {
-            Empresas empresas = db.Empresas.Find(id);
+            var empresas = db.Empresas.Find(id);
             if (empresas == null)
             {
                 return NotFound();

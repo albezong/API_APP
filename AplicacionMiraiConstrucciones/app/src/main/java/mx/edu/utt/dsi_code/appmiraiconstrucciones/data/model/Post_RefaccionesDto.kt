@@ -27,3 +27,7 @@ data class Create_RefaccionesDto_2(
     @SerializedName("numero_reporte") val numeroReporte: Int,
     @SerializedName("descripcion") val descripcion: String,
 )
+
+data class Post_RefaccionesDto_Numero(
+    @SerializedName("ultimo_refacciones") val ultimoRefacciones: Int,
+)

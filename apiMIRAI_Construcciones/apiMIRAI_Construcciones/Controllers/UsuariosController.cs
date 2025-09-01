@@ -13,11 +13,14 @@ using APIMIRAI_Construcciones.Models;
 
 namespace APIMIRAI_Construcciones.Controllers
 {
+    [RoutePrefix("api/Usuarios")]
     public class UsuariosController : ApiController
     {
         private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
-        // GET: api/Usuarios
+        // GET: api/usuarios
+        [HttpGet]
+        [Route("")]
         public IHttpActionResult GetUsuarios()
         {
             var empresas = db.Usuarios
@@ -37,7 +40,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // GET: api/Usuarios/5
-        [ResponseType(typeof(Usuarios))]
+        //[ResponseType(typeof(Usuarios))]
+        [HttpGet]
+        [Route("{id:int}")]
         public IHttpActionResult GetUsuarios(int id)
         {
             var empresa = db.Usuarios
@@ -63,20 +68,29 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // PUT: api/Usuarios/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutUsuarios(int id, Usuarios usuarios)
+        //[ResponseType(typeof(void))]
+        [HttpPut]
+        [Route("{id:int}")]
+        public IHttpActionResult PutUsuarios(int id, UsuariosDto usuario)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
-            if (id != usuarios.idUsuarios)
-            {
+            var existingUsuario = db.Usuarios.Find(id);
+            if (existingUsuario == null)
+                return NotFound();
+
+            if (id != usuario.idUsuarios)
                 return BadRequest();
-            }
 
-            db.Entry(usuarios).State = EntityState.Modified;
+            existingUsuario.nombre = usuario.nombre;
+            existingUsuario.apellidoPaterno = usuario.apellidoPaterno;
+            existingUsuario.apellidoMaterno = usuario.apellidoMaterno;
+            existingUsuario.contraseña = usuario.contraseña;
+            existingUsuario.idfRoles = usuario.idfRoles;
+            existingUsuario.telefono = usuario.telefono;
+
+            db.SaveChanges();
 
             try
             {
@@ -98,34 +112,34 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // POST: api/Usuarios
-        [ResponseType(typeof(Usuarios))]
-        public IHttpActionResult PostUsuarios(Usuarios usuarios)
+        //[ResponseType(typeof(Usuarios))]
+        [HttpPost]
+        [Route("")]
+        public IHttpActionResult PostUsuarios(Usuarios usuario)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
-            db.Usuarios.Add(usuarios);
+            db.Usuarios.Add(usuario);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = usuarios.idUsuarios }, usuarios);
+            return Ok(usuario);
         }
 
         // DELETE: api/Usuarios/5
-        [ResponseType(typeof(Usuarios))]
+        //[ResponseType(typeof(Usuarios))]
+        [HttpDelete]
+        [Route("{id:int}")]
         public IHttpActionResult DeleteUsuarios(int id)
         {
-            Usuarios usuarios = db.Usuarios.Find(id);
-            if (usuarios == null)
-            {
+            var usuario = db.Usuarios.Find(id);
+            if (usuario == null)
                 return NotFound();
-            }
 
-            db.Usuarios.Remove(usuarios);
+            db.Usuarios.Remove(usuario);
             db.SaveChanges();
 
-            return Ok(usuarios);
+            return Ok(usuario);
         }
 
         protected override void Dispose(bool disposing)

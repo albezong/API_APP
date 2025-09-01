@@ -20,7 +20,7 @@ class RevisionesRepository(
         return api.createRevision(revision)
     }
 
-    suspend fun updateRevision(id: Int, revision: Create_RevisionesDto_2): Create_RevisionesDto_2 {
+    suspend fun updateRevision(id: Int, revision: Post_RevisionesDto): Post_RevisionesDto {
         return api.updateRevision(id, revision)
     }
 

@@ -15,6 +15,6 @@ class Post_DetallesPreventivosDto_Repository (private val apiService: ApiService
 
     suspend fun getById(id: Int): Post_DetallesPreventivosDto = apiService.getDetallePreventivoById(id)
 
-    suspend fun update(id: Int, post: Create_DetallesPreventivosDto_2): Create_DetallesPreventivosDto_2 = apiService.updateDetallePreventivo(id, post)
+    suspend fun update(id: Int, post: Post_DetallesPreventivosDto): Post_DetallesPreventivosDto = apiService.updateDetallePreventivo(id, post)
 
 }

@@ -13,11 +13,14 @@ using APIMIRAI_Construcciones.Models;
 
 namespace APIMIRAI_Construcciones.Controllers
 {
+    [RoutePrefix("api/TiposMantenimientos")]
     public class TiposMantenimientosController : ApiController
     {
         private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/TiposMantenimientos
+        [HttpGet]
+        [Route("")]
         public IHttpActionResult GetTiposMantenimientos()
         {
             var empresas = db.TiposMantenimientos
@@ -32,7 +35,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // GET: api/TiposMantenimientos/5
-        [ResponseType(typeof(TiposMantenimientos))]
+        //[ResponseType(typeof(TiposMantenimientos))]
+        [HttpGet]
+        [Route("{id:int}")]
         public IHttpActionResult GetTiposMantenimientos(int id)
         {
             var empresa = db.TiposMantenimientos
@@ -53,20 +58,26 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // PUT: api/TiposMantenimientos/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutTiposMantenimientos(int id, TiposMantenimientos tiposMantenimientos)
+        //[ResponseType(typeof(void))]
+        [HttpPut]
+        [Route("{id:int}")]
+        public IHttpActionResult PutTiposMantenimientos(int id, TiposMantenimientosDto tiposMantenimientos)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            var existingTiposMantenimientos = db.TiposMantenimientos.Find(id);
+            if (existingTiposMantenimientos == null)
+                return NotFound();
+
             if (id != tiposMantenimientos.idTiposMantenimientos)
             {
                 return BadRequest();
             }
 
-            db.Entry(tiposMantenimientos).State = EntityState.Modified;
+            existingTiposMantenimientos.nombre = tiposMantenimientos.nombre;
 
             try
             {
@@ -88,7 +99,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // POST: api/TiposMantenimientos
-        [ResponseType(typeof(TiposMantenimientos))]
+        //[ResponseType(typeof(TiposMantenimientos))]
+        [HttpPost]
+        [Route("")]
         public IHttpActionResult PostTiposMantenimientos(TiposMantenimientos tiposMantenimientos)
         {
             if (!ModelState.IsValid)
@@ -99,14 +112,16 @@ namespace APIMIRAI_Construcciones.Controllers
             db.TiposMantenimientos.Add(tiposMantenimientos);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = tiposMantenimientos.idTiposMantenimientos }, tiposMantenimientos);
+            return Ok(tiposMantenimientos);
         }
 
         // DELETE: api/TiposMantenimientos/5
-        [ResponseType(typeof(TiposMantenimientos))]
+        //[ResponseType(typeof(TiposMantenimientos))]
+        [HttpDelete]
+        [Route("{id:int}")]
         public IHttpActionResult DeleteTiposMantenimientos(int id)
         {
-            TiposMantenimientos tiposMantenimientos = db.TiposMantenimientos.Find(id);
+            var tiposMantenimientos = db.TiposMantenimientos.Find(id);
             if (tiposMantenimientos == null)
             {
                 return NotFound();

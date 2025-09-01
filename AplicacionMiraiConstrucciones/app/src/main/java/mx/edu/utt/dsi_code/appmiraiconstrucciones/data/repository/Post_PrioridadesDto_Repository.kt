@@ -15,6 +15,6 @@ class Post_PrioridadesDto_Repository(private val apiService: ApiService){
 
     suspend fun getById(id: Int): Post_PrioridadesDto = apiService.getPrioridadById(id)
 
-    suspend fun update(id: Int, post: Create_PrioridadesDto_2): Create_PrioridadesDto_2 = apiService.updatePrioridad(id, post)
+    suspend fun update(id: Int, post: Post_PrioridadesDto): Post_PrioridadesDto = apiService.updatePrioridad(id, post)
 
 }

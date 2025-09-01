@@ -13,11 +13,14 @@ using APIMIRAI_Construcciones.Models;
 
 namespace APIMIRAI_Construcciones.Controllers
 {
+    [RoutePrefix("api/Revisiones")]
     public class RevisionesController : ApiController
     {
         private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/Revisiones
+        [HttpGet]
+        [Route("")]
         public IHttpActionResult GetRevisiones()
         {
             var empresas = db.Revisiones
@@ -37,10 +40,12 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // GET: api/Revisiones/5
-        [ResponseType(typeof(Revisiones))]
+        //[ResponseType(typeof(Revisiones))]
+        [HttpGet]
+        [Route("{id:int}")]
         public IHttpActionResult GetRevisiones(int id)
         {
-            var empresa = db.Revisiones
+            var revisiones = db.Revisiones
         .Where(e => e.idRevisiones == id)
         .Select(e => new RevisionesDto
         {
@@ -54,16 +59,18 @@ namespace APIMIRAI_Construcciones.Controllers
         })
         .FirstOrDefault();
 
-            if (empresa == null)
+            if (revisiones == null)
             {
                 return NotFound();
             }
 
-            return Ok(empresa);
+            return Ok(revisiones);
         }
 
         // PUT: api/Revisiones/5
-        [ResponseType(typeof(void))]
+        //[ResponseType(typeof(void))]
+        [HttpPut]
+        [Route("{id:int}")]
         public IHttpActionResult PutRevisiones(int id, Revisiones revisiones)
         {
             if (!ModelState.IsValid)
@@ -98,7 +105,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // POST: api/Revisiones
-        [ResponseType(typeof(Revisiones))]
+        //[ResponseType(typeof(Revisiones))]
+        [HttpPost]
+        [Route("")]
         public IHttpActionResult PostRevisiones(Revisiones revisiones)
         {
             if (!ModelState.IsValid)
@@ -109,11 +118,13 @@ namespace APIMIRAI_Construcciones.Controllers
             db.Revisiones.Add(revisiones);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = revisiones.idRevisiones }, revisiones);
+            return Ok(revisiones);
         }
 
         // DELETE: api/Revisiones/5
-        [ResponseType(typeof(Revisiones))]
+        //[ResponseType(typeof(Revisiones))]
+        [HttpDelete]
+        [Route("{id:int}")]
         public IHttpActionResult DeleteRevisiones(int id)
         {
             Revisiones revisiones = db.Revisiones.Find(id);

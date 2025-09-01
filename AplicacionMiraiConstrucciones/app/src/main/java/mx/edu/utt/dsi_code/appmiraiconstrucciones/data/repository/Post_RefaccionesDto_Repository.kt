@@ -13,6 +13,6 @@ class Post_RefaccionesDto_Repository(private val apiService: ApiService){
 
     suspend fun getById(id: Int): Post_RefaccionesDto = apiService.getRefaccionById(id)
 
-    suspend fun update(id: Int, post: Create_RefaccionesDto_2): Create_RefaccionesDto_2 = apiService.updateRefaccion(id, post)
+    suspend fun update(id: Int, post: Post_RefaccionesDto): Post_RefaccionesDto = apiService.updateRefaccion(id, post)
 
 }

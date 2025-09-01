@@ -53,7 +53,7 @@ import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_UnidadesDto_Vie
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PostCreateTodasMaquiunarias(
-    navController: NavHostController,
+    navController: NavController,
     viewModel: Post_EquiposDto_ViewModel,
     viewModelUbicaciones : Post_UbicacionesDto_ViewModel,
     viewModelUnidades : Post_UnidadesDto_ViewModel,
@@ -95,12 +95,14 @@ fun PostCreateTodasMaquiunarias(
     // Llamamos a la API al cargar el Composable
     LaunchedEffect(Unit) {
         viewModelUbicaciones.fetchPosts()
-        // esperar un momento a que collectAsState actualice y luego loguear
+        viewModelUnidades.fetchPosts()
+        viewModelEstatus.fetchPosts()
+        viewModelTiposMaquinarias.fetchPosts()
     }
-    LaunchedEffect(viewModelUbicaciones.posts.collectAsState().value) {
+    /*LaunchedEffect(viewModelUbicaciones.posts.collectAsState().value) {
         val list = viewModelUbicaciones.posts.value
         list.forEach { Log.d("DebugUbicaciones", "ubi.id=${it.idUbicaciones} nombre=${it.nombre}") }
-    }
+    }*/
 
     Column(
         modifier = Modifier
@@ -212,65 +214,42 @@ fun PostCreateTodasMaquiunarias(
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        /*/idfUbicaciones
-        OutlinedTextField(
-            value = idfUbicaciones,
-            onValueChange = { idfUbicaciones = it},
-            label = { Text("Ubicaciones")},
-            modifier = Modifier.fillMaxWidth()
-        )*/
-        // --- Ubicaciones (ejemplo completo) ---
-        val ubicaciones by viewModelUbicaciones.posts.collectAsState() // usa la propiedad pública posts
-        var seleccionUbicacionesName by remember { mutableStateOf("") }
-
+        //idfUbicaciones
         ExposedDropdownMenuBox(
             expanded = expandidoUbicaciones,
-            onExpandedChange = { expandidoUbicaciones = it }
+            onExpandedChange = { expandidoUbicaciones = !expandidoUbicaciones }
         ) {
-            // muestra el nombre seleccionado o placeholder
             TextField(
-                value = if (seleccionUbicacionesName.isNotBlank()) seleccionUbicacionesName else "Selecciona una Ubicación",
+                value = seleccionUbicaciones?.nombre ?: "Selecciona la Ubicacion",
                 onValueChange = {},
                 readOnly = true,
-                label = { Text("Ubicación") },
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandidoUbicaciones) },
-                modifier = Modifier
-                    .menuAnchor()
-                    .fillMaxWidth()
+                label = { Text("Ubicaciones") },
+                trailingIcon = {
+                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandidoUbicaciones)
+                },
+                modifier = Modifier.menuAnchor()
             )
 
             ExposedDropdownMenu(
                 expanded = expandidoUbicaciones,
                 onDismissRequest = { expandidoUbicaciones = false }
             ) {
-                if (ubicaciones.isEmpty()) {
-                    DropdownMenuItem(text = { Text("Cargando...") }, onClick = { })
-                } else {
-                    ubicaciones.forEach { ubi ->
-                        DropdownMenuItem(
-                            text = { Text(ubi.nombre) },
-                            onClick = {
-                                seleccionUbicaciones = ubi
-                                seleccionUbicacionesName = ubi.nombre
-                                idfUbicaciones = ubi.idUbicaciones             // <-- guardas el INT real
-                                expandidoUbicaciones = false
-                                Log.d("Dropdown", "Seleccion Ubicacion -> id=${idfUbicaciones}, nombre=${ubi.nombre}")
-                            }
-                        )
-                    }
+                ubicacionesCollectToDropDown.forEach { ubicacionesDropDown ->
+                    DropdownMenuItem(
+                        text = { Text(ubicacionesDropDown.nombre) },
+                        onClick = {
+                            seleccionUbicaciones = ubicacionesDropDown
+                            idfUbicaciones = ubicacionesDropDown.idUbicaciones
+                            expandidoUbicaciones = false
+                        }
+                    )
                 }
             }
         }
+
         Spacer(modifier = Modifier.height(8.dp))
 
-/*
-        /*/idfUnidades
-        OutlinedTextField(
-            value = idfUnidades,
-            onValueChange = {idfUnidades = it},
-            label = { Text("Unidades")},
-            modifier = Modifier.fillMaxWidth()
-        )*/
+        //Unidades
         ExposedDropdownMenuBox(
             expanded = expandidoUnidades,
             onExpandedChange = { expandidoUnidades = !expandidoUnidades }
@@ -305,13 +284,7 @@ fun PostCreateTodasMaquiunarias(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        /*/idfEstatus
-        OutlinedTextField(
-            value = idfEstatus,
-            onValueChange = { idfEstatus = it},
-            label = { Text("Estatus")},
-            modifier = Modifier.fillMaxWidth()
-        )*/
+        //idfEstatus
         ExposedDropdownMenuBox(
             expanded = expandidoEstatus,
             onExpandedChange = { expandidoEstatus = !expandidoEstatus }
@@ -346,13 +319,7 @@ fun PostCreateTodasMaquiunarias(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        /*/idfTiposMaquinarias
-        OutlinedTextField(
-            value = idfTiposMaquinarias,
-            onValueChange = { idfTiposMaquinarias = it},
-            label = { Text("TiposMaquinarias")},
-            modifier = Modifier.fillMaxWidth()
-        )*/
+        //idfTiposMaquinarias
         ExposedDropdownMenuBox(
             expanded = expandidoTiposMaquinarias,
             onExpandedChange = { expandidoTiposMaquinarias = !expandidoTiposMaquinarias }
@@ -383,7 +350,7 @@ fun PostCreateTodasMaquiunarias(
                     )
                 }
             }
-        }*****/
+        }
 
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -396,10 +363,6 @@ fun PostCreateTodasMaquiunarias(
 
         Button(
             onClick = {
-                /*val idfUbicaciones = seleccionUbicaciones?.idUbicaciones
-                val idfUnidades = seleccionUnidades?.idUnidades
-                val idfEstatus = seleccionEstatus?.idEstatus
-                val idfTiposMaquinarias = seleccionTiposMaquinarias?.idTiposMaquinarias*/
                 if(
                     codigoArticulo.isNotEmpty() &&
                     nombreArticulo.isNotEmpty() &&
@@ -442,11 +405,10 @@ fun PostCreateTodasMaquiunarias(
                     Log.d("Formulario", "idfUnidades: $idfUnidades")
                     Log.d("Formulario", "idfEstatus: $idfEstatus")
                     Log.d("Formulario", "idfTiposMaquinarias: $idfTiposMaquinarias")
-// ... y así con los demás campos
-
                     navController.popBackStack()
                 } else {
                     errorMessage = "Todos los campos son requeridos!"
+                    Log.d("Formulario", "AQUI YA EXISTE UN ERROR")
                     Log.d("Formulario", "codigoArticulo: $codigoArticulo")
                     Log.d("Formulario", "nombreArticulo: $nombreArticulo")
                     Log.d("Formulario", "nombreComercial: $nombreComercial")
@@ -459,7 +421,6 @@ fun PostCreateTodasMaquiunarias(
                     Log.d("Formulario", "idfUnidades: $idfUnidades")
                     Log.d("Formulario", "idfEstatus: $idfEstatus")
                     Log.d("Formulario", "idfTiposMaquinarias: $idfTiposMaquinarias")
-// ... y así con los demás campos
                 }
             },
             modifier = Modifier.fillMaxWidth()

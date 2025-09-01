@@ -24,10 +24,10 @@ val navigationItems = listOf(
         icon = R.drawable.baseline_search_24,
         hasNews = false
     ),
-    NavigationItem(
+    /*NavigationItem(
         title = "Historial de Servicio",
         route = Routes.SERVICE_HISTORIAL.name,
         icon = R.drawable.baseline_search_24,
         hasNews = false
-    )
+    )*/
 )

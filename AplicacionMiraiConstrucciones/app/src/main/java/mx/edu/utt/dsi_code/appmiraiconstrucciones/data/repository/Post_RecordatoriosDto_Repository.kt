@@ -15,6 +15,6 @@ class Post_RecordatoriosDto_Repository(private val apiService: ApiService){
 
     suspend fun getById(id: Int): Post_RecordatoriosDto = apiService.getRecordatorioById(id)
 
-    suspend fun update(id: Int, post: Create_RecordatoriosDto_2): Create_RecordatoriosDto_2 = apiService.updateRecordatorio(id, post)
+    suspend fun update(id: Int, post: Post_RecordatoriosDto): Post_RecordatoriosDto = apiService.updateRecordatorio(id, post)
 
 }

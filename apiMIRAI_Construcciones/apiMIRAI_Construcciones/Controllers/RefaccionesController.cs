@@ -13,11 +13,14 @@ using APIMIRAI_Construcciones.Models;
 
 namespace APIMIRAI_Construcciones.Controllers
 {
+    [RoutePrefix("api/Refacciones")]
     public class RefaccionesController : ApiController
     {
         private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/Refacciones
+        [HttpGet]
+        [Route("")]
         public IHttpActionResult GetRefacciones()
         {
             var empresas = db.Refacciones
@@ -40,7 +43,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // GET: api/Refacciones/5
-        [ResponseType(typeof(Refacciones))]
+        //[ResponseType(typeof(Refacciones))]
+        [HttpGet]
+        [Route("{id:int}")]
         public IHttpActionResult GetRefacciones(int id)
         {
             var empresa = db.Refacciones
@@ -69,20 +74,33 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // PUT: api/Refacciones/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutRefacciones(int id, Refacciones refacciones)
+        //[ResponseType(typeof(void))]
+        [HttpPut]
+        [Route("{id:int}")]
+        public IHttpActionResult PutRefacciones(int id, RefaccionesDto refacciones)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            var existingRefacciones = db.Refacciones.Find(id);
+            if (existingRefacciones == null)
+                return NotFound();
+
             if (id != refacciones.idRefacciones)
             {
                 return BadRequest();
             }
 
-            db.Entry(refacciones).State = EntityState.Modified;
+            existingRefacciones.idfRevisiones = refacciones.idfRevisiones;
+            existingRefacciones.idfUnidades = refacciones.idfUnidades;
+            existingRefacciones.nombreRefaccion = refacciones.nombreRefaccion;
+            existingRefacciones.idfDescripcionPrioridades = refacciones.idfDescripcionPrioridades;
+            existingRefacciones.cantidad = refacciones.cantidad;
+            existingRefacciones.observaciones = refacciones.observaciones;
+            existingRefacciones.fecha = refacciones.fecha;
+            existingRefacciones.numeroReporte = refacciones.numeroReporte;
 
             try
             {
@@ -104,7 +122,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // POST: api/Refacciones
-        [ResponseType(typeof(Refacciones))]
+        //[ResponseType(typeof(Refacciones))]
+        [HttpPost]
+        [Route("")]
         public IHttpActionResult PostRefacciones(Refacciones refacciones)
         {
             if (!ModelState.IsValid)
@@ -118,14 +138,16 @@ namespace APIMIRAI_Construcciones.Controllers
             db.Refacciones.Add(refacciones);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = refacciones.idRefacciones }, refacciones);
+            return Ok(refacciones);
         }
 
         // DELETE: api/Refacciones/5
-        [ResponseType(typeof(Refacciones))]
+        //[ResponseType(typeof(Refacciones))]
+        [HttpDelete]
+        [Route("{id:int}")]
         public IHttpActionResult DeleteRefacciones(int id)
         {
-            Refacciones refacciones = db.Refacciones.Find(id);
+            var refacciones = db.Refacciones.Find(id);
             if (refacciones == null)
             {
                 return NotFound();

@@ -1,5 +1,6 @@
 package mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -31,16 +32,24 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.R
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.model.Maquinaria
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.model.Post_EquiposDto
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.model.Post_MaquinariasYVehiculosDto
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.model.Post_TiposMaquinariasDto
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.model.Post_UnidadesDto
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.enums.Routes
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.theme.Grey80
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_EquiposDto_ViewModel
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_MaquinariasYVehiculosDto_ViewModel
 
 @Composable
 fun PostListaTodasMaquiunarias(
     navController: NavController,
     viewModel: Post_MaquinariasYVehiculosDto_ViewModel,
+    viewModelEquiposDto: Post_EquiposDto_ViewModel,
 ) {
     val posts by viewModel.posts.collectAsState()
     var query by remember { mutableStateOf("") }
+
     // Llamamos a la API al cargar el Composable
     LaunchedEffect(Unit) {
         viewModel.fetchPosts()
@@ -51,22 +60,6 @@ fun PostListaTodasMaquiunarias(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        /*/ Título
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "Lista de toda la Maquinaria y /o equipo",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.SemiBold
-            )
-            Icon(
-                painter = painterResource(R.drawable.baseline_add_circle_outline_24),
-                contentDescription = "addCircle"
-            )
-        }*/
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -86,12 +79,11 @@ fun PostListaTodasMaquiunarias(
             // Botón para agregar — area táctil correcta y navegación
             IconButton(
                 onClick = {
-                    // navega a la pantalla de agregar/registrar maquinaria
-                    navController.navigate("post_maquinarias")
+                    //navController.navigate("post_maquinarias")
+                    navController.navigate(Routes.CREATE_MAQUINARIA.name)
                 },
                 modifier = Modifier.size(48.dp) // área táctil
             ) {
-                // Si prefieres usar el drawable: painterResource(R.drawable.baseline_add_circle_outline_24)
                 Icon(
                     //imageVector = Icons.Default.Add
                     painterResource(R.drawable.baseline_add_circle_outline_24),
@@ -115,8 +107,20 @@ fun PostListaTodasMaquiunarias(
                 viewModel.fetchPosts(search = searchText)
             },
             posts = posts,
-            onResultClick = {  selected ->
-                navController.navigate("detalle_maquinaria/${selected.id_equipos}")
+            onResultClick = { selected ->
+                //Log.d("Formulario", "PrimerLog_idEquipos: ${selected.idEquipos}")
+                if (selected.idEquipos != null && selected.idEquipos != 0) {
+                    //navController.navigate("detalle_maquinaria/${selected.idEquipos}")
+                    navController.navigate("${Routes.DETALLE_MAQUINARIA.name}/${selected.idEquipos}")
+                    // antes: navController.navigate("detalle_maquinaria/${selected.idEquipos}")
+                    //navController.navigate("${Routes.DETALLE_MAQUINARIA.name}/${selected.idEquipos}")
+
+
+
+                    //Log.d("Formulario", "PrimerLog_idEquipos: ${selected.idEquipos}")
+                } else {
+                    //Log.w("Nav", "ID inválido al navegar: ${selected.idEquipos}")
+                }
             },
             placeholder = { Text("Buscar maquinaria...") },
             leadingIcon = {
@@ -133,7 +137,7 @@ fun CustomizableSearchBar(
     query: String,
     onQueryChange: (String) -> Unit,
     onSearch: (String) -> Unit,
-    posts: List<Maquinaria>, // 👈 recibe la lista completa del tipo que tengas
+    posts: List<Maquinaria>,
     onResultClick: (Maquinaria) -> Unit,
     placeholder: @Composable () -> Unit,
     leadingIcon: @Composable (() -> Unit)? = null,
@@ -141,7 +145,7 @@ fun CustomizableSearchBar(
 ) {
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            //.fillMaxSize()
             .padding(16.dp),
     ) {
         TextField(
@@ -156,10 +160,11 @@ fun CustomizableSearchBar(
         Spacer(modifier = Modifier.height(8.dp))
 
         LazyColumn(
-            modifier = Modifier.fillMaxSize()
-            //.background(Color.Gray)
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f) // importante: evita fillMaxSize anidado
         ) {
-            items(posts, key = { it.id_equipos ?: it.hashCode() }) { post ->
+            items(posts, key = { it.idEquipos ?: it.hashCode() }) { post ->
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -173,7 +178,7 @@ fun CustomizableSearchBar(
                         //.background(Color.Gray)
                     ) {
                         Text(
-                            text = post.nombre_articulo,
+                            text = post.nombreArticulo,
                             style = MaterialTheme.typography.titleMedium
                         )
                         Text(

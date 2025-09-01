@@ -8,8 +8,10 @@ import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.PantallaPrincipal
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.data.recordatorio.NotificationHelper
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.screens.PostCreateTodasMaquiunarias
@@ -24,7 +26,7 @@ import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_TiposMaquinaria
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_UbicacionesDto_ViewModel
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.Post_UnidadesDto_ViewModel
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.UsuariosViewModelLogeo
-
+/*
 @Composable
 fun NavigationHost(
     postMaquinasViewModel: Post_MaquinariasYVehiculosDto_ViewModel,
@@ -46,10 +48,21 @@ fun NavigationHost(
             PantallaPrincipal(
                 viewModel = postMaquinasViewModel,
                 navController = navController,
-                nombre = correo
+                nombre = correo,
+                viewModelEquiposDto = postEquiposViewModel
             )
         }
 
+        /*composable("lista_maquinarias") { backStackEntry ->
+            val correo = backStackEntry.arguments?.getString("correo") ?: ""
+            PantallaPrincipal(
+                viewModel = postMaquinasViewModel,
+                navController = navController,
+                nombre = correo,
+                viewModelEquiposDto = postEquiposViewModel
+            )
+        }
+*/
         composable("post_maquinarias") {
             PostCreateTodasMaquiunarias(
                 navController = navController,
@@ -61,17 +74,41 @@ fun NavigationHost(
             )
         }
 
-        composable("detalle_maquinaria/{id}") { backStackEntry ->
-            val id = backStackEntry.arguments?.getString("id")?.toIntOrNull()
-            if (id != null) {
-                Post_DetalleMaterialScreen(navController = navController, id = id, viewModel = postMaquinasViewModel)
+        composable(
+            route = "detalle_maquinaria/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val id = backStackEntry.arguments?.getInt("id") ?: 0
+            if (id > 0) {
+                Post_DetalleMaterialScreen(
+                    navController = navController,
+                    idEquipos = id,
+                    viewModelEquiposDto = postEquiposViewModel,
+                    viewModelMAquinarias = postMaquinasViewModel
+                )
+            } else {
+                // opcional: mostrar pantalla de error o volver
             }
         }
 
-        composable("edit_maquinaria/{id}") { backStackEntry ->
-            val id = backStackEntry.arguments?.getString("id")?.toIntOrNull()
-            if (id != null) {
-                Post_EditMaquinariaScreen(navController = navController, id = id, viewModel = postEquiposViewModel, viewModelMaquinariaYVehi = postMaquinasViewModel)
+        composable(
+            route = "edit_maquinaria/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val id = backStackEntry.arguments?.getInt("id") ?: 0
+
+            // 👇 Solo mostramos la pantalla si el id es válido (> 0)
+            if (id > 0) {
+                Post_EditMaquinariaScreen(
+                    navController = navController,
+                    id = id,
+                    viewModel = postEquiposViewModel,
+                    viewModelUbicaciones = viewModelUbicaciones,
+                    viewModelUnidades = viewModelUnidades,
+                    viewModelEstatus = viewModelEstatus,
+                    viewModelTiposMaquinarias = viewModelTiposMaquinarias
+
+                )
             }
         }
 
@@ -111,4 +148,4 @@ fun NavigationHost(
             })
         }
     }
-}
+}*/

@@ -15,6 +15,6 @@ class Post_RolesDto_Repository (private val apiService: ApiService){
 
     suspend fun getById(id: Int): Post_RolesDto = apiService.getRolById(id)
 
-    suspend fun update(id: Int, post: Create_RolesDto_2): Create_RolesDto_2 = apiService.updateRol(id, post)
+    suspend fun update(id: Int, post: Post_RolesDto): Post_RolesDto = apiService.updateRol(id, post)
 
 }

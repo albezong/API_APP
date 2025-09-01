@@ -15,6 +15,6 @@ class Post_EstatusDto_Repository(private val apiService: ApiService){
 
     suspend fun getById(id: Int): Post_EstatusDto = apiService.getEstatusById(id)
 
-    suspend fun update(id: Int, post: Create_EstatusDto_2): Create_EstatusDto_2 = apiService.updateEstatus(id, post)
+    suspend fun update(id: Int, post: Post_EstatusDto): Post_EstatusDto = apiService.updateEstatus(id, post)
 
 }

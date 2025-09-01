@@ -15,6 +15,6 @@ class Post_CategoriasPreventivasDto_Repository(private val apiService: ApiServic
 
     suspend fun getById(id: Int): Post_CategoriasPreventivasDto = apiService.getCategoriaPreventivaById(id)
 
-    suspend fun update(id: Int, post: Create_CategoriasPreventivasDto_2): Create_CategoriasPreventivasDto_2 = apiService.updateCategoriaPreventiva(id, post)
+    suspend fun update(id: Int, post: Post_CategoriasPreventivasDto): Post_CategoriasPreventivasDto = apiService.updateCategoriaPreventiva(id, post)
 
 }

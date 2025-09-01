@@ -15,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -28,7 +29,7 @@ import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.theme.Grey80
 fun AppDrawer(
     scope: CoroutineScope,
     scaffoldState: ScaffoldState,
-    navController: NavHostController,
+    navController: NavController,
     nombre: String,
     modifier: Modifier = Modifier
 ) {

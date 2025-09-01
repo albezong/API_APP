@@ -1,5 +1,6 @@
 package mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,6 +18,12 @@ class Post_MaquinariasYVehiculosDto_ViewModel(private val repository: Post_Maqui
     private val _selectedPost = MutableStateFlow<Maquinaria?>(null)
     val selectedPost: StateFlow<Maquinaria?> = _selectedPost
 
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
+    private val _error = MutableStateFlow<String?>(null)
+    val error: StateFlow<String?> = _error
+
     fun fetchPosts(
         search: String? = null,
         tipo: String? = null,
@@ -25,24 +32,45 @@ class Post_MaquinariasYVehiculosDto_ViewModel(private val repository: Post_Maqui
         pageSize: Int? = null
     ) {
         viewModelScope.launch {
-            try {
+            _isLoading.value = true
+            _error.value = null
+            try{
                 val response = repository.getMaquinarias(search, tipo, tipoId, page, pageSize)
-                _posts.value = response.items  // asumiendo que tu DTO tiene `items: List<Maquinaria>`
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+                if (response.isSuccessful) {
+                    _posts.value = response.body()?.items ?: emptyList()
+                } else {
+                    val body = response.errorBody()?.string().orEmpty()
+                    _error.value = "Error ${response.code()}: ${body.take(200)}"
+                    _posts.value = emptyList()
+                }
+            }catch (e: Exception) {
+                Log.e("VM", "fetchPosts error", e)
+                _error.value = e.message ?: "Error de red"
+                _posts.value = emptyList()
+            } finally { _isLoading.value = false }
         }
     }
 
     fun getPostById(id: Int) {
         viewModelScope.launch {
+            _isLoading.value = true
+            _error.value = null
+            _selectedPost.value = null
             try {
-                val result = repository.getMaquinariaById(id) // aquí vas a tu API o DB
-                _selectedPost.value = result
+                val response = repository.getMaquinariaById(id)
+                if (response.isSuccessful) {
+                    _selectedPost.value = response.body()
+                } else {
+                    val body = response.errorBody()?.string().orEmpty()
+                    _error.value = "Error ${response.code()}: ${body.take(200)}"
+                    Log.e("VM", "getPostById server error ${response.code()} body=$body")
+                }
             } catch (e: Exception) {
-                e.printStackTrace()
+                Log.e("VM", "getPostById error", e)
+                _error.value = e.message ?: "Error de red"
+            } finally {
+                _isLoading.value = false
             }
         }
     }
-
 }

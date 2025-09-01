@@ -13,11 +13,14 @@ using APIMIRAI_Construcciones.Models;
 
 namespace APIMIRAI_Construcciones.Controllers
 {
+    [RoutePrefix("api/TiposMaquinarias")]
     public class TiposMaquinariasController : ApiController
     {
         private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/TiposMaquinarias
+        [HttpGet]
+        [Route("")]
         public IHttpActionResult GetTiposMaquinarias()
         {
             var empresas = db.TiposMaquinarias
@@ -32,7 +35,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // GET: api/TiposMaquinarias/5
-        [ResponseType(typeof(TiposMaquinarias))]
+        //[ResponseType(typeof(TiposMaquinarias))]
+        [HttpGet]
+        [Route("{id:int}")]
         public IHttpActionResult GetTiposMaquinarias(int id)
         {
             var empresa = db.TiposMaquinarias
@@ -53,20 +58,26 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // PUT: api/TiposMaquinarias/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutTiposMaquinarias(int id, TiposMaquinarias tiposMaquinarias)
+        //[ResponseType(typeof(void))]
+        [HttpPut]
+        [Route("{id:int}")]
+        public IHttpActionResult PutTiposMaquinarias(int id, TiposMaquinariasDto tiposMaquinarias)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            var existingTiposMaquinarias = db.TiposMaquinarias.Find(id);
+            if (existingTiposMaquinarias == null)
+                return NotFound();
+
             if (id != tiposMaquinarias.idTiposMaquinarias)
             {
                 return BadRequest();
             }
 
-            db.Entry(tiposMaquinarias).State = EntityState.Modified;
+            existingTiposMaquinarias.nombre = tiposMaquinarias.nombre;
 
             try
             {
@@ -88,7 +99,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // POST: api/TiposMaquinarias
-        [ResponseType(typeof(TiposMaquinarias))]
+        //[ResponseType(typeof(TiposMaquinarias))]
+        [HttpPost]
+        [Route("")]
         public IHttpActionResult PostTiposMaquinarias(TiposMaquinarias tiposMaquinarias)
         {
             if (!ModelState.IsValid)
@@ -99,14 +112,16 @@ namespace APIMIRAI_Construcciones.Controllers
             db.TiposMaquinarias.Add(tiposMaquinarias);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = tiposMaquinarias.idTiposMaquinarias }, tiposMaquinarias);
+            return Ok(tiposMaquinarias);
         }
 
         // DELETE: api/TiposMaquinarias/5
-        [ResponseType(typeof(TiposMaquinarias))]
+        //[ResponseType(typeof(TiposMaquinarias))]
+        [HttpDelete]
+        [Route("{id:int}")]
         public IHttpActionResult DeleteTiposMaquinarias(int id)
         {
-            TiposMaquinarias tiposMaquinarias = db.TiposMaquinarias.Find(id);
+            var tiposMaquinarias = db.TiposMaquinarias.Find(id);
             if (tiposMaquinarias == null)
             {
                 return NotFound();

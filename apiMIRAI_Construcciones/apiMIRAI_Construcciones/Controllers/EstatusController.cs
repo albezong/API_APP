@@ -13,11 +13,14 @@ using APIMIRAI_Construcciones.Models;
 
 namespace APIMIRAI_Construcciones.Controllers
 {
+    [RoutePrefix("api/Estatus")]
     public class EstatusController : ApiController
     {
         private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
 
         // GET: api/Estatus
+        [HttpGet]
+        [Route("")]
         public IHttpActionResult GetEstatus()
         {
             var empresas = db.Estatus
@@ -32,7 +35,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // GET: api/Estatus/5
-        [ResponseType(typeof(Estatus))]
+        //[ResponseType(typeof(Estatus))]
+        [HttpGet]
+        [Route("{id:int}")]
         public IHttpActionResult GetEstatus(int id)
         {
             var empresa = db.Estatus
@@ -53,20 +58,24 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // PUT: api/Estatus/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutEstatus(int id, Estatus estatus)
+        //[ResponseType(typeof(void))]
+        [HttpPut]
+        [Route("{id:int}")]
+        public IHttpActionResult PutEstatus(int id, EstatusDto estatus)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
+
+            var existingEstatus = db.Estatus.Find(id);
+            if (existingEstatus == null)
+                return NotFound();
 
             if (id != estatus.idEstatus)
-            {
                 return BadRequest();
-            }
 
-            db.Entry(estatus).State = EntityState.Modified;
+            existingEstatus.nombre = estatus.nombre;
+
+            db.SaveChanges();
 
             try
             {
@@ -88,29 +97,29 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // POST: api/Estatus
-        [ResponseType(typeof(Estatus))]
+        //[ResponseType(typeof(Estatus))]
+        [HttpPost]
+        [Route("")]
         public IHttpActionResult PostEstatus(Estatus estatus)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             db.Estatus.Add(estatus);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = estatus.idEstatus }, estatus);
+            return Ok(estatus);
         }
 
         // DELETE: api/Estatus/5
-        [ResponseType(typeof(Estatus))]
+        //[ResponseType(typeof(Estatus))]
+        [HttpDelete]
+        [Route("{id:int}")]
         public IHttpActionResult DeleteEstatus(int id)
         {
-            Estatus estatus = db.Estatus.Find(id);
+            var estatus = db.Estatus.Find(id);
             if (estatus == null)
-            {
                 return NotFound();
-            }
 
             db.Estatus.Remove(estatus);
             db.SaveChanges();

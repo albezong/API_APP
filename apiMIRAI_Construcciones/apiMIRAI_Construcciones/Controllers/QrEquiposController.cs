@@ -19,6 +19,7 @@ using APIMIRAI_Construcciones.Models;
 
 namespace APIMIRAI_Construcciones.Controllers
 {
+    [RoutePrefix("api/QrEquipos")]
     public class QrEquiposController : ApiController
     {
         private PruebaAlmacenTAEPIEntities1 db = new PruebaAlmacenTAEPIEntities1();
@@ -30,6 +31,8 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // GET: api/QrEquipos
+        [HttpGet]
+        [Route("")]
         public IHttpActionResult GetQrEquipos()
         {
             var empresas = db.QrEquipos
@@ -45,7 +48,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // GET: api/QrEquipos/5
-        [ResponseType(typeof(QrEquipos))]
+        //[ResponseType(typeof(QrEquipos))]
+        [HttpGet]
+        [Route("{id:int}")]
         public IHttpActionResult GetQrEquipos(int id)
         {
             var empresa = db.QrEquipos
@@ -67,20 +72,25 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // PUT: api/QrEquipos/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutQrEquipos(int id, QrEquipos qrEquipos)
+        //[ResponseType(typeof(void))]
+        [HttpPut]
+        [Route("{id:int}")]
+        public IHttpActionResult PutQrEquipos(int id, QrEquiposDto qrEquipos)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
+
+            var existingQrEquipos = db.QrEquipos.Find(id);
+            if (existingQrEquipos == null)
+                return NotFound();
 
             if (id != qrEquipos.idQrEquipos)
-            {
                 return BadRequest();
-            }
 
-            db.Entry(qrEquipos).State = EntityState.Modified;
+            existingQrEquipos.claveQR = qrEquipos.claveQR;
+            existingQrEquipos.idEquipos = qrEquipos.idEquipos;
+
+            db.SaveChanges();
 
             try
             {
@@ -102,7 +112,9 @@ namespace APIMIRAI_Construcciones.Controllers
         }
 
         // POST: api/QrEquipos
-        [ResponseType(typeof(QrEquipos))]
+        //[ResponseType(typeof(QrEquipos))]
+        [HttpPost]
+        [Route("")]
         public IHttpActionResult PostQrEquipos(QrEquipos qrEquipos)
         {
             if (!ModelState.IsValid)
@@ -113,14 +125,16 @@ namespace APIMIRAI_Construcciones.Controllers
             db.QrEquipos.Add(qrEquipos);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = qrEquipos.idQrEquipos }, qrEquipos);
+            return Ok(qrEquipos);
         }
 
         // DELETE: api/QrEquipos/5
-        [ResponseType(typeof(QrEquipos))]
+        //[ResponseType(typeof(QrEquipos))]
+        [HttpDelete]
+        [Route("{id:int}")]
         public IHttpActionResult DeleteQrEquipos(int id)
         {
-            QrEquipos qrEquipos = db.QrEquipos.Find(id);
+            var qrEquipos = db.QrEquipos.Find(id);
             if (qrEquipos == null)
             {
                 return NotFound();
@@ -151,7 +165,7 @@ namespace APIMIRAI_Construcciones.Controllers
         //Ya esta solo tienes que ejecutar la api y abrir la url https://localhost:44333/api/qr/VerQRenIMG/1
         [HttpGet]
         [Route("api/qr/VerQRenIMG/{id}")]
-        [ResponseType(typeof(void))]
+        //[ResponseType(typeof(void))]
         public HttpResponseMessage VerQRImagen(int id)
         {
             var qrEquipo = db.QrEquipos.FirstOrDefault(e => e.idQrEquipos == id);

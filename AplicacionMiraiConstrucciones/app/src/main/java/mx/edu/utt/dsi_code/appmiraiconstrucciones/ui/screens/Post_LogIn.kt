@@ -4,7 +4,9 @@ import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.*
@@ -23,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.R
+import mx.edu.utt.dsi_code.appmiraiconstrucciones.ui.navigation.enums.Routes
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.LoginState
 import mx.edu.utt.dsi_code.appmiraiconstrucciones.viewmodel.UsuariosViewModelLogeo
 import java.net.URLEncoder
@@ -31,16 +34,17 @@ import java.nio.charset.StandardCharsets
 
 @Composable
 fun Post_LogIn(
-    navListaMaquinaria: NavController,
+    navController: NavController,
     usuarioViewModelLogeo: UsuariosViewModelLogeo,
 ) {
     encabezadoLogin()
-    cuerpoLogin(navListaMaquinaria, usuarioViewModelLogeo)
+    cuerpoLogin(navController, usuarioViewModelLogeo)
 }
 
 @Composable
 fun encabezadoLogin(
 ) {
+    val scrollState = rememberScrollState()
     Row(
         modifier = Modifier
             .fillMaxSize()
@@ -49,9 +53,11 @@ fun encabezadoLogin(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(10.dp),
+                .padding(10.dp)
+                .verticalScroll(scrollState),
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            //verticalArrangement = Arrangement.Center,
         ) {
             Text(
                 text = "MIRAI Construcciones México",
@@ -66,7 +72,7 @@ fun encabezadoLogin(
 
 @Composable
 fun cuerpoLogin(
-    navListaMaquinaria: NavController,
+    navController: NavController,
     usuariosViewModel: UsuariosViewModelLogeo,
 ) {
     var nombre by remember { mutableStateOf("") }
@@ -86,8 +92,14 @@ fun cuerpoLogin(
                 // usa el nombre real desde response si existe, si no usa el nombre escrito
                 val correoParaRuta = (usuario?.nombre ?: nombre).trim()
                 val correoEncoded = URLEncoder.encode(correoParaRuta, StandardCharsets.UTF_8.toString())
-                navListaMaquinaria.navigate("lista_maquinarias/$correoEncoded") {
+                /*navController.navigate("lista_maquinarias/$correoEncoded") {
+
                     popUpTo("login") { inclusive = true }
+                    launchSingleTop = true
+                }*/
+                // usar Routes.LISTA_MAQUINARIAS.name para que coincida con el NavGraph
+                navController.navigate("${Routes.LISTA_MAQUINARIAS.name}/$correoEncoded") {
+                    popUpTo(Routes.LOGIN.name) { inclusive = true }
                     launchSingleTop = true
                 }
                 usuariosViewModel.reset() // resetea estado para evitar navegación repetida
@@ -196,6 +208,9 @@ fun cuerpoLogin(
                 } else {
                     // sólo llamamos al ViewModel; la navegación ocurrirá cuando loginState cambie a Success
                     usuariosViewModel.authenticate(nombre.trim(), contraseña)
+
+                    // <-- NO navegar aquí; la navegación la hará el LaunchedEffect cuando loginState sea Success
+                    //navController.navigate("${Routes.LISTA_MAQUINARIAS.name}/${nombre}")
                 }
             },
             enabled = !loading,

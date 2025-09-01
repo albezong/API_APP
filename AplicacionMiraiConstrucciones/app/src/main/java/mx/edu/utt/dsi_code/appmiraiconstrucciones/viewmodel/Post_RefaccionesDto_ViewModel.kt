@@ -59,7 +59,7 @@ class Post_RefaccionesDto_ViewModel (private val repository: Post_RefaccionesDto
         }
     }
 
-    fun updatePost(id: Int, post: Create_RefaccionesDto_2) {
+    fun updatePost(id: Int, post: Post_RefaccionesDto) {
         viewModelScope.launch {
             try {
                 repository.update(id, post)

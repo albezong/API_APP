@@ -63,7 +63,7 @@ class Post_TiposMaquinariasDto_ViewModel (private val repository: Post_TiposMaqu
         }
     }
 
-    fun updatePost(id: Int, post: Create_TiposMaquinariasDto_2) {
+    fun updatePost(id: Int, post: Post_TiposMaquinariasDto) {
         viewModelScope.launch {
             try {
                 repository.update(id, post)

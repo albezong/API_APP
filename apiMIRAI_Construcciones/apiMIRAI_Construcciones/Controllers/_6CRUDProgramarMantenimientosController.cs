@@ -120,7 +120,7 @@ namespace APIMIRAI_Construcciones.Controllers
 
         // GET 
         [HttpGet, Route("{id:int}", Name = "GetProgramacion")]
-        [ResponseType(typeof(RecordatoriosDto))]
+        //[ResponseType(typeof(RecordatoriosDto))]
         public IHttpActionResult GetProgramacion(int id)
         {
             var p = _db.Recordatorios
@@ -195,7 +195,7 @@ namespace APIMIRAI_Construcciones.Controllers
 
         // POST create
         [HttpPost, Route("")]
-        [ResponseType(typeof(Recordatorios))]
+        //[ResponseType(typeof(Recordatorios))]
         public IHttpActionResult PostProgramacion(Recordatorios p)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);

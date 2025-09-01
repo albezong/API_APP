@@ -62,7 +62,7 @@ class Post_CategoriasPreventivasDto_ViewModel(private val repository: Post_Categ
         }
     }
 
-    fun updatePost(id: Int, post: Create_CategoriasPreventivasDto_2) {
+    fun updatePost(id: Int, post: Post_CategoriasPreventivasDto) {
         viewModelScope.launch {
             try {
                 repository.update(id, post)

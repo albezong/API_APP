@@ -233,7 +233,8 @@ class RevisionPreventivaViewModel(
                     appendLine("Autoriza Correctivo: $nombreCorrectivo")
                 }
 
-                val revisionActualizada = Create_RevisionesDto_2(
+                val revisionActualizada = Post_RevisionesDto(
+                    idRevisiones = revisionId,
                     idfTiposMantenimientos = tipoId,
                     idfEquipos = equipoId,
                     idfUsuarios = usuarioId,
